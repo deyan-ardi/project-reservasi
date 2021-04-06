@@ -4,14 +4,15 @@ namespace App\Controllers;
 
 use App\Models\UsersModels;
 use App\Models\JabatanModels;
-
+use App\Models\KamarModels;
 class Admin extends BaseController
 {
-    protected $UserModel, $JabatanModel;
+    protected $UserModel, $JabatanModel, $KamarModel;
     public function __construct()
     {
         $this->UserModel = new UsersModels();
         $this->JabatanModel = new JabatanModels();
+        $this->KamarModel = new KamarModels();
         $this->form_validation = \Config\Services::validation();
     }
     public function index()
@@ -25,18 +26,107 @@ class Admin extends BaseController
         }
         return view("admin/page/index", $data);
     }
+    
+    // Manajemen Kamar
     public function manajemen_kamar()
     {
         $data = [
             "title" => "Manajemen Kamar Panel",
             "id" => "2",
+            'kamar' => $this->KamarModel->findAll(),
         ];
         if (logged_in() && in_groups('user')) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         return view("admin/page/manajemen_kamar", $data);
     }
-
+    public function tmb_kategori()
+    {
+        $data = [
+            "title" => "Tambah Kamar Panel",
+            "id" => "2",
+            'validation' => $this->form_validation,
+        ];
+        if (logged_in() && in_groups('user')) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+        if (!empty($this->request->getPost('submit'))) {
+            $formUbah = $this->validate([
+                'nama' => 'required|alpha_numeric_space',
+                'deskripsi' => 'required|alpha_numeric_space',
+            ]);
+            if (!$formUbah) {
+                return redirect()->to('/admin/tambah-kategori-kamar')->withInput();
+            } else {
+                $save = $this->KamarModel->save([
+                    'nama_kategori' => $this->request->getPost('nama'),
+                    'deskripsi' => $this->request->getPost('deskripsi'),
+                    'created_by' => user()->username,
+                ]);
+                if ($save) {
+                    echo "Berhasil";
+                } else {
+                    echo "gagal";
+                }
+            }
+        } else {
+            return view("admin/page/tambah_kategori", $data);
+        }
+    }
+    public function hapus_kategori($id_kategori = null)
+    {
+        if (logged_in() && in_groups('user')) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+        if ($this->KamarModel->find($id_kategori)) {
+            if ($this->KamarModel->delete($id_kategori)) {
+                echo "Berhasil";
+            } else {
+                echo "Gagal";
+            }
+        } else {
+            echo "Data Tidak Ditemukan";
+        }
+    }
+    public function ubah_kategori($id_kategori = null)
+    {
+        $cari = $this->KamarModel->find($id_kategori);
+        $data = [
+            "title" => "Tambah Kamar Panel",
+            "id" => "2",
+            'validation' => $this->form_validation,
+            'kategori' => $cari,
+        ];
+        if (logged_in() && in_groups('user')) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+        if (!empty($this->request->getPost('submit'))) {
+            if ($cari) {
+                $formUbah = $this->validate([
+                    'nama' => 'required|alpha_numeric_space',
+                    'deskripsi' => 'required|alpha_numeric_space',
+                ]);
+                if (!$formUbah) {
+                    return redirect()->to('/admin/ubah-kategori-kamar/' . $id_kategori)->withInput();
+                } else {
+                    $save = $this->KamarModel->save([
+                        'id_kategori' => $id_kategori,
+                        'nama_kategori' => $this->request->getPost('nama'),
+                        'deskripsi' => $this->request->getPost('deskripsi'),
+                        'created_by' => user()->username,
+                    ]);
+                    if ($save) {
+                        echo "Berhasil";
+                    } else {
+                        echo "gagal";
+                    }
+                }
+            }
+        } else {
+            return view("admin/page/ubah_kategori", $data);
+        }
+    }
+    // End Manajemen Kamar
     // Manajemen Pegawai
     public function manajemen_pegawai()
     {
