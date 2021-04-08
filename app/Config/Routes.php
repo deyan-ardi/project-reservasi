@@ -60,6 +60,11 @@ $routes->post('/admin/tambah-kategori-kamar', 'Admin::tmb_kategori', ['filter' =
 $routes->get('/admin/hapus-kategori-kamar/(:num)', 'Admin::hapus_kategori/$1', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/ubah-kategori-kamar/(:num)', 'Admin::ubah_kategori/$1', ['filter' => 'role:admin,super admin']);
 $routes->post('/admin/ubah-kategori-kamar/(:num)', 'Admin::ubah_kategori/$1', ['filter' => 'role:admin,super admin']);
+$routes->get('/admin/tambah-kamar', 'Admin::tmb_kamar', ['filter' => 'role:admin,super admin']);
+$routes->post('/admin/tambah-kamar', 'Admin::tmb_kamar', ['filter' => 'role:admin,super admin']);
+$routes->get('/admin/hapus-kamar/(:num)', 'Admin::hapus_kamar/$1', ['filter' => 'role:admin,super admin']);
+$routes->get('/admin/ubah-kamar/(:num)', 'Admin::ubah_kamar/$1', ['filter' => 'role:admin,super admin']);
+$routes->post('/admin/ubah-kamar/(:num)', 'Admin::ubah_kamar/$1', ['filter' => 'role:admin,super admin']);
 
 // Super Admin Routes
 $routes->get('/admin/manajemen-pegawai', 'Admin::manajemen_pegawai', ['filter' => 'role:super admin']);

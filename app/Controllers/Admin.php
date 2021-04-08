@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\UsersModels;
 use App\Models\JabatanModels;
+use App\Models\KategoriKamarModels;
 use App\Models\KamarModels;
 class Admin extends BaseController
 {
@@ -12,6 +13,7 @@ class Admin extends BaseController
     {
         $this->UserModel = new UsersModels();
         $this->JabatanModel = new JabatanModels();
+        $this->KategoriKamarModel = new KategoriKamarModels();
         $this->KamarModel = new KamarModels();
         $this->form_validation = \Config\Services::validation();
     }
@@ -33,17 +35,161 @@ class Admin extends BaseController
         $data = [
             "title" => "Manajemen Kamar Panel",
             "id" => "2",
-            'kamar' => $this->KamarModel->findAll(),
+            'kategori_kamar' => $this->KategoriKamarModel->findAll(),
+            'kamar' => $this->KamarModel->getAllKamar(),
         ];
         if (logged_in() && in_groups('user')) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         return view("admin/page/manajemen_kamar", $data);
     }
-    public function tmb_kategori()
+    public function tmb_kamar()
     {
         $data = [
             "title" => "Tambah Kamar Panel",
+            "id" => "2",
+            'validation' => $this->form_validation,
+            'kategori' => $this->KategoriKamarModel->findAll(),
+        ];
+        if (logged_in() && in_groups('user')) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+        if (!empty($this->request->getPost('submit'))) {
+            $formUbah = $this->validate([
+                'nama' => 'required|alpha_numeric_space',
+                'nomor' => 'required|integer',
+                'harga' => 'required|integer',
+                'kategori' => 'required',
+                'deskripsi' => 'required|alpha_numeric_space',
+                'foto[]' => 'uploaded[foto]|max_size[foto,1024]|mime_in[foto,image/jpg,image/jpeg,image/png]|ext_in[foto,png,jpg,jpeg]',
+            ]);
+            if (!$formUbah) {
+                return redirect()->to('/admin/tambah-kamar')->withInput();
+            } else {
+                $arr = array();
+                $files = $this->request->getFiles();
+                foreach ($files['foto'] as $file) {
+                    $namaFoto = $file->getRandomName();
+                    $file->move('room_image', $namaFoto);
+                    array_push($arr, ["kamar" => $namaFoto]);
+                }
+                // Simpan File Sebagai Json
+                $dataFile =  json_encode($arr);
+                $save = $this->KamarModel->save([
+                    'nama_kamar' => $this->request->getPost('nama'),
+                    'deskripsi_kamar' => $this->request->getPost('deskripsi'),
+                    'harga_kamar' => $this->request->getPost('harga'),
+                    'foto_kamar' => $dataFile,
+                    'id_kategori' => $this->request->getPost('kategori'),
+                    'no_kamar' => $this->request->getPost('nomor'),
+                    'created_by' => user()->username,
+                ]);
+                if ($save) {
+                    echo "Berhasil";
+                } else {
+                    echo "gagal";
+                }
+            }
+        } else {
+            return view("admin/page/tambah_kamar", $data);
+        }
+    }
+    public function hapus_kamar($id_kamar = null)
+    {
+        if (logged_in() && in_groups('user')) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+        $cari = $this->KamarModel->find($id_kamar);
+        if ($cari) {
+            foreach (json_decode($cari['foto_kamar']) as $k) {
+                unlink('room_image/' . $k->kamar);
+            }
+
+            if ($this->KamarModel->delete($id_kamar)) {
+                echo "Berhasil";
+            } else {
+                echo "Gagal";
+            }
+        } else {
+            echo "Data Tidak Ditemukan";
+        }
+    }
+    public function ubah_kamar($id_kamar = null)
+    {
+        $cari = $this->KamarModel->find($id_kamar);
+        $data = [
+            "title" => "Tambah Kamar Panel",
+            "id" => "2",
+            'validation' => $this->form_validation,
+            'kategori' => $this->KategoriKamarModel->findAll(),
+            'room' => $cari
+        ];
+        if (logged_in() && in_groups('user') || empty($cari)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            if (!empty($this->request->getPost('submit'))) {
+                $formUbah = $this->validate([
+                    'nama' => 'required|alpha_numeric_space',
+                    'nomor' => 'required|integer',
+                    'harga' => 'required|integer',
+                    'kategori' => 'required',
+                    'deskripsi' => 'required|alpha_numeric_space',
+                    'foto[]' => 'max_size[foto,1024]|mime_in[foto,image/jpg,image/jpeg,image/png]|ext_in[foto,png,jpg,jpeg]',
+                ]);
+                if (!$formUbah) {
+                    return redirect()->to('/admin/ubah-kamar/' . $id_kamar)->withInput();
+                } else {
+                    $files = $this->request->getFiles();
+                    // Cek Apakah Gambar Kosong?
+                    if ($files['foto'][0]->getError() == 0) {
+                        // Hapus Foto Lama
+                        foreach (json_decode($cari['foto_kamar']) as $k) {
+                            unlink('room_image/' . $k->kamar);
+                        }
+                        // Pindahkan foto baru
+                        $arr = array();
+                        foreach ($files['foto'] as $file) {
+                            $namaFoto = $file->getRandomName();
+                            $file->move('room_image', $namaFoto);
+                            array_push($arr, ["kamar" => $namaFoto]);
+                        }
+                        // Simpan File Sebagai Json
+                        $dataFile =  json_encode($arr);
+                        $status = true;
+                    } else {
+                        $status = true;
+                        $dataFile = $cari['foto_kamar'];
+                    }
+
+                    // Jika status true
+                    if ($status == true) {
+                        $save = $this->KamarModel->save([
+                            'id_kamar' => $id_kamar,
+                            'nama_kamar' => $this->request->getPost('nama'),
+                            'deskripsi_kamar' => $this->request->getPost('deskripsi'),
+                            'harga_kamar' => $this->request->getPost('harga'),
+                            'foto_kamar' => $dataFile,
+                            'id_kategori' => $this->request->getPost('kategori'),
+                            'no_kamar' => $this->request->getPost('nomor'),
+                            'created_by' => user()->username,
+                        ]);
+                        if ($save) {
+                            echo "Berhasil";
+                        } else {
+                            echo "gagal";
+                        }
+                    }
+                }
+            } else {
+                return view("admin/page/ubah_kamar", $data);
+            }
+        }
+    }
+    
+    public function tmb_kategori()
+    {
+        $data = [
+            "title" => "Tambah Kategori Kamar Panel",
             "id" => "2",
             'validation' => $this->form_validation,
         ];
@@ -58,7 +204,7 @@ class Admin extends BaseController
             if (!$formUbah) {
                 return redirect()->to('/admin/tambah-kategori-kamar')->withInput();
             } else {
-                $save = $this->KamarModel->save([
+                $save = $this->KategoriKamarModel->save([
                     'nama_kategori' => $this->request->getPost('nama'),
                     'deskripsi' => $this->request->getPost('deskripsi'),
                     'created_by' => user()->username,
@@ -78,8 +224,8 @@ class Admin extends BaseController
         if (logged_in() && in_groups('user')) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
-        if ($this->KamarModel->find($id_kategori)) {
-            if ($this->KamarModel->delete($id_kategori)) {
+        if ($this->KategoriKamarModel->find($id_kategori)) {
+            if ($this->KategoriKamarModel->delete($id_kategori)) {
                 echo "Berhasil";
             } else {
                 echo "Gagal";
@@ -90,9 +236,9 @@ class Admin extends BaseController
     }
     public function ubah_kategori($id_kategori = null)
     {
-        $cari = $this->KamarModel->find($id_kategori);
+        $cari = $this->KategoriKamarModel->find($id_kategori);
         $data = [
-            "title" => "Tambah Kamar Panel",
+            "title" => "Ubah Kategori Kamar Panel",
             "id" => "2",
             'validation' => $this->form_validation,
             'kategori' => $cari,
@@ -109,7 +255,7 @@ class Admin extends BaseController
                 if (!$formUbah) {
                     return redirect()->to('/admin/ubah-kategori-kamar/' . $id_kategori)->withInput();
                 } else {
-                    $save = $this->KamarModel->save([
+                    $save = $this->KategoriKamarModel->save([
                         'id_kategori' => $id_kategori,
                         'nama_kategori' => $this->request->getPost('nama'),
                         'deskripsi' => $this->request->getPost('deskripsi'),
@@ -127,6 +273,7 @@ class Admin extends BaseController
         }
     }
     // End Manajemen Kamar
+    
     // Manajemen Pegawai
     public function manajemen_pegawai()
     {

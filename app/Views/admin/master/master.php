@@ -274,6 +274,19 @@
             imgPreview.src = e.target.result;
         }
     }
+    const multipleImg = () => {
+        const file = document.getElementById('file');
+        const fileLabel = document.querySelector('.custom-file-control');
+        const countLabel = document.querySelector('.count');
+        const imgPreview = document.querySelector('.img-preview');
+        let arr = [];
+        Array.from(file.files).forEach(file => {
+            let x = arr.push(file.name);
+        });
+        fileLabel.textContent = arr;
+        countLabel.textContent = arr.length;
+
+    }
     </script>
 
 </body>
