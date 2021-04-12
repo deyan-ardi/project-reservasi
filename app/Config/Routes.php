@@ -41,7 +41,8 @@ $routes->get('/tentang-kami','Home::about');
 $routes->get('/daftar-kamar','Home::daftar_kamar');
 $routes->get('/kontak-kami','Home::kontak');
 $routes->get('/booking-sekarang','Home::booking');
-$routes->get('/detail-kamar','Home::detail_kamar');
+$routes->get('/detail-kamar/(:num)', 'Home::detail_kamar/$1');
+$routes->post('/detail-kamar/(:num)', 'Home::detail_kamar/$1');
 $routes->get('/pengaturan-profil/(:num)', 'Home::pengaturan/$1', ['filter' => 'role:user']);
 $routes->post('/pengaturan-profil/(:num)', 'Home::pengaturan/$1', ['filter' => 'role:user']);
 

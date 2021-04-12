@@ -13,120 +13,34 @@
 <section class="room-page-section">
     <div class="container">
         <div class="row">
+            <?php foreach ($kamar as $k) : ?>
             <div class="col-lg-4 col-md-6">
                 <div class="room-item">
+
                     <div class="room-image">
-                        <img src="<?= base_url(); ?>/assets/user/img/room-page-image/1.jpg" alt="image">
+                        <?php $foto = json_decode($k->foto_kamar); ?>
+                        <img src="<?= base_url(); ?>/room_image/<?= $foto[1]->kamar    ?>" alt="image">
                         <div class="night-btn">
-                            <a href="#" class="default-btn-one">$260/Night</a>
+                            <a href="#" class="default-btn-one">Rp. <?= $k->harga_kamar; ?> /Malam</a>
                         </div>
                     </div>
                     <div class="room-content">
-                        <h3>Suite Room</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodt.</p>
+                        <h3><?= $k->nama_kamar ?> </h3>
+                        <p style="text-align: justify;">Kategori Kamar : <?= $k->nama_kategori; ?></p>
+                        <p style="text-align: justify;">Rating Kamar : <i class="fa fa-star "
+                                style="color: #cfa97a;"></i> <i class="fa fa-star " style="color: #cfa97a;"></i> <i
+                                class="fa fa-star " style="color: #cfa97a;"></i></p>
                         <div class="room-btn">
-                            <a href="<?= base_url(); ?>/detail-kamar" class="room-btn-one">Read More
+                            <a href="<?= base_url(); ?>/detail-kamar/<?= $k->id_kamar; ?>"
+                                class="room-btn-one">Selengkapnya
                                 <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="room-item">
-                    <div class="room-image">
-                        <img src="<?= base_url(); ?>/assets/user/img/room-page-image/2.jpg" alt="image">
-                        <div class="night-btn">
-                            <a href="#" class="default-btn-one">$260/Night</a>
-                        </div>
-                    </div>
-                    <div class="room-content">
-                        <h3>Single Room</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodt.</p>
-                        <div class="room-btn">
-                            <a href="#" class="room-btn-one">Read More
-                                <i class="fa fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="room-item">
-                    <div class="room-image">
-                        <img src="<?= base_url(); ?>/assets/user/img/room-page-image/3.jpg" alt="image">
-                        <div class="night-btn">
-                            <a href="#" class="default-btn-one">$260/Night</a>
-                        </div>
-                    </div>
-                    <div class="room-content">
-                        <h3>Double Room</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodt.</p>
-                        <div class="room-btn">
-                            <a href="#" class="room-btn-one">Read More
-                                <i class="fa fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="room-item">
-                    <div class="room-image">
-                        <img src="<?= base_url(); ?>/assets/user/img/room-page-image/4.jpg" alt="image">
-                        <div class="night-btn">
-                            <a href="#" class="default-btn-one">$260/Night</a>
-                        </div>
-                    </div>
-                    <div class="room-content">
-                        <h3>Family Room</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodt.</p>
-                        <div class="room-btn">
-                            <a href="#" class="room-btn-one">Read More
-                                <i class="fa fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="room-item">
-                    <div class="room-image">
-                        <img src="<?= base_url(); ?>/assets/user/img/room-page-image/5.jpg" alt="image">
-                        <div class="night-btn">
-                            <a href="#" class="default-btn-one">$260/Night</a>
-                        </div>
-                    </div>
-                    <div class="room-content">
-                        <h3>Small Room</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodt.</p>
-                        <div class="room-btn">
-                            <a href="#" class="room-btn-one">Read More
-                                <i class="fa fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="room-item">
-                    <div class="room-image">
-                        <img src="<?= base_url(); ?>/assets/user/img/room-page-image/6.jpg" alt="image">
-                        <div class="night-btn">
-                            <a href="#" class="default-btn-one">$260/Night</a>
-                        </div>
-                    </div>
-                    <div class="room-content">
-                        <h3>Delux Room</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodt.</p>
-                        <div class="room-btn">
-                            <a href="#" class="room-btn-one">Read More
-                                <i class="fa fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <?php endforeach; ?>
             <div class="col-lg-12 col-md-12">
                 <div class="pagination-area">
                     <a href="#" class="prev page-numbers"><i class="fas fa-angle-double-left"></i></a>

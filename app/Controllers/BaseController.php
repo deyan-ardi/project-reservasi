@@ -20,13 +20,13 @@ use Psr\Log\LoggerInterface;
 
 class BaseController extends Controller
 {
+
 	/**
-	 * An array of helpers to be loaded automatically upon
-	 * class instantiation. These helpers will be available
-	 * to all other controllers that extend BaseController.
+	 * Instance of the main Request object.
 	 *
-	 * @var array
+	 * @var HTTP\IncomingRequest
 	 */
+	protected $request;
 	protected $helpers = ['auth','form','url'];
 
 	/**
@@ -35,6 +35,7 @@ class BaseController extends Controller
 	 * @param RequestInterface  $request
 	 * @param ResponseInterface $response
 	 * @param LoggerInterface   $logger
+	 * 
 	 */
 	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
 	{

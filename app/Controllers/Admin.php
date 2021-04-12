@@ -6,11 +6,13 @@ use App\Models\UsersModels;
 use App\Models\JabatanModels;
 use App\Models\KategoriKamarModels;
 use App\Models\KamarModels;
+
 class Admin extends BaseController
 {
-    protected $UserModel, $JabatanModel, $KamarModel;
+    protected $UserModel, $JabatanModel, $KamarModel, $service_img;
     public function __construct()
     {
+        $this->service_img = \Config\Services::image();
         $this->UserModel = new UsersModels();
         $this->JabatanModel = new JabatanModels();
         $this->KategoriKamarModel = new KategoriKamarModels();
@@ -28,7 +30,7 @@ class Admin extends BaseController
         }
         return view("admin/page/index", $data);
     }
-    
+
     // Manajemen Kamar
     public function manajemen_kamar()
     {
@@ -60,7 +62,7 @@ class Admin extends BaseController
                 'nomor' => 'required|integer',
                 'harga' => 'required|integer',
                 'kategori' => 'required',
-                'deskripsi' => 'required|alpha_numeric_space',
+                'deskripsi' => 'required',
                 'foto[]' => 'uploaded[foto]|max_size[foto,1024]|mime_in[foto,image/jpg,image/jpeg,image/png]|ext_in[foto,png,jpg,jpeg]',
             ]);
             if (!$formUbah) {
@@ -71,7 +73,13 @@ class Admin extends BaseController
                 foreach ($files['foto'] as $file) {
                     $namaFoto = $file->getRandomName();
                     $file->move('room_image', $namaFoto);
-                    array_push($arr, ["kamar" => $namaFoto]);
+                    $thumbnail = $this->service_img
+                        ->withFile(ROOTPATH . 'public/room_image/' . $namaFoto)
+                        ->fit(510, 400, 'center')
+                        ->save(ROOTPATH . 'public/room_image/' . $namaFoto);
+                    if ($thumbnail) {
+                        array_push($arr, ["kamar" => $namaFoto]);
+                    }
                 }
                 // Simpan File Sebagai Json
                 $dataFile =  json_encode($arr);
@@ -133,7 +141,7 @@ class Admin extends BaseController
                     'nomor' => 'required|integer',
                     'harga' => 'required|integer',
                     'kategori' => 'required',
-                    'deskripsi' => 'required|alpha_numeric_space',
+                    'deskripsi' => 'required',
                     'foto[]' => 'max_size[foto,1024]|mime_in[foto,image/jpg,image/jpeg,image/png]|ext_in[foto,png,jpg,jpeg]',
                 ]);
                 if (!$formUbah) {
@@ -151,7 +159,13 @@ class Admin extends BaseController
                         foreach ($files['foto'] as $file) {
                             $namaFoto = $file->getRandomName();
                             $file->move('room_image', $namaFoto);
-                            array_push($arr, ["kamar" => $namaFoto]);
+                            $thumbnail = $this->service_img
+                                ->withFile(ROOTPATH . 'public/room_image/' . $namaFoto)
+                                ->fit(510, 400, 'center')
+                                ->save(ROOTPATH . 'public/room_image/' . $namaFoto);
+                            if ($thumbnail) {
+                                array_push($arr, ["kamar" => $namaFoto]);
+                            }
                         }
                         // Simpan File Sebagai Json
                         $dataFile =  json_encode($arr);
@@ -185,7 +199,7 @@ class Admin extends BaseController
             }
         }
     }
-    
+
     public function tmb_kategori()
     {
         $data = [
@@ -273,7 +287,7 @@ class Admin extends BaseController
         }
     }
     // End Manajemen Kamar
-    
+
     // Manajemen Pegawai
     public function manajemen_pegawai()
     {
@@ -669,15 +683,25 @@ class Admin extends BaseController
                         $fotoProfil = $this->request->getFile('foto');
                         $namaFoto = $fotoProfil->getRandomName();
                         $fotoProfil->move('user_image', $namaFoto);
-                        // Cek apakah gambar didatabase masih kosong atau tidak, jika kosong maka jangan lakukan unlink
-                        if ($users[0]->foto != null) {
-                            if (unlink('user_image/' . $users[0]->foto)) {
-                                $unlink = true;
+
+                        $thumbnail = $this->service_img
+                            ->withFile(ROOTPATH . 'public/user_image/' . $namaFoto)
+                            ->fit(250, 250, 'center')
+                            ->save(ROOTPATH . 'public/user_image/' . $namaFoto);
+                        if ($thumbnail) {
+                            // Cek apakah gambar didatabase masih kosong atau tidak, jika kosong maka jangan lakukan unlink
+                            if ($users[0]->foto != null) {
+                                if (unlink('user_image/' . $users[0]->foto)) {
+
+                                    $unlink = true;
+                                } else {
+                                    $unlink = false;
+                                }
                             } else {
-                                $unlink = false;
+                                $unlink = true;
                             }
                         } else {
-                            $unlink = true;
+                            echo "kesalahan sistem";
                         }
 
                         // Cek apakah gambar lama berhasil dihapus?
@@ -713,9 +737,9 @@ class Admin extends BaseController
                             'password_hash' => $password,
                         ]);
                         if ($updateUser) {
-                            if($status == true){
+                            if ($status == true) {
                                 return redirect()->to('/logout');
-                            }else{
+                            } else {
                                 echo "Berhasil";
                             }
                         } else {

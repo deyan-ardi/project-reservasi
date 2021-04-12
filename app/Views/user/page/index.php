@@ -82,7 +82,6 @@
     </div>
 </div>
 
-
 <section class="about-section">
     <div class="container">
         <div class="row align-items-center">

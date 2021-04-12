@@ -71,22 +71,28 @@
                             <li class="nav-item">
                                 <a href="<?= base_url(); ?>/booking-sekarang" class="nav-link">
                                     Keranjang
-                                    <sup class="text-warning">3</sup>
+                                    <sup class="text-warning"><?= $keranjang; ?></sup>
                                 </a>
                                 <ul class="dropdown-menu">
+                                    <?php if ($keranjang != 0) : ?>
+                                    <?php foreach ($data_keranjang as $d) : ?>
                                     <li class="nav-item">
-                                        <a href="room.html" class="nav-link">Pesanan 1</a>
+                                        <?php if ($d->layanan_kamar == 1) : ?>
+                                        <a href="#" class="nav-link"><?= $d->nama_kamar; ?> - (Rp.<?= $d->sub_total; ?>
+                                            ~
+                                            Dengan Sarapan)</a>
+                                        <?php else : ?>
+                                        <a href="#" class="nav-link"><?= $d->nama_kamar; ?> -
+                                            (Rp.<?= $d->sub_total; ?>)</a>
+                                        <?php endif; ?>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="single-room.html" class="nav-link">Pesanan 2</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="single-room.html" class="nav-link">Pesanan 3</a>
-                                    </li>
-
+                                    <?php endforeach; ?>
                                     <li><a href="<?= base_url(); ?>/booking-sekarang" id="btn-one-checkout"><i
                                                 class="fa fa-shopping-cart"></i> Bayar
                                             Sekarang</a></li>
+                                    <?php else : ?>
+                                    <li> <a href="#" class="nav-link">Belum Ada Pesanan</a></li>
+                                    <?php endif; ?>
                                 </ul>
                             </li>
                             <?php if (logged_in()) : ?>

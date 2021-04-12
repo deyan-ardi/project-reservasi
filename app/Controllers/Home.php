@@ -3,21 +3,43 @@
 namespace App\Controllers;
 
 use App\Models\UsersModels;
+use App\Models\KamarModels;
+use App\Models\PesananModels;
+use App\Models\KeranjangModels;
 
 class Home extends BaseController
 {
 	// Home Page
-	protected $UserModel, $JabatanModel;
+	protected $UserModel, $JabatanModel, $KamarModel, $PesananModel, $KeranjangModel;
+	protected $biaya_layanan;
 	public function __construct()
 	{
+		$this->KamarModel = new KamarModels();
 		$this->UserModel = new UsersModels();
+		$this->PesananModel = new PesananModels();
+		$this->KeranjangModel = new KeranjangModels();
 		$this->form_validation = \Config\Services::validation();
+		$this->biaya_layanan = 500000;
 	}
 	public function index()
 	{
+		if (logged_in()) {
+			$cariPesanan = $this->PesananModel->getAllPesananWhere(user()->id);
+		} else {
+			$cariPesanan = array();
+		}
+		if (empty($cariPesanan)) {
+			$keranjang = 0;
+			$data_keranjang = array();
+		} else {
+			$keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan);
+			$data_keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan, "count");
+		}
 		$data = [
 			"title" => "Beranda",
-			"id" => "1"
+			"id" => "1",
+			"keranjang" => $keranjang,
+			"data_keranjang" => $data_keranjang,
 		];
 		if (logged_in() && !in_groups('user')) {
 			return redirect()->to('/admin');
@@ -26,9 +48,23 @@ class Home extends BaseController
 	}
 	public function about()
 	{
+		if (logged_in()) {
+			$cariPesanan = $this->PesananModel->getAllPesananWhere(user()->id);
+		} else {
+			$cariPesanan = array();
+		}
+		if (empty($cariPesanan)) {
+			$keranjang = 0;
+			$data_keranjang = array();
+		} else {
+			$keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan);
+			$data_keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan, "count");
+		}
 		$data = [
 			"title" => "About",
-			"id" => "2"
+			"id" => "2",
+			"keranjang" => $keranjang,
+			"data_keranjang" => $data_keranjang,
 		];
 		if (logged_in() && !in_groups('user')) {
 			return redirect()->to('/admin');
@@ -37,9 +73,24 @@ class Home extends BaseController
 	}
 	public function daftar_kamar()
 	{
+		if (logged_in()) {
+			$cariPesanan = $this->PesananModel->getAllPesananWhere(user()->id);
+		} else {
+			$cariPesanan = array();
+		}
+		if (empty($cariPesanan)) {
+			$keranjang = 0;
+			$data_keranjang = array();
+		} else {
+			$keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan);
+			$data_keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan, "count");
+		}
 		$data = [
 			"title" => "Daftar Kamar",
-			"id" => "3"
+			"id" => "3",
+			"kamar" => $this->KamarModel->getAllKamar(),
+			"keranjang" => $keranjang,
+			"data_keranjang" => $data_keranjang,
 		];
 		if (logged_in() && !in_groups('user')) {
 			return redirect()->to('/admin');
@@ -48,9 +99,23 @@ class Home extends BaseController
 	}
 	public function kontak()
 	{
+		if (logged_in()) {
+			$cariPesanan = $this->PesananModel->getAllPesananWhere(user()->id);
+		} else {
+			$cariPesanan = array();
+		}
+		if (empty($cariPesanan)) {
+			$keranjang = 0;
+			$data_keranjang = array();
+		} else {
+			$keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan);
+			$data_keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan, "count");
+		}
 		$data = [
 			"title" => "Kontak Kami",
-			"id" => "4"
+			"id" => "4",
+			"keranjang" => $keranjang,
+			"data_keranjang" => $data_keranjang,
 		];
 		if (logged_in() && !in_groups('user')) {
 			return redirect()->to('/admin');
@@ -59,34 +124,157 @@ class Home extends BaseController
 	}
 	public function booking()
 	{
+		if (logged_in()) {
+			$cariPesanan = $this->PesananModel->getAllPesananWhere(user()->id);
+		} else {
+			$cariPesanan = array();
+		}
+		if (empty($cariPesanan)) {
+			$keranjang = 0;
+			$data_keranjang = array();
+		} else {
+			$keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan);
+			$data_keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan, "count");
+		}
 		$data = [
 			"title" => "Booking Kamar",
-			"id" => "5"
+			"id" => "5",
+			"keranjang" => $keranjang,
+			"data_keranjang" => $data_keranjang,
 		];
 		if (logged_in() && !in_groups('user')) {
 			return redirect()->to('/admin');
 		}
 		return view("user/page/checkout", $data);
 	}
-	public function detail_kamar()
+	public function detail_kamar($id_kamar = null)
 	{
+		$cari = $this->KamarModel->getAllKamar($id_kamar);
+		if (logged_in()) {
+			$cariPesanan = $this->PesananModel->getAllPesananWhere(user()->id);
+		} else {
+			$cariPesanan = array();
+		}
+		if (empty($cariPesanan)) {
+			$keranjang = 0;
+			$data_keranjang = array();
+		} else {
+			$keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan);
+			$data_keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan, "count");
+		}
 		$data = [
 			"title" => "Detail Kamar",
-			"id" => "6"
+			"id" => "6",
+			"kamar" => $cari,
+			"all" => $this->KamarModel->getAllKamar(),
+			"keranjang" => $keranjang,
+			"data_keranjang" => $data_keranjang,
 		];
 		if (logged_in() && !in_groups('user')) {
 			return redirect()->to('/admin');
+		} else {
+			if (!empty($this->request->getPost('submit'))) {
+				if (!logged_in() && empty(user())) {
+					return redirect()->to('/login');
+				} else {
+					// Ketentuan Status Bayar
+					// 1. Keranjang
+					// 2. Booking
+					// 3. Dibayar
+					if ($this->request->getPost('layanan') == 1) {
+						$total = $cari[0]->harga_kamar + $this->biaya_layanan;
+					} else {
+						$total = $cari[0]->harga_kamar;
+					}
+					// Cek Total Pembayaran
+					if (empty($cariPesanan) || $cariPesanan[0]->status_bayar == 3) {
+						$save = $this->PesananModel->save([
+							'id_user' => user()->id,
+							'total_bayar' => $total,
+							'status_bayar' => 1,
+							'created_by' => user()->username,
+						]);
+						if ($save) {
+							$getIdPesanan = $this->PesananModel->InsertID();
+							$cekKamar = $this->KeranjangModel->cekKamarKeranjang(user()->id, $getIdPesanan, $id_kamar);
+							if ($cekKamar == 0) {
+								$saveKeranjang = $this->KeranjangModel->save([
+									'id_kamar' => $id_kamar,
+									'id_pesanan' => $getIdPesanan,
+									'id_user' => user()->id,
+									'layanan_kamar' => $this->request->getPost('layanan'),
+									'sub_total' => $total,
+								]);
+								if ($saveKeranjang) {
+									echo "Berhasil Ditambahkan Kekeranjang";
+								} else {
+									echo "Gagal Ditambahkan Kekeranjang";
+								}
+							} else {
+								echo "Gagal Ditambahkan, Kamar Sudah Ada Di Keranjang";
+							}
+						} else {
+							echo "500 - Internal Server Error";
+						}
+					} else {
+						if (!empty($cariPesanan) && $cariPesanan[0]->status_bayar == 1) {
+							$total_bayar = $cariPesanan[0]->total_bayar;
+							$total_bayar = $total_bayar + $total;
+							$cekKamar = $this->KeranjangModel->cekKamarKeranjang(user()->id, $cariPesanan[0]->id_pesanan, $id_kamar);
+							if ($cekKamar == 0) {
+								$updatePesanan =  $this->PesananModel->save([
+									'id_pesanan' => $cariPesanan[0]->id_pesanan,
+									'total_bayar' => $total_bayar,
+								]);
+								if ($updatePesanan) {
+									$saveKeranjang = $this->KeranjangModel->save([
+										'id_kamar' => $id_kamar,
+										'id_pesanan' => $cariPesanan[0]->id_pesanan,
+										'id_user' => user()->id,
+										'layanan_kamar' => $this->request->getPost('layanan'),
+										'sub_total' => $total,
+									]);
+									if ($saveKeranjang) {
+										echo "Berhasil Ditambahkan Kekeranjang";
+									} else {
+										echo "Gagal Ditambahkan Kekeranjang";
+									}
+								}
+							} else {
+								echo "Gagal Ditambahkan, Kamar Sudah Ada Di Keranjang";
+							}
+						} else {
+							echo "500 - Internal Server Error";
+						}
+					}
+				}
+			} else {
+				return view("user/page/single-room", $data);
+			}
 		}
-		return view("user/page/single-room", $data);
 	}
 	public function pengaturan($id_user = null)
 	{
 		$users = $this->UserModel->getUserRoleUser($id_user);
+		if (logged_in()) {
+			$cariPesanan = $this->PesananModel->getAllPesananWhere(user()->id);
+		} else {
+			$cariPesanan = array();
+		}
+		if (empty($cariPesanan)) {
+			$keranjang = 0;
+			$data_keranjang = array();
+		} else {
+			$keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan);
+			$data_keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan, "count");
+		}
 		$data = [
 			"title" => "Pengaturan Profil",
 			"id" => "11",
 			"users" => $users,
-			'validation' => $this->form_validation
+			'validation' => $this->form_validation,
+			"keranjang" => $keranjang,
+			"data_keranjang" => $data_keranjang,
 		];
 		if (logged_in() && !in_groups('user')) {
 			return redirect()->to('/admin');

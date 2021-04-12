@@ -61,7 +61,7 @@ class Email extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $SMTPPass = '-ganatech2020-';
+	public $SMTPPass = '-*ganatech2020*-';
 
 	/**
 	 * SMTP Port

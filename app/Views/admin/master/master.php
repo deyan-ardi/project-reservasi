@@ -62,8 +62,13 @@
                             <li class="dropdown">
                                 <a href="#" id="userSettings" class="user-settings" data-toggle="dropdown"
                                     aria-haspopup="true">
+                                    <?php if (empty(user()->foto)) : ?>
+                                    <img class="avatar" src="<?= base_url(); ?>/user_image/default.jpg"
+                                        alt="User Thumb" />
+                                    <?php else : ?>
                                     <img class="avatar" src="<?= base_url(); ?>/user_image/<?= user()->foto; ?>"
                                         alt="User Thumb" />
+                                    <?php endif; ?>
                                     <span class="user-name"><?= ucWords(user()->username); ?></span>
                                     <i class="icon-chevron-small-down"></i>
                                 </a>
@@ -102,8 +107,12 @@
                 <div class="side-content ">
                     <!-- BEGIN .user-profile -->
                     <div class="user-profile">
+                        <?php if (empty(user()->foto)) : ?>
+                        <img src="<?= base_url(); ?>/user_image/default.jpg" class="profile-thumb" alt="User Thumb">
+                        <?php else : ?>
                         <img src="<?= base_url(); ?>/user_image/<?= user()->foto; ?>" class="profile-thumb"
                             alt="User Thumb">
+                        <?php endif; ?>
                         <h6 class="profile-name"><?= ucWords(user()->username); ?> -
                             <?php if (in_groups("super admin")) : ?>
                             Admin
