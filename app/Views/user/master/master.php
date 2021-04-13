@@ -67,7 +67,7 @@
                                 <a href="<?= base_url(); ?>/kontak-kami" class="nav-link">Kontak</a>
                                 <?php endif; ?>
                             </li>
-
+                            <?php if(logged_in()): ?>
                             <li class="nav-item">
                                 <a href="<?= base_url(); ?>/booking-sekarang" class="nav-link">
                                     Keranjang
@@ -78,12 +78,13 @@
                                     <?php foreach ($data_keranjang as $d) : ?>
                                     <li class="nav-item">
                                         <?php if ($d->layanan_kamar == 1) : ?>
-                                        <a href="#" class="nav-link"><?= $d->nama_kamar; ?> - (Rp.<?= $d->sub_total; ?>
+                                        <a href="#" class="nav-link"><?= $d->nama_kamar; ?> -
+                                            (Rp.<?= $d->sub_total; ?>/Malam
                                             ~
                                             Dengan Sarapan)</a>
                                         <?php else : ?>
                                         <a href="#" class="nav-link"><?= $d->nama_kamar; ?> -
-                                            (Rp.<?= $d->sub_total; ?>)</a>
+                                            (Rp.<?= $d->sub_total; ?>/Malam ~ Tanpa Sarapan)</a>
                                         <?php endif; ?>
                                     </li>
                                     <?php endforeach; ?>
@@ -95,6 +96,7 @@
                                     <?php endif; ?>
                                 </ul>
                             </li>
+                            <?php endif; ?>
                             <?php if (logged_in()) : ?>
                             <li class="nav-item">
                                 <div class="row">

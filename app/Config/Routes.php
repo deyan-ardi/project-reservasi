@@ -40,11 +40,13 @@ $routes->get('/', 'Home::index');
 $routes->get('/tentang-kami','Home::about');
 $routes->get('/daftar-kamar','Home::daftar_kamar');
 $routes->get('/kontak-kami','Home::kontak');
-$routes->get('/booking-sekarang','Home::booking');
+$routes->get('/booking-sekarang', 'Home::booking', ['filter' => 'role:user']);
+$routes->post('/booking-sekarang', 'Home::booking', ['filter' => 'role:user']);
 $routes->get('/detail-kamar/(:num)', 'Home::detail_kamar/$1');
 $routes->post('/detail-kamar/(:num)', 'Home::detail_kamar/$1');
 $routes->get('/pengaturan-profil/(:num)', 'Home::pengaturan/$1', ['filter' => 'role:user']);
 $routes->post('/pengaturan-profil/(:num)', 'Home::pengaturan/$1', ['filter' => 'role:user']);
+$routes->get('/hapus-keranjang/(:num)', 'Home::hapus_keranjang/$1', ['filter' => 'role:user']);
 
 // Admin All Routes
 $routes->get('/admin','Admin::index', ['filter' => 'role:admin,super admin']);

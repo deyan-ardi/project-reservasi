@@ -40,4 +40,32 @@ const previewImg = () => {
         imgPreview.src = e.target.result;
     }
 }
+const hitungLama = () => {
+    let checkIn = document.querySelector('#checkIn');
+    let checkOut = document.querySelector('#checkOut');
+    const hari = document.querySelector('#lama_hari');
+    const totalBayar = document.querySelector('#total_bayar');
+    if (checkIn.value != "" && checkOut.value != "") {
+        let oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        let firstDate = new Date(checkIn.value);
+        let secondDate = new Date(checkOut.value);
+        let tglPertama = Date.parse(firstDate);
+        let tglKedua = Date.parse(secondDate);
+        let selisih = (tglKedua - tglPertama) / oneDay;
+        if (selisih < 0) {
+            hari.value = "Lama Hari Error";
+            totalBayar.value = "Tanggal Check In Tidak Dapat Lebih Besar Dari Check Out";
+            document.querySelector('#button_pesanan').setAttribute("disabled", true);
+            checkIn.classList.add('is-invalid');
+            checkOut.classList.add('is-invalid');
+        } else {
+            hari.value = "x " + selisih + " Hari (Lama Menginap)";
+            totalBayar.value = "Total Wajib Bayar = Rp." + "<?= $pesanan[0]->total_bayar; ?>" * selisih;
+            checkIn.classList.remove('is-invalid');
+            checkOut.classList.remove('is-invalid');
+            document.querySelector('#button_pesanan').removeAttribute("disabled");
+        }
+    }
+
+}
 </script>

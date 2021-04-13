@@ -136,16 +136,83 @@ class Home extends BaseController
 			$keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan);
 			$data_keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan, "count");
 		}
+		$pesanan = $this->PesananModel->getAllPesananWhere(user()->id);
+
 		$data = [
 			"title" => "Booking Kamar",
 			"id" => "5",
 			"keranjang" => $keranjang,
 			"data_keranjang" => $data_keranjang,
+			"all" => $this->KamarModel->getAllKamar(),
+			"pesanan" => $pesanan,
+			"validation" => $this->form_validation,
+			"data_pesanan" => $this->PesananModel->getDataPesananWhere(user()->id),
 		];
 		if (logged_in() && !in_groups('user')) {
 			return redirect()->to('/admin');
+		} else {
+			if (!empty($this->request->getPost('submit_pesanan'))) {
+				$formCheckout = $this->validate([
+					'check-in' => 'required|valid_date[Y-m-d]',
+					'check-out' => 'required|valid_date[Y-m-d]',
+					'dewasa' => 'required',
+					'anak' => 'required',
+				]);
+				if (!$formCheckout) {
+					return redirect()->to('/booking-sekarang')->withInput();
+				} {
+					$updatePesanan = $this->PesananModel->save([
+						"id_pesanan" => $pesanan[0]->id_pesanan,
+						"status_bayar" => 2,
+						"tamu_dewasa" => $this->request->getPost('dewasa'),
+						"tamu_anak" => $this->request->getPost('anak'),
+						"pesan" => $this->request->getPost('catatan'),
+						"check_in" => $this->request->getPost('check-in'),
+						"check_out" => $this->request->getPost('check-out'),
+					]);
+					if ($updatePesanan) {
+						foreach ($data_keranjang as $d) {
+							$this->KamarModel->save([
+								'id_kamar' => $d->id_kamar,
+								"status_kamar" => 1,
+							]);
+						}
+						echo "Berhasil Diupdate";
+					} else {
+						dd($updatePesanan);
+					}
+				}
+			} else {
+				return view("user/page/checkout", $data);
+			}
 		}
-		return view("user/page/checkout", $data);
+	}
+	public function hapus_keranjang($id_keranjang = null)
+	{
+		if (logged_in() && !in_groups('user')) {
+			return redirect()->to('/admin');
+		} else {
+			$cari = $this->KeranjangModel->find($id_keranjang);
+			if (!empty($cari)) {
+				$pesanan = $this->PesananModel->find($cari['id_pesanan']);
+				$total_bayar = $pesanan['total_bayar'] - $cari['sub_total'];
+				$updatePesanan = $this->PesananModel->save([
+					"id_pesanan" => $pesanan['id_pesanan'],
+					"total_bayar" => $total_bayar
+				]);
+				if ($updatePesanan) {
+					if ($this->KeranjangModel->delete($id_keranjang)) {
+						echo "Berhasil Dihapus";
+					} else {
+						echo "Gagal Dihapus";
+					}
+				} else {
+					echo "Gagal Dihapus";
+				}
+			} else {
+				echo "Data Tidak Ditemukan";
+			}
+		}
 	}
 	public function detail_kamar($id_kamar = null)
 	{
