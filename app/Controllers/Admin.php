@@ -6,10 +6,12 @@ use App\Models\UsersModels;
 use App\Models\JabatanModels;
 use App\Models\KategoriKamarModels;
 use App\Models\KamarModels;
+use App\Models\PesananModels;
+use App\Models\KeranjangModels;
 
 class Admin extends BaseController
 {
-    protected $UserModel, $JabatanModel, $KamarModel, $service_img;
+    protected $UserModel, $JabatanModel, $KamarModel, $service_img, $PesananModel, $KeranjangModel;
     public function __construct()
     {
         $this->service_img = \Config\Services::image();
@@ -17,6 +19,8 @@ class Admin extends BaseController
         $this->JabatanModel = new JabatanModels();
         $this->KategoriKamarModel = new KategoriKamarModels();
         $this->KamarModel = new KamarModels();
+        $this->PesananModel = new PesananModels();
+        $this->KeranjangModel = new KeranjangModels();
         $this->form_validation = \Config\Services::validation();
     }
     public function index()
@@ -757,11 +761,87 @@ class Admin extends BaseController
         $data = [
             "title" => "Data Pesanan Masuk Panel",
             "id" => "5",
+            "pesanan_masuk" => $this->PesananModel->getAllPesananBooking(),
+            "rincian_pesanan" => $this->KeranjangModel->getAllRincian(),
         ];
         if (logged_in() && in_groups('user')) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         return view("admin/page/pesanan_masuk", $data);
+    }
+    public function terima_pesanan($id_pesanan = null)
+    {
+        $cari = $this->PesananModel->find($id_pesanan);
+        if (logged_in() && in_groups('user') || empty($cari)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            if ($cari['status_pesanan'] == 1) {
+                // Send Email Ada Disini
+                $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
+                foreach ($cekKamar as $kamar) {
+                    if ($kamar->status_kamar == 1) {
+                        $val = false;
+                        $nKamar = $kamar->nama_kamar;
+                        break;
+                    } else {
+                        $val = true;
+                    }
+                }
+                if ($val == false) {
+                    echo  $nKamar . " Sudah Dipesan Sebelumnya";
+                } else {
+                    foreach ($cekKamar as $upKamar) {
+                        $updateKamar = $this->KamarModel->save([
+                            "id_kamar" => $upKamar->id_kamar,
+                            "status_kamar" => 1,
+                        ]);
+                        if ($updateKamar) {
+                            $upDate = true;
+                        } else {
+                            $upDate = false;
+                            break;
+                        }
+                    }
+                    if ($upDate == true) {
+                        $terima = $this->PesananModel->save([
+                            "id_pesanan" => $id_pesanan,
+                            "accept_date" => date('Y-m-d H:i:s'),
+                            "due_date" => date('Y-m-d H:i:s', time() + (60 * 120)),
+                            "status_keranjang" => 0,
+                            "status_pesanan" => 0,
+                            "status_bukti" => 1,
+                        ]);
+                        if ($terima) {
+                            echo "Berhasil Diterima";
+                        } else {
+                            echo "Gagal Diterima";
+                        }
+                    } else {
+                        echo "Gagal Diterima";
+                    }
+                }
+            }
+        }
+    }
+    public function tolak_pesanan($id_pesanan = null)
+    {
+        $cari = $this->PesananModel->find($id_pesanan);
+        if (logged_in() && in_groups('user') || empty($cari)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            if ($cari['status_pesanan'] == 1) {
+                $tolak = $this->PesananModel->save([
+                    "id_pesanan" => $id_pesanan,
+                    "status_keranjang" => 0,
+                    "status_pesanan" => 0,
+                ]);
+                if ($tolak) {
+                    echo "Berhasil Ditolak";
+                } else {
+                    echo "Gagal Ditolak";
+                }
+            }
+        }
     }
     public function validasi_masuk()
     {

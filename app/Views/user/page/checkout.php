@@ -10,11 +10,13 @@
 </section>
 
 
+
+<?php if (!empty($data_pesanan)) : ?>
+<?php if ($data_pesanan[0]->status_keranjang == 1) : ?>
 <section class="single-room-section">
     <div class="container">
         <div class="row">
-            <?php if ($data_pesanan[0]->status_bayar == 1) : ?>
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="single-leave-reply">
                     <div class="reply-content">
                         <h3>Checkout Pesanan</h3>
@@ -29,7 +31,7 @@
                                         <div class="col-lg-10">
                                             <?php if ($d->layanan_kamar == 1) : ?>
                                             <input type="text" disabled class="form-control mt-2"
-                                                value="<?= $d->nama_kamar; ?> - (Rp.<?= $d->sub_total; ?>/Malam ~ Dengan Sarapan Hotel)">
+                                                value="<?= $d->nama_kamar; ?> - (Rp.<?= $d->sub_total; ?>/Malam ~ Dengan 3x Sarapan Hotel )">
                                             <?php else : ?>
                                             <input type="text" disabled class="form-control mt-2"
                                                 value="<?= $d->nama_kamar; ?> - (Rp.<?= $d->sub_total; ?>/Malam ~ Tanpa Sarapan Hotel)">
@@ -112,6 +114,7 @@
                                             <input type="text" disabled class="form-control"
                                                 value="Sub Total Biaya Kamar = Rp. <?= $pesanan[0]->total_bayar; ?>">
                                         </div>
+                                        <input type="hidden" id="subTotal" value="<?= $pesanan[0]->total_bayar; ?>">
                                         <div class="form-group col-lg-4">
                                             <input type="text" id="lama_hari" disabled class="form-control"
                                                 value="x Lama Hari">
@@ -141,45 +144,95 @@
                     </form>
                 </div>
             </div>
-            <?php elseif ($data_pesanan[0]->status_bayar == 2) : ?>
-            <div class="col-lg-8">
+        </div>
+    </div>
+</section>
+<?php elseif ($data_pesanan[0]->status_pesanan == 1) : ?>
+<section class="single-room-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="single-leave-reply">
                     <div class="reply-content">
-                        <h3>Upload Bukti Pembayaran</h3>
+                        <h3>Status Pesanan</h3>
                     </div>
                     <form class="reservation-form">
                         <div class="row">
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
-                                    <label>Email</label>
+                                    <p class="text-center mt-5">Pesanan Masih Dalam Peninjauan Staff Kami. Kami Akan
+                                        Menghubungimu Nanti</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 mt-5">
+                                <div class="send-btn">
+                                    <a href="<?= base_url(); ?>/kontak-kami" class="send-btn-one">Tanyakan dan Hubungi
+                                        Kami</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php elseif ($data_pesanan[0]->status_pesanan == 0 && $data_pesanan[0]->status_bukti == 0) : ?>
+<section class="single-room-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="single-leave-reply">
+                    <div class="reply-content">
+                        <h3>Status Pesanan</h3>
+                    </div>
+                    <form class="reservation-form">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <p class="text-center mt-5">Mohon Maaf, Kamar Yang Anda Pesan Sudah Ditempati Oleh
+                                        Tamu Lain. Silahkan Pilih Kamar Yang Lain atau Anda Dapat Menghubungi Kami</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 mt-5">
+                                <div class="send-btn">
+                                    <a href="<?= base_url(); ?>/kontak-kami" class="send-btn-one">Tanyakan dan Hubungi
+                                        Kami</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php elseif ($data_pesanan[0]->status_bukti == 1) : ?>
+<section class="single-room-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="single-leave-reply">
+                    <div class="reply-content">
+                        <h3>Upload Bukti Pembayaran</h3>
+                    </div>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <p>Pesanan Anda Pada Tanggal
+                                    <?= date('d l Y H:i', strtotime($data_pesanan[0]->created_at)); ?> WITA Telah
+                                    Diterima,
+                                    Berikut Merupakan Rincian Pesanan Anda</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <form class="reservation-form">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <label>Rincian Pesanan</label>
                                     <input type="email" class="form-control" placeholder="Email">
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12">
-                                <div class="form-group">
-                                    <label>Check In</label>
-                                    <input type="text" id="datepicker" class="form-control" placeholder="Check In">
-                                    <i class="flaticon-calendar"></i>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12">
-                                <div class="form-group">
-                                    <label>Check Out</label>
-                                    <input type="text" id="check-datepicker" class="form-control"
-                                        placeholder="Check Out">
-                                    <i class="flaticon-calendar"></i>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12">
-                                <div class="form-group">
-                                    <label>Room</label>
-                                    <select name="room" class="form-control">
-                                        <option value="1">01</option>
-                                        <option value="2">02</option>
-                                        <option value="3">03</option>
-                                        <option value="4">04</option>
-                                        <option value="5">05</option>
-                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12">
@@ -190,22 +243,41 @@
                         </div>
                     </form>
                 </div>
-                <?php endif; ?>
             </div>
-            <div class="col-lg-4">
-                <div class="sidebar mt-0">
-                    <div class="widget widget-map">
-                        <div class="widget-map-area">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387190.2799090714!2d-74.25987368715496!3d40.697670064588735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sbd!4v1570689677254!5m2!1sen!2sbd"></iframe>
-                        </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<?php else : ?>
+<section class="single-room-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="single-leave-reply">
+                    <div class="reply-content">
+                        <h3>Checkout Pemesanan</h3>
                     </div>
+                    <form class="reservation-form">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <p class="text-center mt-5">Belum Ada Data Pesanan</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 mt-5">
+                                <div class="send-btn">
+                                    <a href="<?= base_url(); ?>/daftar-kamar" class="send-btn-one">Mulai Pesan Kamar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
+<?php endif; ?>
 
 <section class="popular-room-section">
     <div class="container">

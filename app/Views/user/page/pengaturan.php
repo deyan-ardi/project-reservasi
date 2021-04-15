@@ -50,15 +50,15 @@
                                     <label for="inputAddress">Alamat</label>
                                     <input type="text" class="form-control" id="inputAddress"
                                         value="<?= (old('alamat')) ? old('alamat') : ucWords($users[0]->alamat); ?>"
-                                        placeholder="Alamat Pegawai" name="alamat">
+                                        placeholder="Alamat Anda" name="alamat">
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
                                     <label for="datepicker">Tanggal Lahir</label>
-                                    <input type="text" id="datepicker" class="form-control" name="ttl"
-                                        value="<?= (old('ttl')) ? old('ttl') : ucWords($users[0]->ttl); ?>" placeholder="
-                                        Tanggal Lahir">
+                                    <input type="date" class="form-control" name="ttl"
+                                        value="<?= (old('ttl')) ? old('ttl') : ucWords($users[0]->ttl); ?>"
+                                        placeholder="Tanggal Lahir">
                                     <i class="flaticon-calendar"></i>
                                 </div>
                             </div>

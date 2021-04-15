@@ -11,7 +11,6 @@ class Home extends BaseController
 {
 	// Home Page
 	protected $UserModel, $JabatanModel, $KamarModel, $PesananModel, $KeranjangModel;
-	protected $biaya_layanan;
 	public function __construct()
 	{
 		$this->KamarModel = new KamarModels();
@@ -19,7 +18,7 @@ class Home extends BaseController
 		$this->PesananModel = new PesananModels();
 		$this->KeranjangModel = new KeranjangModels();
 		$this->form_validation = \Config\Services::validation();
-		$this->biaya_layanan = 500000;
+		
 	}
 	public function index()
 	{
@@ -163,7 +162,8 @@ class Home extends BaseController
 				} {
 					$updatePesanan = $this->PesananModel->save([
 						"id_pesanan" => $pesanan[0]->id_pesanan,
-						"status_bayar" => 2,
+						'status_keranjang' => 0,
+						'status_pesanan' => 1,
 						"tamu_dewasa" => $this->request->getPost('dewasa'),
 						"tamu_anak" => $this->request->getPost('anak'),
 						"pesan" => $this->request->getPost('catatan'),
@@ -171,15 +171,9 @@ class Home extends BaseController
 						"check_out" => $this->request->getPost('check-out'),
 					]);
 					if ($updatePesanan) {
-						foreach ($data_keranjang as $d) {
-							$this->KamarModel->save([
-								'id_kamar' => $d->id_kamar,
-								"status_kamar" => 1,
-							]);
-						}
-						echo "Berhasil Diupdate";
+						echo "Berhasil Dipesan";
 					} else {
-						dd($updatePesanan);
+						echo "Gagal Dipesan";
 					}
 				}
 			} else {
@@ -229,6 +223,7 @@ class Home extends BaseController
 			$keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan);
 			$data_keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan, "count");
 		}
+
 		$data = [
 			"title" => "Detail Kamar",
 			"id" => "6",
@@ -249,54 +244,30 @@ class Home extends BaseController
 					// 2. Booking
 					// 3. Dibayar
 					if ($this->request->getPost('layanan') == 1) {
-						$total = $cari[0]->harga_kamar + $this->biaya_layanan;
+						$total = $cari[0]->harga_kamar + BIAYA_LAYANAN;
 					} else {
 						$total = $cari[0]->harga_kamar;
 					}
 					// Cek Total Pembayaran
-					if (empty($cariPesanan) || $cariPesanan[0]->status_bayar == 3) {
-						$save = $this->PesananModel->save([
-							'id_user' => user()->id,
-							'total_bayar' => $total,
-							'status_bayar' => 1,
-							'created_by' => user()->username,
-						]);
-						if ($save) {
-							$getIdPesanan = $this->PesananModel->InsertID();
-							$cekKamar = $this->KeranjangModel->cekKamarKeranjang(user()->id, $getIdPesanan, $id_kamar);
-							if ($cekKamar == 0) {
-								$saveKeranjang = $this->KeranjangModel->save([
-									'id_kamar' => $id_kamar,
-									'id_pesanan' => $getIdPesanan,
-									'id_user' => user()->id,
-									'layanan_kamar' => $this->request->getPost('layanan'),
-									'sub_total' => $total,
-								]);
-								if ($saveKeranjang) {
-									echo "Berhasil Ditambahkan Kekeranjang";
-								} else {
-									echo "Gagal Ditambahkan Kekeranjang";
-								}
-							} else {
-								echo "Gagal Ditambahkan, Kamar Sudah Ada Di Keranjang";
-							}
-						} else {
-							echo "500 - Internal Server Error";
-						}
-					} else {
-						if (!empty($cariPesanan) && $cariPesanan[0]->status_bayar == 1) {
-							$total_bayar = $cariPesanan[0]->total_bayar;
-							$total_bayar = $total_bayar + $total;
-							$cekKamar = $this->KeranjangModel->cekKamarKeranjang(user()->id, $cariPesanan[0]->id_pesanan, $id_kamar);
-							if ($cekKamar == 0) {
-								$updatePesanan =  $this->PesananModel->save([
-									'id_pesanan' => $cariPesanan[0]->id_pesanan,
-									'total_bayar' => $total_bayar,
-								]);
-								if ($updatePesanan) {
+					$cariPesananBooking = $this->PesananModel->getAllPesananWhereBooking(user()->id);
+					if (empty($cariPesananBooking)) {
+						if (empty($cariPesanan) || $cariPesanan[0]->status_keranjang == 0 && $cariPesanan[0]->status_pesanan == 0 && $cariPesanan[0]->status_bukti == 0 && $cariPesanan[0]->status_menginap == 0) {
+							$string = "0123456789BCDFGHJKLMNPQRSTVWXYZ";
+							$token = substr(str_shuffle($string), 0, 10);
+							$save = $this->PesananModel->save([
+								'kode_pesanan' => "#" . $token,
+								'id_user' => user()->id,
+								'total_bayar' => $total,
+								'status_keranjang' => 1,
+								'created_by' => user()->username,
+							]);
+							if ($save) {
+								$getIdPesanan = $this->PesananModel->InsertID();
+								$cekKamar = $this->KeranjangModel->cekKamarKeranjang(user()->id, $getIdPesanan, $id_kamar);
+								if ($cekKamar == 0) {
 									$saveKeranjang = $this->KeranjangModel->save([
 										'id_kamar' => $id_kamar,
-										'id_pesanan' => $cariPesanan[0]->id_pesanan,
+										'id_pesanan' => $getIdPesanan,
 										'id_user' => user()->id,
 										'layanan_kamar' => $this->request->getPost('layanan'),
 										'sub_total' => $total,
@@ -306,13 +277,45 @@ class Home extends BaseController
 									} else {
 										echo "Gagal Ditambahkan Kekeranjang";
 									}
+								} else {
+									echo "Gagal Ditambahkan, Kamar Sudah Ada Di Keranjang";
 								}
 							} else {
-								echo "Gagal Ditambahkan, Kamar Sudah Ada Di Keranjang";
+								echo "500 - Internal Server Error";
 							}
 						} else {
-							echo "500 - Internal Server Error";
+							if (!empty($cariPesanan) && $cariPesanan[0]->status_keranjang == 1 && $cariPesanan[0]->status_pesanan == 0 && $cariPesanan[0]->status_bukti == 0 && $cariPesanan[0]->status_menginap == 0) {
+								$total_bayar = $cariPesanan[0]->total_bayar;
+								$total_bayar = $total_bayar + $total;
+								$cekKamar = $this->KeranjangModel->cekKamarKeranjang(user()->id, $cariPesanan[0]->id_pesanan, $id_kamar);
+								if ($cekKamar == 0) {
+									$updatePesanan =  $this->PesananModel->save([
+										'id_pesanan' => $cariPesanan[0]->id_pesanan,
+										'total_bayar' => $total_bayar,
+									]);
+									if ($updatePesanan) {
+										$saveKeranjang = $this->KeranjangModel->save([
+											'id_kamar' => $id_kamar,
+											'id_pesanan' => $cariPesanan[0]->id_pesanan,
+											'id_user' => user()->id,
+											'layanan_kamar' => $this->request->getPost('layanan'),
+											'sub_total' => $total,
+										]);
+										if ($saveKeranjang) {
+											echo "Berhasil Ditambahkan Kekeranjang";
+										} else {
+											echo "Gagal Ditambahkan Kekeranjang";
+										}
+									}
+								} else {
+									echo "Gagal Ditambahkan, Kamar Sudah Ada Di Keranjang";
+								}
+							} else {
+								echo "500 - Internal Server Error";
+							}
 						}
+					} else {
+						echo "Tidak Dapat Membuat Pesanan, Silahkan Selesaikan Pesanan Sebelumnya";
 					}
 				}
 			} else {
@@ -355,7 +358,7 @@ class Home extends BaseController
 					} else {
 						$valid = 'required|valid_email|valid_emails|is_unique[users.email]';
 					}
-					if ($users[0]->username == $this->request->getPost('username')) {
+					if (ucWords($users[0]->username) == $this->request->getPost('username')) {
 						$username = 'required';
 					} else {
 						$username = 'required|is_unique[users.username]';

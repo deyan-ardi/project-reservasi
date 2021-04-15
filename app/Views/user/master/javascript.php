@@ -59,11 +59,14 @@ const hitungLama = () => {
             checkIn.classList.add('is-invalid');
             checkOut.classList.add('is-invalid');
         } else {
-            hari.value = "x " + selisih + " Hari (Lama Menginap)";
-            totalBayar.value = "Total Wajib Bayar = Rp." + "<?= $pesanan[0]->total_bayar; ?>" * selisih;
-            checkIn.classList.remove('is-invalid');
-            checkOut.classList.remove('is-invalid');
-            document.querySelector('#button_pesanan').removeAttribute("disabled");
+            let subTotal = document.querySelector("#subTotal").value;
+            if (subTotal != "") {
+                hari.value = "x " + selisih + " Hari (Lama Menginap)";
+                totalBayar.value = "Total Wajib Bayar = Rp." + subTotal * selisih;
+                checkIn.classList.remove('is-invalid');
+                checkOut.classList.remove('is-invalid');
+                document.querySelector('#button_pesanan').removeAttribute("disabled");
+            }
         }
     }
 

@@ -67,7 +67,7 @@
                                 <a href="<?= base_url(); ?>/kontak-kami" class="nav-link">Kontak</a>
                                 <?php endif; ?>
                             </li>
-                            <?php if(logged_in()): ?>
+                            <?php if (logged_in()) : ?>
                             <li class="nav-item">
                                 <a href="<?= base_url(); ?>/booking-sekarang" class="nav-link">
                                     Keranjang
@@ -92,7 +92,10 @@
                                                 class="fa fa-shopping-cart"></i> Bayar
                                             Sekarang</a></li>
                                     <?php else : ?>
-                                    <li> <a href="#" class="nav-link">Belum Ada Pesanan</a></li>
+                                    <li><a href="#" class="mt-3"><em>Keranjang Kosong</em></a></li>
+                                    <li><a href="<?= base_url(); ?>/booking-sekarang" id="btn-one-checkout"
+                                            class="mt-3"> Cek Katalog
+                                            Pesanan</a></li>
                                     <?php endif; ?>
                                 </ul>
                             </li>

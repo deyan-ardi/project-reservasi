@@ -28,4 +28,18 @@ class KeranjangModels extends Model
             return $this->where('keranjang.id_user', $id_user)->where('keranjang.id_pesanan', $id_pesanan)->get()->getResult();
         }
     }
+
+    public function getAllRincian()
+    {
+        $this->select("keranjang.*,manajemen_kamar.nama_kamar,manajemen_kamar.no_kamar, manajemen_kamar.harga_kamar");
+        return $this->join("manajemen_kamar", "manajemen_kamar.id_kamar = keranjang.id_kamar")->get()->getResult();
+    }
+
+    public function getAllReadyKamar($id_user, $id_pesanan)
+    {
+        $this->select('manajemen_kamar.nama_kamar,manajemen_kamar.status_kamar,manajemen_kamar.id_kamar, keranjang.*');
+        $this->join('manajemen_kamar', 'manajemen_kamar.id_kamar = keranjang.id_kamar');
+        return $this->where('keranjang.id_user', $id_user)->where('keranjang.id_pesanan', $id_pesanan)->get()->getResult();
+    }
+ 
 }

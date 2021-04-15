@@ -49,19 +49,29 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
-                                    <label>Pelayanan Kamar</label>
+                                    <label>Layanan Sarapan <sup>)*</sup> </label>
                                     <select name="layanan" class="form-control" required>
-                                        <option value="">Pilih Opsi Pelayanan</option>
+                                        <option value="">Pilih Opsi Layanan</option>
                                         <option value="0">Tidak Sertakan Sarapan</option>
                                         <option value="1">Sertakan Sarapan</option>
                                     </select>
+                                    <label class="mt-3"> <sup>)*</sup> Jika Anda Ingin Menyertakan
+                                        Sarapan, Anda
+                                        Akan Dikenakan Biaya Tambahan Sebesar Rp.<?= BIAYA_LAYANAN; ?> dengan rincian 1x
+                                        Sarapan Pagi, 1x Sarapan Siang, 1x Sarapan Malam. Menu Sarapan dapat dipilih
+                                        ketika Anda berada di Penginapan</label>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12">
                                 <div class="send-btn">
+                                    <?php if (empty(user()->alamat || empty(user()->ttl || empty(user()->foto)))) : ?>
+                                    <a href="<?= base_url(); ?>/pengaturan-profil/<?= user()->id; ?>"
+                                        class="send-btn-one">Lengkapi Data
+                                        Profil</a>
+                                    <?php else : ?>
                                     <button class="send-btn-one" type="submit" name="submit" value="Submit">Booking
                                         Sekarang</button>
-
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>

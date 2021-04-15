@@ -8,7 +8,7 @@ class UsersModels extends Model
 {
     protected $table      = 'users';
     protected $useTimestamps = true;
-    protected $allowedFields = ['username', 'email', 'foto', 'password_hash', 'ttl', 'alamat'];
+    protected $allowedFields = ['username', 'email', 'foto', 'password_hash', 'ttl', 'alamat', 'no_tlp'];
     public function getUserRoleAdmin($id_pegawai = null)
     {
         if ($id_pegawai == null) {
