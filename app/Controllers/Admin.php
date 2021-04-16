@@ -823,6 +823,20 @@ class Admin extends BaseController
             }
         }
     }
+    public function hapus_pesanan($id_pesanan = null)
+    {
+        $cari = $this->PesananModel->find($id_pesanan);
+        if (logged_in() && in_groups('user') || empty($cari)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+
+            if ($this->PesananModel->delete($id_pesanan)) {
+                echo "Berhasil Dihapus";
+            } else {
+                echo "Gagal Dihapus";
+            }
+        }
+    }
     public function tolak_pesanan($id_pesanan = null)
     {
         $cari = $this->PesananModel->find($id_pesanan);
@@ -833,7 +847,7 @@ class Admin extends BaseController
                 $tolak = $this->PesananModel->save([
                     "id_pesanan" => $id_pesanan,
                     "status_keranjang" => 0,
-                    "status_pesanan" => 0,
+                    "status_pesanan" => 2,
                 ]);
                 if ($tolak) {
                     echo "Berhasil Ditolak";
@@ -848,22 +862,238 @@ class Admin extends BaseController
         $data = [
             "title" => "Data Validasi Masuk Panel",
             "id" => "6",
+            "pesanan_masuk" => $this->PesananModel->getAllPesananValidasi(),
+            "rincian_pesanan" => $this->KeranjangModel->getAllRincian(),
         ];
         if (logged_in() && in_groups('user')) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         return view("admin/page/validasi_masuk", $data);
     }
+    public function terima_bukti($id_pesanan = null)
+    {
+        $cari = $this->PesananModel->find($id_pesanan);
+        if (logged_in() && in_groups('user') || empty($cari)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            if ($cari['status_bukti'] == 2) {
+                $terima = $this->PesananModel->save([
+                    "id_pesanan" => $id_pesanan,
+                    "status_keranjang" => 0,
+                    "status_pesanan" => 0,
+                    "status_bukti" => 0,
+                    "status_menginap" => 1,
+                ]);
+                if ($terima) {
+                    echo "Berhasil Diterima";
+                } else {
+                    echo "Gagal Diterima";
+                }
+            }
+        }
+    }
+    public function refresh_pesanan($id_pesanan = null)
+    {
+        $cari = $this->PesananModel->find($id_pesanan);
+        if (logged_in() && in_groups('user') || empty($cari)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            if ($cari['status_bukti'] == 1 && new \Datetime(date('Y-m-d H:i:s')) > new \Datetime($cari['due_date'])) {
+                $terima = $this->PesananModel->save([
+                    "id_pesanan" => $id_pesanan,
+                    "due_date" =>  date('Y-m-d H:i:s', time() + (60 * 120)),
+                ]);
+                if ($terima) {
+                    echo "Berhasil Direfresh";
+                } else {
+                    echo "Gagal Direfresh";
+                }
+            }
+        }
+    }
+    public function tolak_bukti($id_pesanan = null)
+    {
+        $cari = $this->PesananModel->find($id_pesanan);
+        if (logged_in() && in_groups('user') || empty($cari)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            if ($cari['status_bukti'] == 2) {
+                $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
+                foreach ($cekKamar as $upKamar) {
+                    $updateKamar = $this->KamarModel->save([
+                        "id_kamar" => $upKamar->id_kamar,
+                        "status_kamar" => 0,
+                    ]);
+                    if ($updateKamar) {
+                        $upDate = true;
+                    } else {
+                        $upDate = false;
+                        break;
+                    }
+                }
+                if ($upDate) {
+                    $tolak = $this->PesananModel->save([
+                        "id_pesanan" => $id_pesanan,
+                        "status_keranjang" => 0,
+                        "status_pesanan" => 0,
+                        "status_bukti" => 3,
+                    ]);
+                    if ($tolak) {
+                        echo "Berhasil Ditolak";
+                    } else {
+                        echo "Gagal Ditolak";
+                    }
+                }
+            }
+        }
+    }
+    public function hapus_bukti($id_pesanan = null)
+    {
+        $cari = $this->PesananModel->find($id_pesanan);
+        if (logged_in() && in_groups('user') || empty($cari)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
+            foreach ($cekKamar as $upKamar) {
+                $updateKamar = $this->KamarModel->save([
+                    "id_kamar" => $upKamar->id_kamar,
+                    "status_kamar" => 0,
+                ]);
+                if ($updateKamar) {
+                    $upDate = true;
+                } else {
+                    $upDate = false;
+                    break;
+                }
+            }
+            if ($upDate) {
+                if (!empty($cari['bukti_bayar'])) {
+                    $hapus_foto = unlink('transfer_image/' . $cari['bukti_bayar']);
+                    if ($hapus_foto) {
+                        $status = true;
+                    } else {
+                        $status = false;
+                    }
+                } else {
+                    $status = true;
+                }
+
+                if ($status) {
+                    if ($this->PesananModel->delete($id_pesanan)) {
+                        echo "Berhasil Dihapus";
+                    } else {
+                        echo "Gagal Dihapus";
+                    }
+                } else {
+                    echo "Gagal Menghapus";
+                }
+            } else {
+                echo "Kesalahan Sistem";
+            }
+        }
+    }
     public function pesanan_tervalidasi()
     {
         $data = [
             "title" => "Data Validasi Masuk Panel",
             "id" => "7",
+            "pesanan_masuk" => $this->PesananModel->getAllPesananTervalidasi(),
+            "rincian_pesanan" => $this->KeranjangModel->getAllRincian(),
+            "validation" => $this->form_validation,
         ];
         if (logged_in() && in_groups('user')) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            if ($this->request->getPost('submit_perpanjangan')) {
+                $cari = $this->PesananModel->find($this->request->getPost('id_pesanan'));
+                if (!empty($cari)) {
+                    if (new \Datetime($cari['check_out']) <= new \Datetime($this->request->getPost('check-out'))) {
+                        $selisih = date_diff(new \Datetime($this->request->getPost('check-out')), new \Datetime($cari['check_out']));
+                        $perlu_bayar = $cari['total_bayar'] * $selisih->d;
+                        $updateCheckout = $this->PesananModel->save([
+                            "id_pesanan" => $cari["id_pesanan"],
+                            "check_out" => $this->request->getPost('check-out'),
+                            "sisa_bayar" => $perlu_bayar,
+                        ]);
+                        if ($updateCheckout) {
+                            echo "Berhasil Diperpanjang";
+                        } else {
+                            echo "Gagal Diperpanjang";
+                        }
+                    } else {
+                        echo "Tanggal Perpanjangan Tidak Dapat Kurang Dari Check Out";
+                    }
+                } else {
+                    echo "Pesanan Tidak Ditemukan";
+                }
+            } else {
+                return view("admin/page/pesanan_tervalidasi", $data);
+            }
         }
-        return view("admin/page/pesanan_tervalidasi", $data);
+    }
+    public function check_in($id_pesanan = null)
+    {
+        $cari = $this->PesananModel->find($id_pesanan);
+        if (logged_in() && in_groups('user') || empty($cari)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            if ($cari['status_menginap'] == 1) {
+                $terima = $this->PesananModel->save([
+                    "id_pesanan" => $id_pesanan,
+                    "status_keranjang" => 0,
+                    "status_pesanan" => 0,
+                    "status_bukti" => 0,
+                    "status_menginap" => 2,
+                ]);
+                if ($terima) {
+                    echo "Berhasil Diterima";
+                } else {
+                    echo "Gagal Diterima";
+                }
+            }
+        }
+    }
+    public function check_out($id_pesanan = null)
+    {
+        $cari = $this->PesananModel->find($id_pesanan);
+        if (logged_in() && in_groups('user') || empty($cari)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            if ($cari['status_menginap'] == 2) {
+                $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
+                foreach ($cekKamar as $upKamar) {
+                    $updateKamar = $this->KamarModel->save([
+                        "id_kamar" => $upKamar->id_kamar,
+                        "status_kamar" => 0,
+                    ]);
+                    if ($updateKamar) {
+                        $upDate = true;
+                    } else {
+                        $upDate = false;
+                        break;
+                    }
+                }
+                if ($upDate) {
+                    $sudah_bayar = $cari['total_bayar'] + $cari['sisa_bayar'];
+                    $terima = $this->PesananModel->save([
+                        "id_pesanan" => $id_pesanan,
+                        "status_keranjang" => 0,
+                        "status_pesanan" => 0,
+                        "status_bukti" => 0,
+                        "status_menginap" => 3,
+                        "total_bayar" => $sudah_bayar,
+                        "sisa_bayar" => 0,
+                    ]);
+                    if ($terima) {
+                        echo "Berhasil Diterima";
+                    } else {
+                        echo "Gagal Diterima";
+                    }
+                } else {
+                    echo "Gagal Mengubah Kamar";
+                }
+            }
+        }
     }
     public function info_website()
     {

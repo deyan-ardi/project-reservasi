@@ -9,8 +9,6 @@
     </div>
 </section>
 
-
-
 <?php if (!empty($data_pesanan)) : ?>
 <?php if ($data_pesanan[0]->status_keranjang == 1) : ?>
 <section class="single-room-section">
@@ -177,7 +175,7 @@
         </div>
     </div>
 </section>
-<?php elseif ($data_pesanan[0]->status_pesanan == 0 && $data_pesanan[0]->status_bukti == 0) : ?>
+<?php elseif ($data_pesanan[0]->status_pesanan == 2 || $data_pesanan[0]->status_bukti == 3 ) : ?>
 <section class="single-room-section">
     <div class="container">
         <div class="row">
@@ -190,8 +188,41 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
-                                    <p class="text-center mt-5">Mohon Maaf, Kamar Yang Anda Pesan Sudah Ditempati Oleh
-                                        Tamu Lain. Silahkan Pilih Kamar Yang Lain atau Anda Dapat Menghubungi Kami</p>
+                                    <p class="text-center mt-5">Mohon Maaf,Pemesanan Yang Anda Minta Tidak Dapat
+                                        Dilanjutkan.Silahkan Pilih Konfirmasi Ulang Untuk Membuat Ulang Pesanan</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 mt-5">
+                                <div class="send-btn">
+                                    <a href="<?= base_url(); ?>/konfirmasi-ulang/<?= $data_pesanan[0]->id_pesanan; ?>"
+                                        class="send-btn-one">Konfirmasi Ulang</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php elseif ($data_pesanan[0]->status_menginap == 1 || $data_pesanan[0]->status_menginap == 2) : ?>
+<section class="single-room-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="single-leave-reply">
+                    <div class="reply-content">
+                        <h3>Status Pesanan</h3>
+                    </div>
+                    <form class="reservation-form">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <p class="text-center mt-5">Pesanan Anda Telah Terkonfirmasi, Berikut Invoice Yang
+                                        Perlu Anda Bawa Pada Saat Check In. Sampai Jumpa Di Penginapan</p>
+                                </div>
+                                <div class="form-group text-center">
+                                    <button class="btn btn-primary btn-sm">Unduh Invoice</button>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12 mt-5">
@@ -207,7 +238,44 @@
         </div>
     </div>
 </section>
+<?php elseif ($data_pesanan[0]->status_menginap == 3) : ?>
+<section class="single-room-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="single-leave-reply">
+                    <div class="reply-content">
+                        <h3>Status Pesanan</h3>
+                    </div>
+                    <form class="reservation-form">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <p class="text-center mt-5" style="line-height: normal;">Terimakasih Telah Melakukan
+                                        Pesanan Dengan
+                                        Kode Pesanan
+                                        <kbd><?= $data_pesanan[0]->kode_pesanan; ?> </kbd> Pada Tanggal <kbd>
+                                            <?= date('d F Y H:i', strtotime($data_pesanan[0]->created_at)); ?> WITA
+                                        </kbd>. Tekan Selesai Pesanan Untuk Melanjutkan Memesan.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 mt-5">
+                                <div class="send-btn">
+                                    <a href="<?= base_url(); ?>/konfirmasi-selesai/<?= $data_pesanan[0]->id_pesanan; ?>"
+                                        class="send-btn-one">Konfirmasi Selesai
+                                        Pemesanan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <?php elseif ($data_pesanan[0]->status_bukti == 1) : ?>
+<?php if (new Datetime(date('Y-m-d H:i:s')) <= new Datetime($data_pesanan[0]->due_date)) : ?>
 <section class="single-room-section">
     <div class="container">
         <div class="row">
@@ -216,28 +284,374 @@
                     <div class="reply-content">
                         <h3>Upload Bukti Pembayaran</h3>
                     </div>
-
-                    <table>
-                        <tr>
-                            <td>
-                                <p>Pesanan Anda Pada Tanggal
-                                    <?= date('d l Y H:i', strtotime($data_pesanan[0]->created_at)); ?> WITA Telah
-                                    Diterima,
-                                    Berikut Merupakan Rincian Pesanan Anda</p>
-                            </td>
-                        </tr>
-                    </table>
+                    <p style="line-height: normal;">Pesanan Anda Pada Tanggal <kbd>
+                            <?= date('d F Y H:i', strtotime($data_pesanan[0]->created_at)); ?> WITA
+                        </kbd>Telah
+                        Diterima Oleh Staff Kami Pada Tanggal
+                        <kbd> <?= date('d F Y H:i', strtotime($data_pesanan[0]->accept_date)); ?> WITA
+                        </kbd>,
+                        Berikut Merupakan Rincian Pesanan Anda. Silahkan lakukan pembayaran dan pengunggahan
+                        Bukti Transfer sebelum batas akhir Pembayaran.
+                    </p>
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <h6>Pesanan</h6>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Kode Pesanan </p>
+                                    </td>
+                                    <td>
+                                        <p>:</p>
+                                    </td>
+                                    <td>
+                                        <p><?= $data_pesanan[0]->kode_pesanan; ?></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Nama Pemesan</p>
+                                    </td>
+                                    <td>
+                                        <p>:</p>
+                                    </td>
+                                    <td>
+                                        <p><?= $data_pesanan[0]->username; ?></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Jumlah Tamu Dewasa</p>
+                                    </td>
+                                    <td>
+                                        <p>:</p>
+                                    </td>
+                                    <td>
+                                        <p><?= $data_pesanan[0]->tamu_dewasa; ?> Orang</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Jumlah Tamu Anak-Anak</p>
+                                    </td>
+                                    <td>
+                                        <p>:</p>
+                                    </td>
+                                    <td>
+                                        <p><?= $data_pesanan[0]->tamu_anak; ?> Orang</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Tanggal Check In</p>
+                                    </td>
+                                    <td>
+                                        <p>:</p>
+                                    </td>
+                                    <td>
+                                        <p><?= date('d F Y', strtotime($data_pesanan[0]->check_in)); ?></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Tanggal Check Out</p>
+                                    </td>
+                                    <td>
+                                        <p>:</p>
+                                    </td>
+                                    <td>
+                                        <p><?= date('d F Y', strtotime($data_pesanan[0]->check_out)); ?></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Tanggal Booking</p>
+                                    </td>
+                                    <td>
+                                        <p>:</p>
+                                    </td>
+                                    <td>
+                                        <p><?= date('d F Y H:i', strtotime($data_pesanan[0]->created_at)); ?> WITA</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Deskripsi Pesanan</p>
+                                    </td>
+                                    <td>
+                                        <p>:</p>
+                                    </td>
+                                    <td>
+                                        <p><?= $data_pesanan[0]->pesan; ?></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="mt-3">
+                                <tr>
+                                    <td>
+                                        <h6>Rincian Pesanan</h6>
+                                    </td>
+                                </tr>
+                                <?php foreach ($rincian_pesanan as $k) : ?>
+                                <?php if ($data_pesanan[0]->id_pesanan == $k->id_pesanan) : ?>
+                                <tr>
+                                    <div class="col-12">
+                                        <?php if ($k->layanan_kamar == 0) : ?>
+                                        <td>
+                                            <table class="mt-4">
+                                                <tr>
+                                                    <td>
+                                                        <p>Nomor Kamar</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>:</p>
+                                                    </td>
+                                                    <td>
+                                                        <p><kbd><?= $k->no_kamar; ?></kbd></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p>Nama Kamar</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>:</p>
+                                                    </td>
+                                                    <td>
+                                                        <p><?= $k->nama_kamar; ?></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p>Layanan Kamar</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>:</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Pesan Dengan Tanpa Sarapan</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p>Biaya Kamar</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>:</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Rp. <?= $k->harga_kamar; ?></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p>Subtotal</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>:</p>
+                                                    </td>
+                                                    <td>
+                                                        <p><kbd>Rp.<?= $k->sub_total; ?></kbd></p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <?php else : ?>
+                                        <td>
+                                            <table class="mt-4">
+                                                <tr>
+                                                    <td>
+                                                        <p>Nomor Kamar</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>:</p>
+                                                    </td>
+                                                    <td>
+                                                        <p><kbd><?= $k->no_kamar; ?></kbd></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p>Nama Kamar</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>:</p>
+                                                    </td>
+                                                    <td>
+                                                        <p><?= $k->nama_kamar; ?></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p>Layanan Kamar</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>:</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Pesan Dengan Sarapan</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p>Biaya Layanan</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>:</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Rp. <?= BIAYA_LAYANAN; ?></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p>Biaya Kamar</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>:</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Rp. <?= $k->harga_kamar; ?></p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p>Subtotal</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>:</p>
+                                                    </td>
+                                                    <td>
+                                                        <p><kbd> Rp.<?= $k->sub_total; ?></kbd></p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <?php endif; ?>
+                                    </div>
+                                </tr>
+                                <?php endif; ?>
+                                <?php endforeach; ?>
+                            </table>
+                            <div class="table-responsive">
+                                <table class="mt-3">
+                                    <tr>
+                                        <td>
+                                            <h6>Rincian Pembayaran</h6>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>Wajib Bayar</p>
+                                        </td>
+                                        <td>
+                                            <p>:</p>
+                                        </td>
+                                        <td>
+                                            <p><kbd>Rp.<?= $data_pesanan[0]->total_bayar; ?></kbd></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>Rekening Tujuan</p>
+                                        </td>
+                                        <td>
+                                            <p>:</p>
+                                        </td>
+                                        <td>
+                                            <p><kbd>BRI ~ [8982102399831 - An. Santoso]</kbd></p>
+                                        </td>
+                                    <tr>
+                                        <td>
+                                            <p>Due Date</p>
+                                        </td>
+                                        <td>
+                                            <p>:</p>
+                                        </td>
+                                        <td>
+                                            <p><kbd><?= date('d F Y H:i', strtotime($data_pesanan[0]->due_date)); ?>
+                                                    WITA</kbd></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="" class="btn btn-primary btn-sm">Unduh Invoice</a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="mt-3">
+                                    <tr>
+                                        <td>
+                                            <h6>Unggah Bukti Transfer (.jpg;.png;.jpeg;.pdf maks 1 Mb)</h6>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <form class="reservation-form" method="POST" action=""
+                                            enctype="multipart/form-data">
+                                            <div class="row">
+                                                <td>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="form-group">
+                                                            <input type="file" accept=".png,.jpg,.jpeg,.pdf"
+                                                                class="form-control <?php if ($validation->getError('file_bukti')) : ?>is-invalid<?php endif ?>"
+                                                                name="file_bukti" required>
+                                                            <div class="invalid-feedback">
+                                                                <?= $validation->getError('file_bukti'); ?>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="id_pesanan"
+                                                            value="<?= $data_pesanan[0]->id_pesanan; ?>">
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="send-btn">
+                                                            <button type="submit" name="submit_bukti"
+                                                                value="Submit Bukti" class="send-btn-one">Upload Bukti
+                                                                Pembayaran</button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </div>
+                                        </form>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php else : ?>
+<section class="single-room-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="single-leave-reply">
+                    <div class="reply-content">
+                        <h3>Upload Bukti Pembayaran</h3>
+                    </div>
                     <form class="reservation-form">
                         <div class="row">
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
-                                    <label>Rincian Pesanan</label>
-                                    <input type="email" class="form-control" placeholder="Email">
+                                    <p class="text-center mt-5">Durasi Tunggu Pembayaran Telah Berakhir Pada Tanggal
+                                        <kbd><?= date('d F Y H:i', strtotime($data_pesanan[0]->due_date)); ?>
+                                            WITA</kbd></kbd>, Silahkan Hubungi Kami
+                                        Untuk Mendapatkan Informasi Lebih Lanjut
+                                    </p>
                                 </div>
                             </div>
-                            <div class="col-lg-12 col-md-12">
+                            <div class="col-lg-12 col-md-12 mt-5">
                                 <div class="send-btn">
-                                    <button class="send-btn-one">Upload Bukti Pembayaran</button>
+                                    <a href="<?= base_url(); ?>/kontak-kami" class="send-btn-one">Tanyakan dan Hubungi
+                                        Kami</a>
                                 </div>
                             </div>
                         </div>
@@ -248,7 +662,37 @@
     </div>
 </section>
 <?php endif; ?>
-
+<?php elseif ($data_pesanan[0]->status_bukti == 2) : ?>
+<section class="single-room-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="single-leave-reply">
+                    <div class="reply-content">
+                        <h3>Upload Bukti Pembayaran</h3>
+                    </div>
+                    <form class="reservation-form">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <p class="text-center mt-5">Bukti Pembayaran Telah Berhasil Dikirim,Saat Ini Kami
+                                        Sedang Mereview Bukti Pembayaran Anda</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 mt-5">
+                                <div class="send-btn">
+                                    <a href="<?= base_url(); ?>/kontak-kami" class="send-btn-one">Tanyakan dan Hubungi
+                                        Kami</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
 <?php else : ?>
 <section class="single-room-section">
     <div class="container">
@@ -312,6 +756,4 @@
         </div>
     </div>
 </section>
-
-
 <?= $this->endSection(); ?>

@@ -92,7 +92,8 @@
                                                     Pesanan</button>
                                             </a><br>
                                             <?php endif; ?>
-                                            <a href=""><button type="button" class="btn btn-danger btn-sm mt-2">Hapus
+                                            <a href="<?= base_url(); ?>/admin/hapus-pesanan/<?= $d->id_pesanan; ?>"><button
+                                                    type="button" class="btn btn-danger btn-sm mt-2">Hapus
                                                     Pesanan</button>
                                             </a>
                                         </td>

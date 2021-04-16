@@ -6,15 +6,16 @@ use App\Models\UsersModels;
 use App\Models\KamarModels;
 use App\Models\PesananModels;
 use App\Models\KeranjangModels;
-
+use App\Models\RincianModels;
 class Home extends BaseController
 {
 	// Home Page
-	protected $UserModel, $JabatanModel, $KamarModel, $PesananModel, $KeranjangModel;
+	protected $UserModel, $JabatanModel, $KamarModel, $PesananModel, $KeranjangModel, $RincianModel;
 	public function __construct()
 	{
 		$this->KamarModel = new KamarModels();
 		$this->UserModel = new UsersModels();
+		$this->RincianModel = new RincianModels();
 		$this->PesananModel = new PesananModels();
 		$this->KeranjangModel = new KeranjangModels();
 		$this->form_validation = \Config\Services::validation();
@@ -121,6 +122,56 @@ class Home extends BaseController
 		}
 		return view("user/page/contact", $data);
 	}
+	public function konfirmasi_selesai($id_pesanan = null)
+	{
+		$cari = $this->PesananModel->getPesananUser($id_pesanan);
+		if (logged_in() && !in_groups('user')) {
+			return redirect()->to('/admin');
+		} else {
+			if (empty($cari)) {
+				throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+			} else {
+				if ($cari[0]->status_menginap == 3) {
+					$updateStatus = $this->RincianModel->save([
+						"kode_pesanan" => $cari[0]->kode_pesanan,
+						"nama_pemesan" => $cari[0]->username,
+						"check_in" => $cari[0]->check_in,
+						"check_out" => $cari[0]->check_out,
+						"pay_date" => $cari[0]->pay_date,
+						"tamu_dewasa" => $cari[0]->tamu_dewasa,
+						"tamu_anak" => $cari[0]->tamu_anak,
+						"total_bayar" => $cari[0]->total_bayar,
+					]);
+					if ($updateStatus) {
+						if ($this->PesananModel->delete($id_pesanan)) {
+							echo "Berhasil";
+						} else {
+							echo "Gagal";
+						}
+					} else {
+						echo "Gagal";
+					}
+				}
+			}
+		}
+	}
+	public function konfirmasi_ulang($id_pesanan = null)
+	{
+		$cari = $this->PesananModel->getPesananUser($id_pesanan);
+		if (logged_in() && !in_groups('user')) {
+			return redirect()->to('/admin');
+		} else {
+			if (empty($cari)) {
+				throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+			} else {
+				if ($this->PesananModel->delete($id_pesanan)) {
+					echo "Berhasil";
+				} else {
+					echo "Gagal";
+				}
+			}
+		}
+	}
 	public function booking()
 	{
 		if (logged_in()) {
@@ -146,6 +197,7 @@ class Home extends BaseController
 			"pesanan" => $pesanan,
 			"validation" => $this->form_validation,
 			"data_pesanan" => $this->PesananModel->getDataPesananWhere(user()->id),
+			"rincian_pesanan" => $this->KeranjangModel->getAllRincian(),
 		];
 		if (logged_in() && !in_groups('user')) {
 			return redirect()->to('/admin');
@@ -158,8 +210,8 @@ class Home extends BaseController
 					'anak' => 'required',
 				]);
 				if (!$formCheckout) {
-					return redirect()->to('/booking-sekarang')->withInput();
-				} {
+					return redirect()->to('/booking-sekarang ')->withInput();
+				} else {
 					$updatePesanan = $this->PesananModel->save([
 						"id_pesanan" => $pesanan[0]->id_pesanan,
 						'status_keranjang' => 0,
@@ -174,6 +226,32 @@ class Home extends BaseController
 						echo "Berhasil Dipesan";
 					} else {
 						echo "Gagal Dipesan";
+					}
+				}
+			} else if ($this->request->getPost('submit_bukti')) {
+				$formBukti = $this->validate([
+					'file_bukti' => 'uploaded[file_bukti]|max_size[file_bukti,1024]|mime_in[file_bukti,image/jpg,image/jpeg,image/png,application/pdf]|ext_in[file_bukti,png,jpg,jpeg,pdf]',
+				]);
+				if (!$formBukti) {
+					return redirect()->to('/booking-sekarang')->withInput();
+				} else {
+					if ($this->request->getFile('file_bukti')->getError() == 0) {
+						$buktiPembayaran = $this->request->getFile('file_bukti');
+						$namaFoto = $buktiPembayaran->getRandomName();
+						$buktiPembayaran->move('transfer_image', $namaFoto);
+						$updatePesanan = $this->PesananModel->save([
+							"id_pesanan" => $this->request->getPost('id_pesanan'),
+							"pay_date" => date('Y-m-d H:i:s'),
+							"bukti_bayar" => $namaFoto,
+							"status_bukti" => 2,
+						]);
+						if ($updatePesanan) {
+							echo "Berhasil Mengirim Bukti Pembayaran";
+						} else {
+							echo "Gagal Mengirim Bukti Pembayaran";
+						}
+					} else {
+						echo "Gambar Tidak Boleh Kosong";
 					}
 				}
 			} else {

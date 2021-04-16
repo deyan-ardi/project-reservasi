@@ -10,9 +10,8 @@
                         <i class="icon-laptop_windows"></i>
                     </div>
                     <div class="page-title">
-                        <h5>Manajemen Validasi Masuk</h5>
-                        <h6 class="sub-heading">Anda dapat melakukan manajemen pada pesanan bungalow yang tervalidasi
-                            yang ada
+                        <h5>Data Validasi Masuk</h5>
+                        <h6 class="sub-heading">Anda dapat melakukan manajemen pada data validasi pesanan masuk yang ada
                             melalui fitur ini
                         </h6>
                     </div>
@@ -28,476 +27,223 @@
                 <div class="card">
                     <div class="card-header">Data Validasi Masuk</div>
                     <div class="card-body">
-                        <table id="rowSelection" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                </tr>
-                                <tr>
-                                    <td>Garrett Winters</td>
-                                    <td>Accountant</td>
-                                    <td>Tokyo</td>
-                                    <td>63</td>
-                                    <td>2011/07/25</td>
-                                    <td>$170,750</td>
-                                </tr>
-                                <tr>
-                                    <td>Ashton Cox</td>
-                                    <td>Junior Technical Author</td>
-                                    <td>San Francisco</td>
-                                    <td>66</td>
-                                    <td>2009/01/12</td>
-                                    <td>$86,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Cedric Kelly</td>
-                                    <td>Senior Javascript Developer</td>
-                                    <td>Edinburgh</td>
-                                    <td>22</td>
-                                    <td>2012/03/29</td>
-                                    <td>$433,060</td>
-                                </tr>
-                                <tr>
-                                    <td>Airi Satou</td>
-                                    <td>Accountant</td>
-                                    <td>Tokyo</td>
-                                    <td>33</td>
-                                    <td>2008/11/28</td>
-                                    <td>$162,700</td>
-                                </tr>
-                                <tr>
-                                    <td>Brielle Williamson</td>
-                                    <td>Integration Specialist</td>
-                                    <td>New York</td>
-                                    <td>61</td>
-                                    <td>2012/12/02</td>
-                                    <td>$372,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Herrod Chandler</td>
-                                    <td>Sales Assistant</td>
-                                    <td>San Francisco</td>
-                                    <td>59</td>
-                                    <td>2012/08/06</td>
-                                    <td>$137,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Rhona Davidson</td>
-                                    <td>Integration Specialist</td>
-                                    <td>Tokyo</td>
-                                    <td>55</td>
-                                    <td>2010/10/14</td>
-                                    <td>$327,900</td>
-                                </tr>
-                                <tr>
-                                    <td>Colleen Hurst</td>
-                                    <td>Javascript Developer</td>
-                                    <td>San Francisco</td>
-                                    <td>39</td>
-                                    <td>2009/09/15</td>
-                                    <td>$205,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Sonya Frost</td>
-                                    <td>Software Engineer</td>
-                                    <td>Edinburgh</td>
-                                    <td>23</td>
-                                    <td>2008/12/13</td>
-                                    <td>$103,600</td>
-                                </tr>
-                                <tr>
-                                    <td>Jena Gaines</td>
-                                    <td>Office Manager</td>
-                                    <td>London</td>
-                                    <td>30</td>
-                                    <td>2008/12/19</td>
-                                    <td>$90,560</td>
-                                </tr>
-                                <tr>
-                                    <td>Quinn Flynn</td>
-                                    <td>Support Lead</td>
-                                    <td>Edinburgh</td>
-                                    <td>22</td>
-                                    <td>2013/03/03</td>
-                                    <td>$342,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Charde Marshall</td>
-                                    <td>Regional Director</td>
-                                    <td>San Francisco</td>
-                                    <td>36</td>
-                                    <td>2008/10/16</td>
-                                    <td>$470,600</td>
-                                </tr>
-                                <tr>
-                                    <td>Haley Kennedy</td>
-                                    <td>Senior Marketing Designer</td>
-                                    <td>London</td>
-                                    <td>43</td>
-                                    <td>2012/12/18</td>
-                                    <td>$313,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Tatyana Fitzpatrick</td>
-                                    <td>Regional Director</td>
-                                    <td>London</td>
-                                    <td>19</td>
-                                    <td>2010/03/17</td>
-                                    <td>$385,750</td>
-                                </tr>
-                                <tr>
-                                    <td>Michael Silva</td>
-                                    <td>Marketing Designer</td>
-                                    <td>London</td>
-                                    <td>66</td>
-                                    <td>2012/11/27</td>
-                                    <td>$198,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Paul Byrd</td>
-                                    <td>Chief Financial Officer (CFO)</td>
-                                    <td>New York</td>
-                                    <td>64</td>
-                                    <td>2010/06/09</td>
-                                    <td>$725,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Gloria Little</td>
-                                    <td>Systems Administrator</td>
-                                    <td>New York</td>
-                                    <td>59</td>
-                                    <td>2009/04/10</td>
-                                    <td>$237,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Bradley Greer</td>
-                                    <td>Software Engineer</td>
-                                    <td>London</td>
-                                    <td>41</td>
-                                    <td>2012/10/13</td>
-                                    <td>$132,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Dai Rios</td>
-                                    <td>Personnel Lead</td>
-                                    <td>Edinburgh</td>
-                                    <td>35</td>
-                                    <td>2012/09/26</td>
-                                    <td>$217,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Jenette Caldwell</td>
-                                    <td>Development Lead</td>
-                                    <td>New York</td>
-                                    <td>30</td>
-                                    <td>2011/09/03</td>
-                                    <td>$345,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Yuri Berry</td>
-                                    <td>Chief Marketing Officer (CMO)</td>
-                                    <td>New York</td>
-                                    <td>40</td>
-                                    <td>2009/06/25</td>
-                                    <td>$675,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Caesar Vance</td>
-                                    <td>Pre-Sales Support</td>
-                                    <td>New York</td>
-                                    <td>21</td>
-                                    <td>2011/12/12</td>
-                                    <td>$106,450</td>
-                                </tr>
-                                <tr>
-                                    <td>Doris Wilder</td>
-                                    <td>Sales Assistant</td>
-                                    <td>Sidney</td>
-                                    <td>23</td>
-                                    <td>2010/09/20</td>
-                                    <td>$85,600</td>
-                                </tr>
-                                <tr>
-                                    <td>Angelica Ramos</td>
-                                    <td>Chief Executive Officer (CEO)</td>
-                                    <td>London</td>
-                                    <td>47</td>
-                                    <td>2009/10/09</td>
-                                    <td>$1,200,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Gavin Joyce</td>
-                                    <td>Developer</td>
-                                    <td>Edinburgh</td>
-                                    <td>42</td>
-                                    <td>2010/12/22</td>
-                                    <td>$92,575</td>
-                                </tr>
-                                <tr>
-                                    <td>Jennifer Chang</td>
-                                    <td>Regional Director</td>
-                                    <td>Singapore</td>
-                                    <td>28</td>
-                                    <td>2010/11/14</td>
-                                    <td>$357,650</td>
-                                </tr>
-                                <tr>
-                                    <td>Brenden Wagner</td>
-                                    <td>Software Engineer</td>
-                                    <td>San Francisco</td>
-                                    <td>28</td>
-                                    <td>2011/06/07</td>
-                                    <td>$206,850</td>
-                                </tr>
-                                <tr>
-                                    <td>Fiona Green</td>
-                                    <td>Chief Operating Officer (COO)</td>
-                                    <td>San Francisco</td>
-                                    <td>48</td>
-                                    <td>2010/03/11</td>
-                                    <td>$850,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Shou Itou</td>
-                                    <td>Regional Marketing</td>
-                                    <td>Tokyo</td>
-                                    <td>20</td>
-                                    <td>2011/08/14</td>
-                                    <td>$163,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Michelle House</td>
-                                    <td>Integration Specialist</td>
-                                    <td>Sidney</td>
-                                    <td>37</td>
-                                    <td>2011/06/02</td>
-                                    <td>$95,400</td>
-                                </tr>
-                                <tr>
-                                    <td>Suki Burks</td>
-                                    <td>Developer</td>
-                                    <td>London</td>
-                                    <td>53</td>
-                                    <td>2009/10/22</td>
-                                    <td>$114,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Prescott Bartlett</td>
-                                    <td>Technical Author</td>
-                                    <td>London</td>
-                                    <td>27</td>
-                                    <td>2011/05/07</td>
-                                    <td>$145,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Gavin Cortez</td>
-                                    <td>Team Leader</td>
-                                    <td>San Francisco</td>
-                                    <td>22</td>
-                                    <td>2008/10/26</td>
-                                    <td>$235,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Martena Mccray</td>
-                                    <td>Post-Sales support</td>
-                                    <td>Edinburgh</td>
-                                    <td>46</td>
-                                    <td>2011/03/09</td>
-                                    <td>$324,050</td>
-                                </tr>
-                                <tr>
-                                    <td>Unity Butler</td>
-                                    <td>Marketing Designer</td>
-                                    <td>San Francisco</td>
-                                    <td>47</td>
-                                    <td>2009/12/09</td>
-                                    <td>$85,675</td>
-                                </tr>
-                                <tr>
-                                    <td>Howard Hatfield</td>
-                                    <td>Office Manager</td>
-                                    <td>San Francisco</td>
-                                    <td>51</td>
-                                    <td>2008/12/16</td>
-                                    <td>$164,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Hope Fuentes</td>
-                                    <td>Secretary</td>
-                                    <td>San Francisco</td>
-                                    <td>41</td>
-                                    <td>2010/02/12</td>
-                                    <td>$109,850</td>
-                                </tr>
-                                <tr>
-                                    <td>Vivian Harrell</td>
-                                    <td>Financial Controller</td>
-                                    <td>San Francisco</td>
-                                    <td>62</td>
-                                    <td>2009/02/14</td>
-                                    <td>$452,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Timothy Mooney</td>
-                                    <td>Office Manager</td>
-                                    <td>London</td>
-                                    <td>37</td>
-                                    <td>2008/12/11</td>
-                                    <td>$136,200</td>
-                                </tr>
-                                <tr>
-                                    <td>Jackson Bradshaw</td>
-                                    <td>Director</td>
-                                    <td>New York</td>
-                                    <td>65</td>
-                                    <td>2008/09/26</td>
-                                    <td>$645,750</td>
-                                </tr>
-                                <tr>
-                                    <td>Olivia Liang</td>
-                                    <td>Support Engineer</td>
-                                    <td>Singapore</td>
-                                    <td>64</td>
-                                    <td>2011/02/03</td>
-                                    <td>$234,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Bruno Nash</td>
-                                    <td>Software Engineer</td>
-                                    <td>London</td>
-                                    <td>38</td>
-                                    <td>2011/05/03</td>
-                                    <td>$163,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Sakura Yamamoto</td>
-                                    <td>Support Engineer</td>
-                                    <td>Tokyo</td>
-                                    <td>37</td>
-                                    <td>2009/08/19</td>
-                                    <td>$139,575</td>
-                                </tr>
-                                <tr>
-                                    <td>Thor Walton</td>
-                                    <td>Developer</td>
-                                    <td>New York</td>
-                                    <td>61</td>
-                                    <td>2013/08/11</td>
-                                    <td>$98,540</td>
-                                </tr>
-                                <tr>
-                                    <td>Finn Camacho</td>
-                                    <td>Support Engineer</td>
-                                    <td>San Francisco</td>
-                                    <td>47</td>
-                                    <td>2009/07/07</td>
-                                    <td>$87,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Serge Baldwin</td>
-                                    <td>Data Coordinator</td>
-                                    <td>Singapore</td>
-                                    <td>64</td>
-                                    <td>2012/04/09</td>
-                                    <td>$138,575</td>
-                                </tr>
-                                <tr>
-                                    <td>Zenaida Frank</td>
-                                    <td>Software Engineer</td>
-                                    <td>New York</td>
-                                    <td>63</td>
-                                    <td>2010/01/04</td>
-                                    <td>$125,250</td>
-                                </tr>
-                                <tr>
-                                    <td>Zorita Serrano</td>
-                                    <td>Software Engineer</td>
-                                    <td>San Francisco</td>
-                                    <td>56</td>
-                                    <td>2012/06/01</td>
-                                    <td>$115,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Jennifer Acosta</td>
-                                    <td>Junior Javascript Developer</td>
-                                    <td>Edinburgh</td>
-                                    <td>43</td>
-                                    <td>2013/02/01</td>
-                                    <td>$75,650</td>
-                                </tr>
-                                <tr>
-                                    <td>Cara Stevens</td>
-                                    <td>Sales Assistant</td>
-                                    <td>New York</td>
-                                    <td>46</td>
-                                    <td>2011/12/06</td>
-                                    <td>$145,600</td>
-                                </tr>
-                                <tr>
-                                    <td>Hermione Butler</td>
-                                    <td>Regional Director</td>
-                                    <td>London</td>
-                                    <td>47</td>
-                                    <td>2011/03/21</td>
-                                    <td>$356,250</td>
-                                </tr>
-                                <tr>
-                                    <td>Lael Greer</td>
-                                    <td>Systems Administrator</td>
-                                    <td>London</td>
-                                    <td>21</td>
-                                    <td>2009/02/27</td>
-                                    <td>$103,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Jonas Alexander</td>
-                                    <td>Developer</td>
-                                    <td>San Francisco</td>
-                                    <td>30</td>
-                                    <td>2010/07/14</td>
-                                    <td>$86,500</td>
-                                </tr>
-                                <tr>
-                                    <td>Shad Decker</td>
-                                    <td>Regional Director</td>
-                                    <td>Edinburgh</td>
-                                    <td>51</td>
-                                    <td>2008/11/13</td>
-                                    <td>$183,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Michael Bruce</td>
-                                    <td>Javascript Developer</td>
-                                    <td>Singapore</td>
-                                    <td>29</td>
-                                    <td>2011/06/27</td>
-                                    <td>$183,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Donna Snider</td>
-                                    <td>Customer Support</td>
-                                    <td>New York</td>
-                                    <td>27</td>
-                                    <td>2011/01/25</td>
-                                    <td>$112,000</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table id="rowSelection2" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">Kode Pesanan</th>
+                                        <th rowspan="2">Nama Pemesan</th>
+                                        <th rowspan="2">Status Pesanan</th>
+                                        <th colspan="7" class="text-center">Pesanan</th>
+                                        <th rowspan="2">Fitur</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Tamu Dewasa</th>
+                                        <th>Tamu Anak-Anak</th>
+                                        <th>Check In</th>
+                                        <th>Check Out</th>
+                                        <th>Tanggal Diterima</th>
+                                        <th>Deskripsi Pesanan</th>
+                                        <th>Total Bayar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($pesanan_masuk as $d) : ?>
+                                    <tr>
+                                        <td><?= $d->kode_pesanan; ?></td>
+                                        <td><?= $d->username; ?></td>
+                                        <td>
+                                            <?php if ($d->status_bukti == 2) : ?>
+                                            <a href="#" data-toggle="modal"
+                                                data-target="#bukti-<?= $d->id_pesanan; ?>"><button type="button"
+                                                    class="btn btn-success btn-sm">Bukti
+                                                    Transfer Masuk</button>
+                                            </a>
+                                            <?php elseif ($d->status_bukti == 3) : ?>
+                                            <a href="#" data-toggle="modal"
+                                                data-target="#bukti-<?= $d->id_pesanan; ?>"><button type="button"
+                                                    class="btn btn-danger btn-sm">Bukti
+                                                    Transfer Ditolak</button>
+                                            </a>
+                                            <?php elseif (new Datetime(date('Y-m-d H:i:s')) >= new Datetime($d->due_date)) : ?>
+                                            <a href="#"><button type="button" class="btn btn-danger btn-sm">Waktu Bayar
+                                                    Habis</button>
+                                            </a>
+                                            <?php elseif ($d->status_bukti == 1) : ?>
+                                            <a href="#"><button type="button" class="btn btn-info btn-sm">Pesanan
+                                                    Masuk</button>
+                                            </a>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><?= $d->tamu_dewasa; ?> Orang</td>
+                                        <td><?= $d->tamu_anak; ?> Orang</td>
+                                        <td><?= date('d-m-Y', strtotime($d->check_in)); ?></td>
+                                        <td><?= date('d-m-Y', strtotime($d->check_out)); ?></td>
+                                        <td><?= date('d-m-Y H:i', strtotime($d->accept_date)); ?> WITA</td>
+                                        <td><?php if (empty($d->pesan)) : ?>
+                                            -
+                                            <?php else : ?>
+                                            <?= $d->pesan; ?>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td>Rp.<?= $d->total_bayar; ?></td>
+                                        <td>
+                                            <a href="#" data-toggle="modal"
+                                                data-target="#view-<?= $d->id_pesanan; ?>"><button type="button"
+                                                    class="btn btn-info btn-sm mt-2">Detail Pesanan</button>
+                                            </a><br>
+                                            <?php if ($d->status_bukti == 2) : ?>
+                                            <a href="<?= base_url(); ?>/admin/terima-bukti/<?= $d->id_pesanan; ?>"><button
+                                                    type="button" class="btn btn-success btn-sm mt-2">Terima
+                                                    Bukti</button>
+                                            </a><br>
+                                            <a href="<?= base_url(); ?>/admin/tolak-bukti/<?= $d->id_pesanan; ?>"><button
+                                                    type="button" class="btn btn-warning btn-sm mt-2">Tolak
+                                                    Bukti</button>
+                                            </a><br>
+                                            <?php else : ?>
+                                            <?php if (new Datetime(date('Y-m-d H:i:s')) > new Datetime($d->due_date)) : ?>
+                                            <a href="<?= base_url(); ?>/admin/refresh-pesanan/<?= $d->id_pesanan; ?>"><button
+                                                    type="button" class="btn btn-warning btn-sm mt-2">Refresh
+                                                    Pesanan</button>
+                                            </a><br>
+                                            <?php endif; ?>
+                                            <?php endif; ?>
+                                            <a href="<?= base_url(); ?>/admin/hapus-bukti/<?= $d->id_pesanan; ?>"><button
+                                                    type="button" class="btn btn-danger btn-sm mt-2">Hapus
+                                                    Pesanan</button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="bukti-<?= $d->id_pesanan; ?>" tabindex="-1"
+                                        aria-labelledby="buktiLabel-<?= $d->id_pesanan; ?>" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="buktiLabel-<?= $d->id_pesanan; ?>">Bukti
+                                                        Transfer
+                                                        Pesanan Nomor
+                                                        <?= $d->kode_pesanan; ?>
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <?php if (!empty($d->bukti_bayar)) : ?>
+                                                    <?php
+                                                            $ekstensi_file = explode(".", $d->bukti_bayar);
+                                                            if ($ekstensi_file[1] === "pdf") :
+                                                            ?>
+                                                    <div class="embed-responsive embed-responsive-16by9">
+                                                        <iframe class="embed-responsive-item"
+                                                            src="<?= base_url(); ?>/transfer_image/<?= $d->bukti_bayar; ?>"
+                                                            allowfullscreen></iframe>
+                                                    </div>
+                                                    <?php else : ?>
+                                                    <div class="img-responsive">
+                                                        <img
+                                                            src="<?= base_url(); ?>/transfer_image/<?= $d->bukti_bayar; ?>">
+                                                    </div>
+                                                    <?php endif; ?>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Tutup</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="view-<?= $d->id_pesanan; ?>" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Pesanan Nomor
+                                                        <?= $d->kode_pesanan; ?>
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h6>Rincian Pesanan</h6>
+                                                    <?php foreach ($rincian_pesanan as $k) : ?>
+                                                    <?php if ($d->id_pesanan == $k->id_pesanan) : ?>
+                                                    <ul>
+                                                        <?php if ($k->layanan_kamar == 0) : ?>
+                                                        <li class="mt-4">
+                                                            <div class="col-12 border border-success">
+                                                                <p class="mt-2"> No Kamar : [<?= $k->no_kamar; ?>] </p>
+                                                                <p> Nama Kamar : <?= $k->nama_kamar; ?> </p>
+                                                                <p> Layanan Kamar : Pesan Dengan
+                                                                    Tanpa Sarapan </p>
+                                                                <p> Biaya Kamar : Rp. <?= $k->harga_kamar; ?></p>
+                                                                <p> Subtotal :
+                                                                    Rp. <?= $k->sub_total; ?></p>
+                                                            </div>
+                                                        </li>
+                                                        <?php else : ?>
+                                                        <li class="mt-4">
+                                                            <div class="col-12 border border-success">
+                                                                <p class="mt-2"> No Kamar : [<?= $k->no_kamar; ?>] </p>
+                                                                <p> Nama Kamar : <?= $k->nama_kamar; ?> </p>
+                                                                <p> Layanan Kamar : Pesan Dengan
+                                                                    Sarapan </p>
+                                                                <p> Biaya Kamar : Rp. <?= $k->harga_kamar; ?></p>
+                                                                <p> Biaya Layanan : Rp. <?= BIAYA_LAYANAN ?></p>
+                                                                <p> Subtotal :
+                                                                    Rp. <?= $k->sub_total; ?></p>
+                                                            </div>
+                                                        </li>
+                                                        <?php endif; ?>
+                                                    </ul>
+                                                    <?php endif; ?>
+                                                    <?php endforeach; ?>
+
+                                                    <h6 class="mt-4">Hubungi Tamu</h6>
+                                                    <ul>
+                                                        <li>
+                                                            <div class="col-12">
+                                                                <a href="mailto:<?= $d->email; ?>"
+                                                                    class="btn btn-secondary btn-sm mt-2">Hubungi
+                                                                    Lewat Email</a>
+                                                            </div>
+                                                        </li>
+
+                                                        <li>
+                                                            <div class="col-12">
+                                                                <a href="https://api.whatsapp.com/send?phone=<?= $d->no_tlp; ?>"
+                                                                    class="btn btn-success btn-sm mt-2">Hubungi
+                                                                    Lewat Whatsapp</a>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="col-12">
+                                                                <a href="telp:<?= $d->no_tlp; ?>"
+                                                                    class="btn btn-info btn-sm mt-2">Hubungi
+                                                                    Lewat Telepon</a>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Tutup</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
