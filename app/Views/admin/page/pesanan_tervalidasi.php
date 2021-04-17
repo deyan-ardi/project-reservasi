@@ -107,10 +107,12 @@
                                                     class="btn btn-warning btn-sm mt-2">Perpanjang</button>
                                             </a><br>
                                             <?php endif; ?>
+                                            <?php if(in_groups("super admin")): ?>
                                             <a href="<?= base_url(); ?>/admin/hapus-tamu/<?= $d->id_pesanan; ?>"><button
-                                                    type="button" class="btn btn-danger btn-sm mt-2">Hapus
+                                                    type="button" class="btn btn-danger btn-sm mt-2 tombol-hapus">Hapus
                                                     Pesanan</button>
                                             </a>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
 

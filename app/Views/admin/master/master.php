@@ -20,11 +20,13 @@
     <link href="<?= base_url(); ?>/assets/admin/vendor/chartist/css/chartist-custom.css" rel="stylesheet" />
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/vendor/datatables/dataTables.bs4.css" />
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/vendor/datatables/dataTables.bs4-custom.css" />
+    <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/vendor/sweetalert/sweetalert2.css">
 
 </head>
 
 <body>
-
+    <div class="berhasil" data-berhasil="<?= session()->getFlashdata('berhasil') ?>"></div>
+    <div class="gagal" data-gagal="<?= session()->getFlashdata('gagal') ?>"></div>
     <!-- Loading starts -->
     <div id="loading-wrapper">
         <div id="loader">
@@ -177,7 +179,7 @@
                             <li class="menu-header">
                                 -- Manajemen Reservasi
                             </li>
-                            <?php if ($id == "5" || $id == "6" || $id == "7") : ?>
+                            <?php if ($id == "5" || $id == "6" || $id == "7" || $id == "8") : ?>
                             <li class="active selected">
                                 <?php else : ?>
                             <li>
@@ -217,12 +219,20 @@
                                             Tervalidasi</a>
                                         <?php endif; ?>
                                     </li>
+                                    <li>
+                                        <?php if ($id == "8") : ?>
+                                        <a href="<?= base_url(); ?>/admin/laporan-pesanan" class="current-page">Cetak
+                                            Laporan</a>
+                                        <?php else : ?>
+                                        <a href="<?= base_url(); ?>/admin/laporan-pesanan">Cetak Laporan</a>
+                                        <?php endif; ?>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="menu-header">
                                 -- Manajemen Website
                             </li>
-                            <?php if ($id == "8") : ?>
+                            <?php if ($id == "9") : ?>
                             <li class="active selected">
                                 <?php else : ?>
                             <li>
@@ -268,6 +278,8 @@
     <!-- Custom Data tables -->
     <script src="<?= base_url(); ?>/assets/admin/vendor/datatables/custom/custom-datatables.js"></script>
 
+    <!-- Sweetalert -->
+    <script src="<?= base_url(); ?>/assets/admin/vendor/sweetalert/sweetalert2.js"></script>
     <!-- Common JS -->
     <script src="<?= base_url(); ?>/assets/admin/js/common.js"></script>
     <script>

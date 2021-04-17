@@ -356,3 +356,51 @@
         });
     });
 })(jQuery);
+
+ $(document).ready(function () {
+   const success = $(".berhasil").data("berhasil");
+   if (success) {
+     Swal.fire({
+       position: "center",
+       icon: "success",
+       text: success,
+       showConfirmButton: true,
+     });
+   }
+ });
+ $(document).ready(function () {
+   const gagal = $(".gagal").data("gagal");
+   if (gagal) {
+     Swal.fire({
+       position: "center",
+       icon: "error",
+       text: "Opss.." + gagal,
+       showConfirmButton: true,
+     });
+   }
+ });
+
+ $(document).ready(function () {
+   if (".swal2-select") {
+     setInterval(function () {
+       $(".swal2-select").remove();
+     }, 100);
+   }
+ });
+ $(".tombol-reset").on("click", function (e) {
+   e.preventDefault();
+   const href = $(this).attr("href");
+   Swal.fire({
+     title: "Apakah Anda Yakin Ingin Mengkonfirmasi Ulang Pesanan?",
+     text: "Pesanan Anda Akan Terhapus Sepenuhnya",
+     icon: "warning",
+     showCancelButton: true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "Yakin",
+   }).then((result) => {
+     if (result.value) {
+       document.location.href = href;
+     }
+   });
+ });

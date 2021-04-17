@@ -12,7 +12,8 @@
 </head>
 
 <body>
-
+    <div class="berhasil" data-berhasil="<?= session()->getFlashdata('berhasil') ?>"></div>
+    <div class="gagal" data-gagal="<?= session()->getFlashdata('gagal') ?>"></div>
     <div class="preloader">
         <div class="loader">
             <div class="shadow"></div>

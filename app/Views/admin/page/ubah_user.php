@@ -34,10 +34,10 @@
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="border border-secondary rounded">
-                                        <?php if(empty($users[0]->foto)): ?>
+                                        <?php if (empty($users[0]->foto)) : ?>
                                         <img src="<?= base_url(); ?>/user_image/default.jpg" width="75px"
                                             class="img-thumbnail img-preview" alt="">
-                                        <?php else: ?>
+                                        <?php else : ?>
                                         <img src="<?= base_url(); ?>/user_image/<?= $users[0]->foto; ?>" width="75px"
                                             class="img-thumbnail img-preview" alt="">
                                         <?php endif; ?>
@@ -75,6 +75,16 @@
                                 <input type="date" max="2006-01-01" name="ttl"
                                     value="<?= (old('ttl')) ? old('ttl') : ucWords($users[0]->ttl); ?>"
                                     class="form-control" id="inputTanggal">
+                            </div>
+                            <div class="form-group">
+                                <label for="no_tlp" class="col-form-label">No Telp/Whatsapp</label>
+                                <input type="number" min="8000000000" name="no_tlp"
+                                    value="<?= (old('no_tlp')) ? old('no_tlp') : ucWords($users[0]->no_tlp); ?>"
+                                    class="form-control <?php if ($validation->getError('no_tlp')) : ?>is-invalid<?php endif ?>"
+                                    id="no_tlp" placeholder="+62" required>
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('no_tlp'); ?>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail" class="col-form-label">Email</label>

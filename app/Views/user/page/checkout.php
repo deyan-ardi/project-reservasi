@@ -164,8 +164,8 @@
                             </div>
                             <div class="col-lg-12 col-md-12 mt-5">
                                 <div class="send-btn">
-                                    <a href="<?= base_url(); ?>/kontak-kami" class="send-btn-one">Tanyakan dan Hubungi
-                                        Kami</a>
+                                    <a href="<?= base_url(); ?>/batalkan-pesanan/<?= $data_pesanan[0]->id_pesanan; ?>"
+                                        class="send-btn-one tombol-reset">Batalkan Pesanan</a>
                                 </div>
                             </div>
                         </div>
@@ -175,7 +175,7 @@
         </div>
     </div>
 </section>
-<?php elseif ($data_pesanan[0]->status_pesanan == 2 || $data_pesanan[0]->status_bukti == 3 ) : ?>
+<?php elseif ($data_pesanan[0]->status_pesanan == 2 || $data_pesanan[0]->status_bukti == 3) : ?>
 <section class="single-room-section">
     <div class="container">
         <div class="row">
@@ -195,7 +195,7 @@
                             <div class="col-lg-12 col-md-12 mt-5">
                                 <div class="send-btn">
                                     <a href="<?= base_url(); ?>/konfirmasi-ulang/<?= $data_pesanan[0]->id_pesanan; ?>"
-                                        class="send-btn-one">Konfirmasi Ulang</a>
+                                        class="send-btn-one tombol-reset">Konfirmasi Ulang</a>
                                 </div>
                             </div>
                         </div>
@@ -263,7 +263,7 @@
                             <div class="col-lg-12 col-md-12 mt-5">
                                 <div class="send-btn">
                                     <a href="<?= base_url(); ?>/konfirmasi-selesai/<?= $data_pesanan[0]->id_pesanan; ?>"
-                                        class="send-btn-one">Konfirmasi Selesai
+                                        class="send-btn-one tombol-reset">Konfirmasi Selesai
                                         Pemesanan</a>
                                 </div>
                             </div>

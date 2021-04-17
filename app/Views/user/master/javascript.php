@@ -28,7 +28,10 @@
 
 <script src="<?= base_url(); ?>/assets/user/js/contact-form-script.js"></script>
 
+
+<script src="<?= base_url(); ?>/assets/admin/vendor/sweetalert/sweetalert2.js"></script>
 <script src="<?= base_url(); ?>/assets/user/js/active.js"></script>
+
 <script>
 const previewImg = () => {
     const file = document.getElementById('file');

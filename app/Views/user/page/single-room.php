@@ -64,7 +64,7 @@
                             </div>
                             <div class="col-lg-12 col-md-12">
                                 <div class="send-btn">
-                                    <?php if (empty(user()->alamat || empty(user()->ttl || empty(user()->foto)))) : ?>
+                                    <?php if (empty(user()->alamat) || empty(user()->ttl) || empty(user()->foto) || empty(user()->no_tlp)) : ?>
                                     <a href="<?= base_url(); ?>/pengaturan-profil/<?= user()->id; ?>"
                                         class="send-btn-one">Lengkapi Data
                                         Profil</a>

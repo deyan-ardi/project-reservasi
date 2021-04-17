@@ -83,3 +83,45 @@ $('.task-list').on('click', 'li.list', function() {
 $(function() {
 	$("#loading-wrapper").fadeOut(5000);
 });
+
+ $(document).ready(function () {
+   const success = $(".berhasil").data("berhasil");
+   if (success) {
+     Swal.fire({
+       position: "center",
+       icon: "success",
+       text: success,
+       showConfirmButton: true,
+     });
+   }
+ });
+ $(document).ready(function () {
+   const gagal = $(".gagal").data("gagal");
+   if (gagal) {
+     Swal.fire({
+       position: "center",
+       icon: "error",
+       text: "Opss.." + gagal,
+       showConfirmButton: true,
+     });
+   }
+ });
+
+ $(".tombol-hapus").on("click", function (e) {
+   e.preventDefault();
+   const href = $(this).attr("href");
+   Swal.fire({
+     title: "Apakah Anda Yakin Ingin Menghapus?",
+     text:
+       "Semua file yang berkaitan dengan data ini akan terhapus secara permanen",
+     icon: "warning",
+     showCancelButton: true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "Yakin",
+   }).then((result) => {
+     if (result.value) {
+       document.location.href = href;
+     }
+   });
+ });

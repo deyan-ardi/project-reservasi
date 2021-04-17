@@ -8,10 +8,10 @@ use App\Models\KategoriKamarModels;
 use App\Models\KamarModels;
 use App\Models\PesananModels;
 use App\Models\KeranjangModels;
-
+use App\Models\RincianModels;
 class Admin extends BaseController
 {
-    protected $UserModel, $JabatanModel, $KamarModel, $service_img, $PesananModel, $KeranjangModel;
+    protected $UserModel, $JabatanModel, $KamarModel, $service_img, $PesananModel, $KeranjangModel, $RincianModel;
     public function __construct()
     {
         $this->service_img = \Config\Services::image();
@@ -19,6 +19,7 @@ class Admin extends BaseController
         $this->JabatanModel = new JabatanModels();
         $this->KategoriKamarModel = new KategoriKamarModels();
         $this->KamarModel = new KamarModels();
+        $this->RincianModel = new RincianModels();
         $this->PesananModel = new PesananModels();
         $this->KeranjangModel = new KeranjangModels();
         $this->form_validation = \Config\Services::validation();
@@ -97,9 +98,11 @@ class Admin extends BaseController
                     'created_by' => user()->username,
                 ]);
                 if ($save) {
-                    echo "Berhasil";
+                    session()->setFlashdata('berhasil', 'Kamar Berhasil Ditambahkan');
+                    return redirect()->to('/admin/manajemen-kamar');
                 } else {
-                    echo "gagal";
+                    session()->setFlashdata('gagal', 'Kamar Gagal Ditambahkan');
+                    return redirect()->to('/admin/manajemen-kamar');
                 }
             }
         } else {
@@ -118,19 +121,22 @@ class Admin extends BaseController
             }
 
             if ($this->KamarModel->delete($id_kamar)) {
-                echo "Berhasil";
+                session()->setFlashdata('berhasil', 'Kamar Berhasil Dihapus');
+                return redirect()->to('/admin/manajemen-kamar');
             } else {
-                echo "Gagal";
+                session()->setFlashdata('gagal', 'Kamar Gagal Dihapus');
+                return redirect()->to('/admin/manajemen-kamar');
             }
         } else {
-            echo "Data Tidak Ditemukan";
+            session()->setFlashdata('gagal', 'Kamar Tidak Ditemukan');
+            return redirect()->to('/admin/manajemen-kamar');
         }
     }
     public function ubah_kamar($id_kamar = null)
     {
         $cari = $this->KamarModel->find($id_kamar);
         $data = [
-            "title" => "Tambah Kamar Panel",
+            "title" => "Ubah Kamar Panel",
             "id" => "2",
             'validation' => $this->form_validation,
             'kategori' => $this->KategoriKamarModel->findAll(),
@@ -192,9 +198,11 @@ class Admin extends BaseController
                             'created_by' => user()->username,
                         ]);
                         if ($save) {
-                            echo "Berhasil";
+                            session()->setFlashdata('berhasil', 'Kamar Berhasil Diubah');
+                            return redirect()->to('/admin/manajemen-kamar');
                         } else {
-                            echo "gagal";
+                            session()->setFlashdata('gagal', 'Kamar Gagal Diubah');
+                            return redirect()->to('/admin/manajemen-kamar');
                         }
                     }
                 }
@@ -228,9 +236,11 @@ class Admin extends BaseController
                     'created_by' => user()->username,
                 ]);
                 if ($save) {
-                    echo "Berhasil";
+                    session()->setFlashdata('berhasil', 'Kategori Kamar Berhasil Ditambahkan');
+                    return redirect()->to('/admin/manajemen-kamar');
                 } else {
-                    echo "gagal";
+                    session()->setFlashdata('gagal', 'Kategori Kamar Gagal Ditambahkan');
+                    return redirect()->to('/admin/manajemen-kamar');
                 }
             }
         } else {
@@ -244,12 +254,15 @@ class Admin extends BaseController
         }
         if ($this->KategoriKamarModel->find($id_kategori)) {
             if ($this->KategoriKamarModel->delete($id_kategori)) {
-                echo "Berhasil";
+                session()->setFlashdata('berhasil', 'Kategori Kamar Berhasil Dihapus');
+                return redirect()->to('/admin/manajemen-kamar');
             } else {
-                echo "Gagal";
+                session()->setFlashdata('gagal', 'Kategori Kamar Gagal Dihapus');
+                return redirect()->to('/admin/manajemen-kamar');
             }
         } else {
-            echo "Data Tidak Ditemukan";
+            session()->setFlashdata('gagal', 'Kategori Kamar Tidak Ditemukan');
+            return redirect()->to('/admin/manajemen-kamar');
         }
     }
     public function ubah_kategori($id_kategori = null)
@@ -280,9 +293,11 @@ class Admin extends BaseController
                         'created_by' => user()->username,
                     ]);
                     if ($save) {
-                        echo "Berhasil";
+                        session()->setFlashdata('berhasil', 'Kategori Kamar Berhasil Diubah');
+                        return redirect()->to('/admin/manajemen-kamar');
                     } else {
-                        echo "gagal";
+                        session()->setFlashdata('berhasil', 'Kategori Kamar Gagal Diubah');
+                        return redirect()->to('/admin/manajemen-kamar');
                     }
                 }
             }
@@ -327,12 +342,17 @@ class Admin extends BaseController
                 if ($unlink == true) {
                     if ($this->UserModel->delete($id_pegawai)) {
                         // return redirect()->to('/admin/manajemen_pegawai');
-                        echo "Berhasil dihapus";
+                        session()->setFlashdata('berhasil', 'Pegawai Berhasil Dihapus');
+                        return redirect()->to('/admin/manajemen-pegawai');
+                    } else {
+                        session()->setFlashdata('gagal', 'Pegawai Gagal Dihapus');
+                        return redirect()->to('/admin/manajemen-pegawai');
                     }
                 }
             } else {
                 // return redirect()->to('/admin/manajemen_pegawai');
-                echo "Error tidak dapat menghapus data";
+                session()->setFlashdata('gagal', 'Pegawai Gagal Dihapus');
+                return redirect()->to('/admin/manajemen-pegawai');
             }
         }
     }
@@ -363,6 +383,7 @@ class Admin extends BaseController
                 'username' => $username,
                 'email' => $valid,
                 'jabatan' => 'required',
+                'no_tlp' => 'required|integer|alpha_numeric',
                 'foto' => 'max_size[foto,1024]|mime_in[foto,image/jpg,image/jpeg,image/png]|ext_in[foto,png,jpg,jpeg]',
 
             ]);
@@ -384,7 +405,8 @@ class Admin extends BaseController
                             $hashOptions
                         );
                     } else {
-                        echo "Password Tidak Sama";
+                        session()->setFlashdata('gagal', 'Password Baru dan Password Konfirmasi Tidak Sama');
+                        return redirect()->to('/admin/manajemen-pegawai');
                     }
                 } else {
                     $password = $users[0]->password_hash;
@@ -420,31 +442,38 @@ class Admin extends BaseController
                             'foto' => $namaFoto,
                             'alamat' => $this->request->getPost('alamat'),
                             'ttl' => $ttl,
+                            'no_tlp' => $this->request->getPost('no_tlp'),
                             'email' => $this->request->getPost('email'),
                             'username' => $this->request->getPost('username'),
                             'password_hash' => $password,
                         ]);
                         if ($updateUser && $this->JabatanModel->updateJabatan($id_pegawai, $this->request->getPost('jabatan'))) {
-                            echo "Berhasil";
+                            session()->setFlashdata('berhasil', 'Pegawai Berhasil Diubah');
+                            return redirect()->to('/admin/manajemen-pegawai');
                         } else {
-                            echo "Problem";
+                            session()->setFlashdata('gagal', 'Pegawai Gagal Diubah');
+                            return redirect()->to('/admin/manajemen-pegawai');
                         }
                     } else {
-                        echo "Kesalahan Server";
+                        session()->setFlashdata('gagal', 'Pegawai Gagal Diubah');
+                        return redirect()->to('/admin/manajemen-pegawai');
                     }
                 } else {
                     $updateUser = $this->UserModel->save([
                         'id' => $id_pegawai,
                         'alamat' => $this->request->getPost('alamat'),
                         'ttl' => $ttl,
+                        'no_tlp' => $this->request->getPost('no_tlp'),
                         'email' => $this->request->getPost('email'),
                         'username' => $this->request->getPost('username'),
                         'password_hash' => $password,
                     ]);
                     if ($updateUser && $this->JabatanModel->updateJabatan($id_pegawai, $this->request->getPost('jabatan'))) {
-                        echo "Berhasil";
+                        session()->setFlashdata('berhasil', 'Pegawai Berhasil Diubah');
+                        return redirect()->to('/admin/manajemen-pegawai');
                     } else {
-                        echo "Problem";
+                        session()->setFlashdata('gagal', 'Pegawai Gagal Diubah');
+                        return redirect()->to('/admin/manajemen-pegawai');
                     }
                 }
             }
@@ -490,12 +519,18 @@ class Admin extends BaseController
                 if ($unlink == true) {
                     if ($this->UserModel->delete($id_user)) {
                         // return redirect()->to('/admin/manajemen_pegawai');
-                        echo "Berhasil dihapus";
+                        session()->setFlashdata('berhasil', 'Pengguna Berhasil Dihapus');
+                        return redirect()->to('/admin/manajemen-user');
+                    } else {
+                        // return redirect()->to('/admin/manajemen_pegawai');
+                        session()->setFlashdata('gagal', 'Pengguna Gagal Dihapus');
+                        return redirect()->to('/admin/manajemen-user');
                     }
                 }
             } else {
                 // return redirect()->to('/admin/manajemen_pegawai');
-                echo "Error tidak dapat menghapus data";
+                session()->setFlashdata('gagal', 'Pengguna Gagal Dihapus');
+                return redirect()->to('/admin/manajemen-user');
             }
         }
     }
@@ -526,6 +561,7 @@ class Admin extends BaseController
             $formUbah = $this->validate([
                 'username' => $username,
                 'email' => $valid,
+                'no_tlp' => 'required|integer|alpha_numeric',
                 'jabatan' => 'required',
                 'foto' => 'max_size[foto,1024]|mime_in[foto,image/jpg,image/jpeg,image/png]|ext_in[foto,png,jpg,jpeg]',
 
@@ -548,7 +584,8 @@ class Admin extends BaseController
                             $hashOptions
                         );
                     } else {
-                        echo "Password Tidak Sama";
+                        session()->setFlashdata('gagal', 'Password Baru Tidak Sama Dengan Password Konfirmasi');
+                        return redirect()->to('/admin/manajemen-user');
                     }
                 } else {
                     $password = $users[0]->password_hash;
@@ -584,17 +621,21 @@ class Admin extends BaseController
                             'foto' => $namaFoto,
                             'alamat' => $this->request->getPost('alamat'),
                             'ttl' => $ttl,
+                            'no_tlp' => $this->request->getPost('no_tlp'),
                             'email' => $this->request->getPost('email'),
                             'username' => $this->request->getPost('username'),
                             'password_hash' => $password,
                         ]);
                         if ($updateUser && $this->JabatanModel->updateJabatan($id_user, $this->request->getPost('jabatan'))) {
-                            echo "Berhasil";
+                            session()->setFlashdata('berhasil', 'Pengguna Berhasil Diubah');
+                            return redirect()->to('/admin/manajemen-user');
                         } else {
-                            echo "Problem";
+                            session()->setFlashdata('gagal', 'Pengguna Gagal Diubah');
+                            return redirect()->to('/admin/manajemen-user');
                         }
                     } else {
-                        echo "Kesalahan Server";
+                        session()->setFlashdata('gagal', 'Pengguna Gagal Diubah');
+                        return redirect()->to('/admin/manajemen-user');
                     }
                 } else {
                     $updateUser = $this->UserModel->save([
@@ -602,13 +643,16 @@ class Admin extends BaseController
                         'alamat' => $this->request->getPost('alamat'),
                         'ttl' => $ttl,
                         'email' => $this->request->getPost('email'),
+                        'no_tlp' => $this->request->getPost('no_tlp'),
                         'username' => $this->request->getPost('username'),
                         'password_hash' => $password,
                     ]);
                     if ($updateUser && $this->JabatanModel->updateJabatan($id_user, $this->request->getPost('jabatan'))) {
-                        echo "Berhasil";
+                        session()->setFlashdata('berhasil', 'Pengguna Berhasil Diubah');
+                        return redirect()->to('/admin/manajemen-user');
                     } else {
-                        echo "Problem";
+                        session()->setFlashdata('gagal', 'Pengguna Gagal Diubah');
+                        return redirect()->to('/admin/manajemen-user');
                     }
                 }
             }
@@ -616,9 +660,9 @@ class Admin extends BaseController
             return view("admin/page/ubah_user", $data);
         }
     }
-
     // End User Manajemen
 
+    // Start Profil Manajemen
     public function pengaturan($id_user = null)
     {
         $users = $this->UserModel->getUserRoleAdmin($id_user);
@@ -646,6 +690,7 @@ class Admin extends BaseController
                 $formUbah = $this->validate([
                     'username' => $username,
                     'email' => $valid,
+                    'no_tlp' => 'required|integer|alpha_numeric',
                     'foto' => 'max_size[foto,1024]|mime_in[foto,image/jpg,image/jpeg,image/png]|ext_in[foto,png,jpg,jpeg]',
 
                 ]);
@@ -668,7 +713,8 @@ class Admin extends BaseController
                             );
                             $status = true;
                         } else {
-                            echo "Password Tidak Sama";
+                            session()->setFlashdata('gagal', 'Password Baru Tidak Sama Dengan Password Konfirmasi');
+                            return redirect()->to('/admin/pengaturan-profil/' . $id_user);
                         }
                     } else {
                         $password = $users[0]->password_hash;
@@ -705,7 +751,8 @@ class Admin extends BaseController
                                 $unlink = true;
                             }
                         } else {
-                            echo "kesalahan sistem";
+                            session()->setFlashdata('gagal', 'Gagal Memotong Gambar');
+                            return redirect()->to('/admin/pengaturan-profil/' . $id_user);
                         }
 
                         // Cek apakah gambar lama berhasil dihapus?
@@ -714,6 +761,7 @@ class Admin extends BaseController
                                 'id' => $id_user,
                                 'foto' => $namaFoto,
                                 'alamat' => $this->request->getPost('alamat'),
+                                'no_tlp' => $this->request->getPost('no_tlp'),
                                 'ttl' => $ttl,
                                 'email' => $this->request->getPost('email'),
                                 'username' => $this->request->getPost('username'),
@@ -723,19 +771,23 @@ class Admin extends BaseController
                                 if ($status == true) {
                                     return redirect()->to('/logout');
                                 } else {
-                                    echo "Berhasil";
+                                    session()->setFlashdata('berhasil', 'Profil Berhasil Diperbaharui');
+                                    return redirect()->to('/admin/pengaturan-profil/' . $id_user);
                                 }
                             } else {
-                                echo "Problem";
+                                session()->setFlashdata('gagal', 'Profil Gagal Diperbaharui');
+                                return redirect()->to('/admin/pengaturan-profil/' . $id_user);
                             }
                         } else {
-                            echo "Kesalahan Server";
+                            session()->setFlashdata('gagal', 'Profil Gagal Diperbaharui');
+                            return redirect()->to('/admin/pengaturan-profil/' . $id_user);
                         }
                     } else {
                         $updateUser = $this->UserModel->save([
                             'id' => $id_user,
                             'alamat' => $this->request->getPost('alamat'),
                             'ttl' => $ttl,
+                            'no_tlp' => $this->request->getPost('no_tlp'),
                             'email' => $this->request->getPost('email'),
                             'username' => $this->request->getPost('username'),
                             'password_hash' => $password,
@@ -744,10 +796,12 @@ class Admin extends BaseController
                             if ($status == true) {
                                 return redirect()->to('/logout');
                             } else {
-                                echo "Berhasil";
+                                session()->setFlashdata('berhasil', 'Profil Berhasil Diperbaharui');
+                                return redirect()->to('/admin/pengaturan-profil/' . $id_user);
                             }
                         } else {
-                            echo "Problem";
+                            session()->setFlashdata('gagal', 'Profil Gagal Diperbaharui');
+                            return redirect()->to('/admin/pengaturan-profil/' . $id_user);
                         }
                     }
                 }
@@ -756,6 +810,9 @@ class Admin extends BaseController
             }
         }
     }
+    // End Manajemen Profil
+
+    // Start Manajemen Pesanan Masuk
     public function pesanan_masuk()
     {
         $data = [
@@ -788,7 +845,8 @@ class Admin extends BaseController
                     }
                 }
                 if ($val == false) {
-                    echo  $nKamar . " Sudah Dipesan Sebelumnya";
+                    session()->setFlashdata('gagal', $nKamar . " Sudah Dipesan Sebelumnya");
+                    return redirect()->to('/admin/pesanan-masuk');
                 } else {
                     foreach ($cekKamar as $upKamar) {
                         $updateKamar = $this->KamarModel->save([
@@ -812,12 +870,15 @@ class Admin extends BaseController
                             "status_bukti" => 1,
                         ]);
                         if ($terima) {
-                            echo "Berhasil Diterima";
+                            session()->setFlashdata('berhasil', "Pesanan Berhasil Diterima");
+                            return redirect()->to('/admin/pesanan-masuk');
                         } else {
-                            echo "Gagal Diterima";
+                            session()->setFlashdata('gagal', "Pesanan Gagal Diterima");
+                            return redirect()->to('/admin/pesanan-masuk');
                         }
                     } else {
-                        echo "Gagal Diterima";
+                        session()->setFlashdata('gagal', "Pesanan Gagal Diterima");
+                        return redirect()->to('/admin/pesanan-masuk');
                     }
                 }
             }
@@ -831,9 +892,11 @@ class Admin extends BaseController
         } else {
 
             if ($this->PesananModel->delete($id_pesanan)) {
-                echo "Berhasil Dihapus";
+                session()->setFlashdata('berhasil', "Pesanan Berhasil Dihapus");
+                return redirect()->to('/admin/pesanan-masuk');
             } else {
-                echo "Gagal Dihapus";
+                session()->setFlashdata('gagal', "Pesanan Gagal Dihapus");
+                return redirect()->to('/admin/pesanan-masuk');
             }
         }
     }
@@ -850,13 +913,18 @@ class Admin extends BaseController
                     "status_pesanan" => 2,
                 ]);
                 if ($tolak) {
-                    echo "Berhasil Ditolak";
+                    session()->setFlashdata('berhasil', "Pesanan Berhasil Ditolak");
+                    return redirect()->to('/admin/pesanan-masuk');
                 } else {
-                    echo "Gagal Ditolak";
+                    session()->setFlashdata('gagal', "Pesanan Gagal Ditolak");
+                    return redirect()->to('/admin/pesanan-masuk');
                 }
             }
         }
     }
+    // End Manajamen Pesanan Masuk
+
+    // Start Manajemen Validasi Masuk
     public function validasi_masuk()
     {
         $data = [
@@ -869,6 +937,18 @@ class Admin extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         return view("admin/page/validasi_masuk", $data);
+    }
+    public function laporan_pesanan()
+    {
+        $data = [
+            "title" => "Data Laporan Pesanan Panel",
+            "id" => "8",
+            "laporan_pesanan" => $this->RincianModel->findAll(),
+        ];
+        if (logged_in() && in_groups('user')) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+        return view("admin/page/laporan_pesanan", $data);
     }
     public function terima_bukti($id_pesanan = null)
     {
@@ -885,9 +965,11 @@ class Admin extends BaseController
                     "status_menginap" => 1,
                 ]);
                 if ($terima) {
-                    echo "Berhasil Diterima";
+                    session()->setFlashdata('berhasil', "Pesanan Berhasil Divalidasi");
+                    return redirect()->to('/admin/validasi-masuk');
                 } else {
-                    echo "Gagal Diterima";
+                    session()->setFlashdata('gagal', "Pesanan Gagal Divalidasi");
+                    return redirect()->to('/admin/validasi-masuk');
                 }
             }
         }
@@ -904,9 +986,11 @@ class Admin extends BaseController
                     "due_date" =>  date('Y-m-d H:i:s', time() + (60 * 120)),
                 ]);
                 if ($terima) {
-                    echo "Berhasil Direfresh";
+                    session()->setFlashdata('berhasil', "Pesanan Berhasil Direfresh");
+                    return redirect()->to('/admin/validasi-masuk');
                 } else {
-                    echo "Gagal Direfresh";
+                    session()->setFlashdata('gagal', "Pesanan Gagal Direfresh");
+                    return redirect()->to('/admin/validasi-masuk');
                 }
             }
         }
@@ -939,9 +1023,11 @@ class Admin extends BaseController
                         "status_bukti" => 3,
                     ]);
                     if ($tolak) {
-                        echo "Berhasil Ditolak";
+                        session()->setFlashdata('berhasil', "Pesanan Berhasil Ditolak");
+                        return redirect()->to('/admin/validasi-masuk');
                     } else {
-                        echo "Gagal Ditolak";
+                        session()->setFlashdata('gagal', "Pesanan Gagal Ditolak");
+                        return redirect()->to('/admin/validasi-masuk');
                     }
                 }
             }
@@ -980,18 +1066,25 @@ class Admin extends BaseController
 
                 if ($status) {
                     if ($this->PesananModel->delete($id_pesanan)) {
-                        echo "Berhasil Dihapus";
+                        session()->setFlashdata('berhasil', "Pesanan Berhasil Dihapus");
+                        return redirect()->to('/admin/validasi-masuk');
                     } else {
-                        echo "Gagal Dihapus";
+                        session()->setFlashdata('gagal', "Pesanan Gagal Dihapus");
+                        return redirect()->to('/admin/validasi-masuk');
                     }
                 } else {
-                    echo "Gagal Menghapus";
+                    session()->setFlashdata('gagal', "Pesanan Gagal Dihapus");
+                    return redirect()->to('/admin/validasi-masuk');
                 }
             } else {
-                echo "Kesalahan Sistem";
+                session()->setFlashdata('gagal', "Pesanan Gagal Dihapus");
+                return redirect()->to('/admin/validasi-masuk');
             }
         }
     }
+    // End Manajamene Validasi Pesanan
+
+    // Start Manajemen Pesanan Tervalidasi
     public function pesanan_tervalidasi()
     {
         $data = [
@@ -1016,15 +1109,19 @@ class Admin extends BaseController
                             "sisa_bayar" => $perlu_bayar,
                         ]);
                         if ($updateCheckout) {
-                            echo "Berhasil Diperpanjang";
+                            session()->setFlashdata('berhasil', "Waktu Menginap Berhasil Diperpanjang");
+                            return redirect()->to('/admin/pesanan-tervalidasi');
                         } else {
-                            echo "Gagal Diperpanjang";
+                            session()->setFlashdata('gagal', "Waktu Menginap Gagal Diperpanjang");
+                            return redirect()->to('/admin/pesanan-tervalidasi');
                         }
                     } else {
-                        echo "Tanggal Perpanjangan Tidak Dapat Kurang Dari Check Out";
+                        session()->setFlashdata('gagal', "Waktu Check Out Tidak Dapat Lebih Besar Dari Waktu Perpanjangan");
+                        return redirect()->to('/admin/pesanan-tervalidasi');
                     }
                 } else {
-                    echo "Pesanan Tidak Ditemukan";
+                    session()->setFlashdata('berhasil', "Pesanan Tidak Ditemukan");
+                    return redirect()->to('/admin/pesanan-tervalidasi');
                 }
             } else {
                 return view("admin/page/pesanan_tervalidasi", $data);
@@ -1046,9 +1143,11 @@ class Admin extends BaseController
                     "status_menginap" => 2,
                 ]);
                 if ($terima) {
-                    echo "Berhasil Diterima";
+                    session()->setFlashdata('berhasil', "Status Tamu Berhasil Diupdate");
+                    return redirect()->to('/admin/pesanan-tervalidasi');
                 } else {
-                    echo "Gagal Diterima";
+                    session()->setFlashdata('gagal', "Status Tamu Gagal Diupdate");
+                    return redirect()->to('/admin/pesanan-tervalidasi');
                 }
             }
         }
@@ -1085,12 +1184,15 @@ class Admin extends BaseController
                         "sisa_bayar" => 0,
                     ]);
                     if ($terima) {
-                        echo "Berhasil Diterima";
+                        session()->setFlashdata('berhasil', "Status Tamu Berhasil Diupdate");
+                        return redirect()->to('/admin/pesanan-tervalidasi');
                     } else {
-                        echo "Gagal Diterima";
+                        session()->setFlashdata('gagal', "Status Tamu Gagal Diupdate");
+                        return redirect()->to('/admin/pesanan-tervalidasi');
                     }
                 } else {
-                    echo "Gagal Mengubah Kamar";
+                    session()->setFlashdata('gagal', "Status Tamu Gagal Diupdate");
+                    return redirect()->to('/admin/pesanan-tervalidasi');
                 }
             }
         }
@@ -1099,7 +1201,7 @@ class Admin extends BaseController
     {
         $data = [
             "title" => "Data Validasi Masuk Panel",
-            "id" => "8",
+            "id" => "9",
         ];
         if (logged_in() && in_groups('user')) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();

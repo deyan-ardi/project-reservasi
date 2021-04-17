@@ -75,6 +75,16 @@
                                     class="form-control" id="inputTanggal">
                             </div>
                             <div class="form-group">
+                                <label for="no_tlp" class="col-form-label">No Telp/Whatsapp</label>
+                                <input type="number" min="8000000000" name="no_tlp"
+                                    value="<?= (old('no_tlp')) ? old('no_tlp') : ucWords($users[0]->no_tlp); ?>"
+                                    class="form-control <?php if ($validation->getError('no_tlp')) : ?>is-invalid<?php endif ?>"
+                                    id="no_tlp" placeholder="+62" required>
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('no_tlp'); ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="inputEmail" class="col-form-label">Email</label>
                                 <input type="email"
                                     class="form-control <?php if ($validation->getError('email')) : ?>is-invalid<?php endif ?>"

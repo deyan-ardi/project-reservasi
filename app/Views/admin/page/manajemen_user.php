@@ -84,7 +84,8 @@
                                         <td class="text-danger">Non-Active</td>
                                         <?php endif; ?>
                                         <td><a href="<?= base_url(); ?>/admin/hapus-user/<?= $d->userid; ?>"><button
-                                                    type="button" class="btn btn-danger">Hapus</button></a><br><a
+                                                    type="button"
+                                                    class="btn btn-danger tombol-hapus">Hapus</button></a><br><a
                                                 href="<?= base_url(); ?>/admin/ubah-user/<?= $d->userid; ?>"><button
                                                     type="button" class="btn btn-warning mt-2">Ubah</button></a></td>
                                     </tr>

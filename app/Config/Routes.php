@@ -49,6 +49,7 @@ $routes->post('/pengaturan-profil/(:num)', 'Home::pengaturan/$1', ['filter' => '
 $routes->get('/hapus-keranjang/(:num)', 'Home::hapus_keranjang/$1', ['filter' => 'role:user']);
 $routes->get('/konfirmasi-selesai/(:num)', 'Home::konfirmasi_selesai/$1', ['filter' => 'role:user']);
 $routes->get('/konfirmasi-ulang/(:num)', 'Home::konfirmasi_ulang/$1', ['filter' => 'role:user']);
+$routes->get('/batalkan-pesanan/(:num)', 'Home::batal_pesanan/$1', ['filter' => 'role:user']);
 
 // Admin All Routes
 $routes->get('/admin','Admin::index', ['filter' => 'role:admin,super admin']);
@@ -63,28 +64,29 @@ $routes->get('/admin/pengaturan-profil/(:num)', 'Admin::pengaturan/$1', ['filter
 $routes->post('/admin/pengaturan-profil/(:num)', 'Admin::pengaturan/$1', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/tambah-kategori-kamar', 'Admin::tmb_kategori', ['filter' => 'role:admin,super admin']);
 $routes->post('/admin/tambah-kategori-kamar', 'Admin::tmb_kategori', ['filter' => 'role:admin,super admin']);
-$routes->get('/admin/hapus-kategori-kamar/(:num)', 'Admin::hapus_kategori/$1', ['filter' => 'role:admin,super admin']);
+$routes->get('/admin/hapus-kategori-kamar/(:num)', 'Admin::hapus_kategori/$1', ['filter' => 'role:super admin']);
 $routes->get('/admin/ubah-kategori-kamar/(:num)', 'Admin::ubah_kategori/$1', ['filter' => 'role:admin,super admin']);
 $routes->post('/admin/ubah-kategori-kamar/(:num)', 'Admin::ubah_kategori/$1', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/tambah-kamar', 'Admin::tmb_kamar', ['filter' => 'role:admin,super admin']);
 $routes->post('/admin/tambah-kamar', 'Admin::tmb_kamar', ['filter' => 'role:admin,super admin']);
-$routes->get('/admin/hapus-kamar/(:num)', 'Admin::hapus_kamar/$1', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/ubah-kamar/(:num)', 'Admin::ubah_kamar/$1', ['filter' => 'role:admin,super admin']);
 $routes->post('/admin/ubah-kamar/(:num)', 'Admin::ubah_kamar/$1', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/terima-pesanan/(:num)', 'Admin::terima_pesanan/$1', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/tolak-pesanan/(:num)', 'Admin::tolak_pesanan/$1', ['filter' => 'role:admin,super admin']);
-$routes->get('/admin/hapus-pesanan/(:num)', 'Admin::hapus_pesanan/$1', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/refresh-pesanan/(:num)', 'Admin::refresh_pesanan/$1', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/terima-bukti/(:num)', 'Admin::terima_bukti/$1', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/tolak-bukti/(:num)', 'Admin::tolak_bukti/$1', ['filter' => 'role:admin,super admin']);
-$routes->get('/admin/hapus-bukti/(:num)', 'Admin::hapus_bukti/$1', ['filter' => 'role:admin,super admin']);
-$routes->get('/admin/hapus-tamu/(:num)', 'Admin::hapus_bukti/$1', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/check-in-tamu/(:num)', 'Admin::check_in/$1', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/check-out-tamu/(:num)', 'Admin::check_out/$1', ['filter' => 'role:admin,super admin']);
+$routes->get('/admin/laporan-pesanan', 'Admin::laporan_pesanan', ['filter' => 'role:admin,super admin']);
 
 // Super Admin Routes
+$routes->get('/admin/hapus-kamar/(:num)', 'Admin::hapus_kamar/$1', ['filter' => 'role:super admin']);
+$routes->get('/admin/hapus-bukti/(:num)', 'Admin::hapus_bukti/$1', ['filter' => 'role:super admin']);
+$routes->get('/admin/hapus-tamu/(:num)', 'Admin::hapus_bukti/$1', ['filter' => 'role:super admin']);
 $routes->get('/admin/manajemen-pegawai', 'Admin::manajemen_pegawai', ['filter' => 'role:super admin']);
 $routes->get('/admin/manajemen-user', 'Admin::manajemen_user', ['filter' => 'role:super admin']);
+$routes->get('/admin/hapus-pesanan/(:num)', 'Admin::hapus_pesanan/$1', ['filter' => 'role:super admin']);
 $routes->get('/admin/hapus-pegawai/(:num)', 'Admin::hapus_pegawai/$1', ['filter' => 'role:super admin']);
 $routes->get('/admin/ubah-pegawai/(:num)', 'Admin::ubah_pegawai/$1', ['filter' => 'role:super admin']);
 $routes->post('/admin/ubah-pegawai/(:num)', 'Admin::ubah_pegawai/$1', ['filter' => 'role:super admin']);

@@ -75,6 +75,16 @@
                                     value="<?= (old('ttl')) ? old('ttl') : ucWords($users[0]->ttl); ?>"
                                     class="form-control" id="inputTanggal">
                             </div>
+                            <div class="form-group">
+                                <label for="no_tlp" class="col-form-label">No Telp/Whatsapp</label>
+                                <input type="number" min="8000000000" name="no_tlp"
+                                    value="<?= (old('no_tlp')) ? old('no_tlp') : ucWords($users[0]->no_tlp); ?>"
+                                    class="form-control <?php if ($validation->getError('no_tlp')) : ?>is-invalid<?php endif ?>"
+                                    id="no_tlp" placeholder="+62" required>
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('no_tlp'); ?>
+                                </div>
+                            </div>
                             <h5 class="text-center mt-5">Pengaturan Akun</h5>
                             <hr width="25%">
                             <div class="form-group">

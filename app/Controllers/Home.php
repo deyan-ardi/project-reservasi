@@ -7,6 +7,7 @@ use App\Models\KamarModels;
 use App\Models\PesananModels;
 use App\Models\KeranjangModels;
 use App\Models\RincianModels;
+
 class Home extends BaseController
 {
 	// Home Page
@@ -19,7 +20,6 @@ class Home extends BaseController
 		$this->PesananModel = new PesananModels();
 		$this->KeranjangModel = new KeranjangModels();
 		$this->form_validation = \Config\Services::validation();
-		
 	}
 	public function index()
 	{
@@ -143,13 +143,19 @@ class Home extends BaseController
 						"total_bayar" => $cari[0]->total_bayar,
 					]);
 					if ($updateStatus) {
-						if ($this->PesananModel->delete($id_pesanan)) {
-							echo "Berhasil";
-						} else {
-							echo "Gagal";
+						$hapusBukti = unlink('transfer_image/' . $cari[0]->bukti_bayar);
+						if ($hapusBukti) {
+							if ($this->PesananModel->delete($id_pesanan)) {
+								session()->setFlashdata('berhasil', "Berhasil Mengkonfirmasi");
+								return redirect()->to('/booking-sekarang');
+							} else {
+								session()->setFlashdata('gagal', "Gagal Mengkonfirmasi");
+								return redirect()->to('/booking-sekarang');
+							}
 						}
 					} else {
-						echo "Gagal";
+						session()->setFlashdata('gagal', "Gagal Mengkonfirmasi");
+						return redirect()->to('/booking-sekarang');
 					}
 				}
 			}
@@ -164,10 +170,34 @@ class Home extends BaseController
 			if (empty($cari)) {
 				throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 			} else {
+				$hapusBukti = unlink('transfer_image/' . $cari[0]->bukti_bayar);
+				if ($hapusBukti) {
+					if ($this->PesananModel->delete($id_pesanan)) {
+						session()->setFlashdata('berhasil', "Berhasil Mengkonfirmasi");
+						return redirect()->to('/booking-sekarang');
+					} else {
+						session()->setFlashdata('gagal', "Gagal Mengkonfirmasi");
+						return redirect()->to('/booking-sekarang');
+					}
+				}
+			}
+		}
+	}
+	public function batal_pesanan($id_pesanan = null)
+	{
+		$cari = $this->PesananModel->getPesananUser($id_pesanan);
+		if (logged_in() && !in_groups('user')) {
+			return redirect()->to('/admin');
+		} else {
+			if (empty($cari)) {
+				throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+			} else {
 				if ($this->PesananModel->delete($id_pesanan)) {
-					echo "Berhasil";
+					session()->setFlashdata('berhasil', "Berhasil Dibatalkan");
+					return redirect()->to('/booking-sekarang');
 				} else {
-					echo "Gagal";
+					session()->setFlashdata('gagal', "Gagal Dibatalkan");
+					return redirect()->to('/booking-sekarang');
 				}
 			}
 		}
@@ -223,9 +253,11 @@ class Home extends BaseController
 						"check_out" => $this->request->getPost('check-out'),
 					]);
 					if ($updatePesanan) {
-						echo "Berhasil Dipesan";
+						session()->setFlashdata('berhasil', "Pesanan Berhasil Dibuat");
+						return redirect()->to('/booking-sekarang');
 					} else {
-						echo "Gagal Dipesan";
+						session()->setFlashdata('gagal', "Pesanan Gagal Dibuat");
+						return redirect()->to('/booking-sekarang');
 					}
 				}
 			} else if ($this->request->getPost('submit_bukti')) {
@@ -246,12 +278,15 @@ class Home extends BaseController
 							"status_bukti" => 2,
 						]);
 						if ($updatePesanan) {
-							echo "Berhasil Mengirim Bukti Pembayaran";
+							session()->setFlashdata('berhasil', "Berhasil Mengirim Bukti Pembayaran");
+							return redirect()->to('/booking-sekarang');
 						} else {
-							echo "Gagal Mengirim Bukti Pembayaran";
+							session()->setFlashdata('gagal', "Gagal Mengirim Bukti Pembayaran");
+							return redirect()->to('/booking-sekarang');
 						}
 					} else {
-						echo "Gambar Tidak Boleh Kosong";
+						session()->setFlashdata('gagal', "Gambar Tidak Boleh Kosong");
+						return redirect()->to('/booking-sekarang');
 					}
 				}
 			} else {
@@ -274,15 +309,19 @@ class Home extends BaseController
 				]);
 				if ($updatePesanan) {
 					if ($this->KeranjangModel->delete($id_keranjang)) {
-						echo "Berhasil Dihapus";
+						session()->setFlashdata('berhasil', "Keranjang Berhasil Dihapus");
+						return redirect()->to('/booking-sekarang');
 					} else {
-						echo "Gagal Dihapus";
+						session()->setFlashdata('gagal', "Keranjang Gagal Dihapus");
+						return redirect()->to('/booking-sekarang');
 					}
 				} else {
-					echo "Gagal Dihapus";
+					session()->setFlashdata('gagal', "Keranjang Gagal Dihapus");
+					return redirect()->to('/booking-sekarang');
 				}
 			} else {
-				echo "Data Tidak Ditemukan";
+				session()->setFlashdata('gagal', "Data Keranjang Tidak Ditemukan");
+				return redirect()->to('/booking-sekarang');
 			}
 		}
 	}
@@ -351,15 +390,19 @@ class Home extends BaseController
 										'sub_total' => $total,
 									]);
 									if ($saveKeranjang) {
-										echo "Berhasil Ditambahkan Kekeranjang";
+										session()->setFlashdata('berhasil', "Berhasil Ditambahkan Kekeranjang");
+										return redirect()->to('/detail-kamar/' . $id_kamar);
 									} else {
-										echo "Gagal Ditambahkan Kekeranjang";
+										session()->setFlashdata('gagal', "Gagal Ditambahkan Kekeranjang");
+										return redirect()->to('/detail-kamar/' . $id_kamar);
 									}
 								} else {
-									echo "Gagal Ditambahkan, Kamar Sudah Ada Di Keranjang";
+									session()->setFlashdata('gagal', "Gagal Ditambahkan, Item Sudah Ada Dikeranjang");
+									return redirect()->to('/detail-kamar/' . $id_kamar);
 								}
 							} else {
-								echo "500 - Internal Server Error";
+								session()->setFlashdata('gagal', "Gagal Ditambahkan Kekeranjang");
+								return redirect()->to('/detail-kamar/' . $id_kamar);
 							}
 						} else {
 							if (!empty($cariPesanan) && $cariPesanan[0]->status_keranjang == 1 && $cariPesanan[0]->status_pesanan == 0 && $cariPesanan[0]->status_bukti == 0 && $cariPesanan[0]->status_menginap == 0) {
@@ -380,20 +423,25 @@ class Home extends BaseController
 											'sub_total' => $total,
 										]);
 										if ($saveKeranjang) {
-											echo "Berhasil Ditambahkan Kekeranjang";
+											session()->setFlashdata('berhasil', "Berhasil Ditambahkan Kekeranjang");
+											return redirect()->to('/detail-kamar/' . $id_kamar);
 										} else {
-											echo "Gagal Ditambahkan Kekeranjang";
+											session()->setFlashdata('gagal', "Gagal Ditambahkan Kekeranjang");
+											return redirect()->to('/detail-kamar/' . $id_kamar);
 										}
 									}
 								} else {
-									echo "Gagal Ditambahkan, Kamar Sudah Ada Di Keranjang";
+									session()->setFlashdata('gagal', "Gagal Ditambahkan, Item Sudah Ada Dikeranjang");
+									return redirect()->to('/detail-kamar/' . $id_kamar);
 								}
 							} else {
-								echo "500 - Internal Server Error";
+								session()->setFlashdata('gagal', "Gagal Ditambahkan Kekeranjang");
+								return redirect()->to('/detail-kamar/' . $id_kamar);
 							}
 						}
 					} else {
-						echo "Tidak Dapat Membuat Pesanan, Silahkan Selesaikan Pesanan Sebelumnya";
+						session()->setFlashdata('gagal', "Gagal Ditambahkan, Selesaikan Terlebih Dahulu Pesanan Sebelumnya");
+						return redirect()->to('/detail-kamar/' . $id_kamar);
 					}
 				}
 			} else {
@@ -444,6 +492,7 @@ class Home extends BaseController
 					$formUbah = $this->validate([
 						'username' => $username,
 						'email' => $valid,
+						'no_tlp' => 'required|integer|alpha_numeric',
 						'foto' => 'max_size[foto,1024]|mime_in[foto,image/jpg,image/jpeg,image/png]|ext_in[foto,png,jpg,jpeg]',
 
 					]);
@@ -466,7 +515,8 @@ class Home extends BaseController
 								);
 								$status = true;
 							} else {
-								echo "Password Tidak Sama";
+								session()->setFlashdata('gagal', "Password Baru Tidak Sama Dengan Password Konfirmasi");
+								return redirect()->to('/pengaturan-profil/' . $id_user);
 							}
 						} else {
 							$password = $users[0]->password_hash;
@@ -503,6 +553,7 @@ class Home extends BaseController
 									'foto' => $namaFoto,
 									'alamat' => $this->request->getPost('alamat'),
 									'ttl' => $ttl,
+									'no_tlp' => $this->request->getPost('no_tlp'),
 									'email' => $this->request->getPost('email'),
 									'username' => $this->request->getPost('username'),
 									'password_hash' => $password,
@@ -511,19 +562,23 @@ class Home extends BaseController
 									if ($status == true) {
 										return redirect()->to('/logout');
 									} else {
-										echo "Berhasil";
+										session()->setFlashdata('berhasil', "Profil Berhasil Diubah");
+										return redirect()->to('/pengaturan-profil/' . $id_user);
 									}
 								} else {
-									echo "Problem";
+									session()->setFlashdata('gagal', "Profil Gagal Diubah");
+									return redirect()->to('/pengaturan-profil/' . $id_user);
 								}
 							} else {
-								echo "Kesalahan Server";
+								session()->setFlashdata('gagal', "Profil Gagal Diubah");
+								return redirect()->to('/pengaturan-profil/' . $id_user);
 							}
 						} else {
 							$updateUser = $this->UserModel->save([
 								'id' => $id_user,
 								'alamat' => $this->request->getPost('alamat'),
 								'ttl' => $ttl,
+								'no_tlp' => $this->request->getPost('no_tlp'),
 								'email' => $this->request->getPost('email'),
 								'username' => $this->request->getPost('username'),
 								'password_hash' => $password,
@@ -532,10 +587,12 @@ class Home extends BaseController
 								if ($status == true) {
 									return redirect()->to('/logout');
 								} else {
-									echo "Berhasil";
+									session()->setFlashdata('berhasil', "Profil Berhasil Diubah");
+									return redirect()->to('/pengaturan-profil/' . $id_user);
 								}
 							} else {
-								echo "Problem";
+								session()->setFlashdata('gagal', "Profil Gagal Diubah");
+								return redirect()->to('/pengaturan-profil/' . $id_user);
 							}
 						}
 					}
