@@ -602,4 +602,34 @@ class Home extends BaseController
 			}
 		}
 	}
+
+	// Function PDF
+
+	public function invoice_masuk($status = null)
+	{
+		if (!empty($status)) {
+			$data = [
+				'data_pesanan' => $this->PesananModel->getDataPesananWhere(user()->id),
+				'rincian_pesanan' => $this->KeranjangModel->getAllRincian(),
+			];
+			if ($status == "invoice-pemesanan") {
+				$html = view('cetak/index', $data);
+			} else {
+				$html = view('cetak/bukti', $data);
+			}
+
+
+			$dompdf = new \Dompdf\Dompdf();
+			$dompdf->setPaper('A4', 'portrait');
+			$dompdf->set_option('isHtml5ParserEnabled', true);
+			$dompdf->set_option('isRemoteEnabled', true);
+			$dompdf->set_option('defaultMediaType', 'all');
+			$dompdf->set_option('isFontSubsettingEnabled', true);
+			$dompdf->set_option('defaultFont', 'OpenSans');
+			$dompdf->loadHtml($html, 'UTF-8');
+			$dompdf->render();
+			$dompdf->stream("INVOICE-" . date('d-m-Y_H.i.s') . ".pdf");
+		}
+	}
+	
 }

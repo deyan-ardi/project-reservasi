@@ -1215,4 +1215,6 @@ class Admin extends BaseController
         }
         return view("admin/page/info_website", $data);
     }
+
+
 }

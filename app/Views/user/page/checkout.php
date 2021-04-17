@@ -222,7 +222,8 @@
                                         Perlu Anda Bawa Pada Saat Check In. Sampai Jumpa Di Penginapan</p>
                                 </div>
                                 <div class="form-group text-center">
-                                    <button class="btn btn-primary btn-sm">Unduh Invoice</button>
+                                    <a href="<?= base_url(); ?>/unduh-invoice/bukti-pembayaran"
+                                        class="btn btn-primary btn-sm">Unduh Invoice</a>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12 mt-5">
@@ -580,7 +581,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><a href="" class="btn btn-primary btn-sm">Unduh Invoice</a></td>
+                                        <td><a href="<?= base_url(); ?>/unduh-invoice/invoice-pemesanan"
+                                                class="btn btn-primary btn-sm">Unduh Invoice</a></td>
                                     </tr>
                                 </table>
                             </div>

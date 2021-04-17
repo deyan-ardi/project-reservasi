@@ -50,6 +50,7 @@ $routes->get('/hapus-keranjang/(:num)', 'Home::hapus_keranjang/$1', ['filter' =>
 $routes->get('/konfirmasi-selesai/(:num)', 'Home::konfirmasi_selesai/$1', ['filter' => 'role:user']);
 $routes->get('/konfirmasi-ulang/(:num)', 'Home::konfirmasi_ulang/$1', ['filter' => 'role:user']);
 $routes->get('/batalkan-pesanan/(:num)', 'Home::batal_pesanan/$1', ['filter' => 'role:user']);
+$routes->get('/unduh-invoice/(:any)', 'Home::invoice_masuk/$1', ['filter' => 'role:user']);
 
 // Admin All Routes
 $routes->get('/admin','Admin::index', ['filter' => 'role:admin,super admin']);
