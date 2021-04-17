@@ -33,4 +33,16 @@ class UsersModels extends Model
             return $this->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id')->where('auth_groups_users.group_id', '3')->where('users.id', $id_user)->get()->getResult();
         }
     }
+    public function countUser($status)
+    {
+        if ($status == "staff") {
+            $this->select('users.id as userid, username, email, foto, alamat, ttl,no_tlp, name, password_hash,active');
+            $this->join('auth_groups_users', 'auth_groups_users.user_id = users.id');
+            return $this->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id')->where('auth_groups_users.group_id', '2')->orWhere('auth_groups_users.group_id', '1')->get()->getNumRows();
+        } else {
+            $this->select('users.id as userid, username, email, foto, alamat, ttl,no_tlp, name, password_hash,active');
+            $this->join('auth_groups_users', 'auth_groups_users.user_id = users.id');
+            return $this->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id')->where('auth_groups_users.group_id', '3')->get()->getNumRows();
+        }
+    }
 }

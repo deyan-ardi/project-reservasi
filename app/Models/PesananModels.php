@@ -45,4 +45,19 @@ class PesananModels extends Model
         $this->select("pesanan.*,users.username,users.alamat,users.email, users.no_tlp,");
         return $this->join('users', 'users.id = pesanan.id_user')->where("status_menginap", 1)->orWhere("status_menginap", 2)->orWhere("status_menginap", 3)->orderBy('created_at', 'ASC')->get()->getResult();
     }
+    public function countPesanan($status)
+    {
+        if ($status == "pesanan") {
+            return $this->where("status_pesanan", 1)->get()->getNumRows();
+        } else if ($status == "bukti") {
+            return $this->where("status_bukti", 2)->get()->getNumRows();
+        } else {
+            return $this->where("status_menginap", 1)->get()->getNumRows();
+        }
+    }
+    public function getAllPesananUser()
+    {
+        $this->select('pesanan.*,users.username');
+        return $this->join('users', 'users.id = pesanan.id_user')->limit(3)->orderBy('created_at', 'ASC')->get()->getResult();
+    }
 }

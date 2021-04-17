@@ -52,11 +52,10 @@
                                         <td><?= $d['created_at']; ?></td>
                                         <td><?= $d['created_by']; ?></td>
                                         <td>
-                                            <?php if(in_groups("super admin")): ?>
-                                            <a
-                                                href="<?= base_url(); ?>/admin/hapus-kategori-kamar/<?= $d['id_kategori']; ?>"><button
-                                                    type="button"
-                                                    class="btn btn-danger tombol-hapus">Hapus</button></a><br>
+                                            <?php if (in_groups("super admin")) : ?>
+                                            <a href="<?= base_url(); ?>/admin/hapus-kategori-kamar/<?= $d['id_kategori']; ?>"
+                                                class="tombol-hapus"><button type="button"
+                                                    class="btn btn-danger">Hapus</button></a><br>
                                             <?php endif; ?>
                                             <a
                                                 href="<?= base_url(); ?>/admin/ubah-kategori-kamar/<?= $d['id_kategori']; ?>"><button
@@ -138,9 +137,9 @@
                                         <td><?= $k->created_by; ?></td>
                                         <td>
                                             <?php if (in_groups('super admin')) : ?>
-                                            <a href="<?= base_url(); ?>/admin/hapus-kamar/<?= $k->id_kamar; ?>"><button
-                                                    type="button"
-                                                    class="btn btn-danger tombol-hapus">Hapus</button></a><br>
+                                            <a href="<?= base_url(); ?>/admin/hapus-kamar/<?= $k->id_kamar; ?>"
+                                                class="tombol-hapus"><button type="button"
+                                                    class="btn btn-danger">Hapus</button></a><br>
                                             <?php endif; ?>
                                             <a href="<?= base_url(); ?>/admin/ubah-kamar/<?= $k->id_kamar; ?>"><button
                                                     type="button" class="btn btn-warning mt-2">Ubah</button></a>

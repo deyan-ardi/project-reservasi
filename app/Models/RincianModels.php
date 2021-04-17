@@ -12,4 +12,9 @@ class RincianModels extends Model
     protected $allowedFields = ['kode_pesanan', 'nama_pemesan', 'check_in', 'check_out', 'pay_date', 'tamu_dewasa', 'tamu_anak', 'total_bayar'];
     protected $updatedField  = false;
     protected $deletedField  = false;
+
+    public function countRincian()
+    {
+        return $this->get()->getNumRows();
+    }
 }

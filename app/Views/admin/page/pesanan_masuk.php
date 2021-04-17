@@ -92,9 +92,10 @@
                                                     Pesanan</button>
                                             </a><br>
                                             <?php endif; ?>
-                                            <?php if(in_groups("super admin")): ?>
-                                            <a href="<?= base_url(); ?>/admin/hapus-pesanan/<?= $d->id_pesanan; ?>"><button
-                                                    type="button" class="btn btn-danger btn-sm mt-2 tombol-hapus">Hapus
+                                            <?php if (in_groups("super admin")) : ?>
+                                            <a href="<?= base_url(); ?>/admin/hapus-pesanan/<?= $d->id_pesanan; ?>"
+                                                class=" tombol-hapus"><button type="button"
+                                                    class="btn btn-danger btn-sm mt-2">Hapus
                                                     Pesanan</button>
                                             </a>
                                             <?php endif; ?>

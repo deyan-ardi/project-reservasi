@@ -85,9 +85,9 @@
                                         <?php else : ?>
                                         <td class="text-danger">Non-Active</td>
                                         <?php endif; ?>
-                                        <td><a href="<?= base_url(); ?>/admin/hapus-pegawai/<?= $d->userid; ?>"><button
-                                                    type="button"
-                                                    class="btn btn-danger tombol-hapus">Hapus</button></a><br><a
+                                        <td><a href="<?= base_url(); ?>/admin/hapus-pegawai/<?= $d->userid; ?>"
+                                                class="tombol-hapus"><button type="button"
+                                                    class="btn btn-danger">Hapus</button></a><br><a
                                                 href="<?= base_url(); ?>/admin/ubah-pegawai/<?= $d->userid; ?>"><button
                                                     type="button" class="btn btn-warning mt-2">Ubah</button></a></td>
                                     </tr>

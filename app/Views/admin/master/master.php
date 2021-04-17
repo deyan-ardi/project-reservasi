@@ -115,13 +115,7 @@
                         <img src="<?= base_url(); ?>/user_image/<?= user()->foto; ?>" class="profile-thumb"
                             alt="User Thumb">
                         <?php endif; ?>
-                        <h6 class="profile-name"><?= ucWords(user()->username); ?> -
-                            <?php if (in_groups("super admin")) : ?>
-                            Admin
-                            <?php else : ?>
-                            Staff
-                            <?php endif; ?>
-                        </h6>
+
                     </div>
                     <!-- END .user-profile -->
 

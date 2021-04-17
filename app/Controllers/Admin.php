@@ -29,6 +29,13 @@ class Admin extends BaseController
         $data = [
             "title" => "Dashboard Panel",
             "id" => "1",
+            "count_masuk" => $this->PesananModel->countPesanan("pesanan"),
+            "count_validasi" => $this->PesananModel->countPesanan("bukti"),
+            "count_tervalidasi" => $this->PesananModel->countPesanan("tervalidasi"),
+            "count_selesai" => $this->RincianModel->countRincian(),
+            "count_pegawai" => $this->UserModel->countUser("staff"),
+            "count_member" => $this->UserModel->countUser("member"),
+            "status_akhir" => $this->PesananModel->getAllPesananUser(),
         ];
         if (logged_in() && in_groups('user')) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();

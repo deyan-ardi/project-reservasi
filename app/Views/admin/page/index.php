@@ -11,8 +11,8 @@
                         <i class="icon-laptop_windows"></i>
                     </div>
                     <div class="page-title">
-                        <h5>Quick Dashboard</h5>
-                        <h6 class="sub-heading">Welcome to Unify Admin Template</h6>
+                        <h5>Dashboard</h5>
+                        <h6 class="sub-heading">Selamat Datang Di Dashboard Sistem BLABLABLA</h6>
                     </div>
                 </div>
             </div>
@@ -23,74 +23,70 @@
     <div class="main-content">
         <!-- Row start -->
         <div class="row gutters">
-            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                <div class="card block-300">
-                    <div class="card-body">
-                        <div id="mapAfrica" class="chart-height-md"></div>
-                        <div class="info-stats">
-                            <span class="info-label red"></span>
-                            <p class="info-title">Overall Sales in Africa</p>
-                            <h4 class="info-total">62,800</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col">
+            <div class="col-xl-3 col-lg-2 col-md-3 col-sm-3 col">
                 <a href="#" class="block-140">
                     <div class="icon violet">
                         <i class="icon-shopping-cart2"></i>
                     </div>
-                    <h5>2540</h5>
-                    <p>Items Sold</p>
+                    <h5><?= $count_selesai; ?></h5>
+                    <p>Pesanan Selesai</p>
                 </a>
                 <a href="#" class="block-140">
-                    <div class="icon pink">
-                        <i class="icon-thumbs-up2"></i>
+                    <div class="icon info">
+                        <i class="icon-login"></i>
                     </div>
-                    <h5>763</h5>
-                    <p>Likes</p>
+                    <h5><?= $count_tervalidasi; ?></h5>
+                    <p>Pesanan Tervalidasi</p>
                 </a>
+
             </div>
-            <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col">
+            <div class="col-xl-3 col-lg-2 col-md-3 col-sm-3 col">
                 <a href="#" class="block-140">
                     <div class="icon success">
                         <i class="icon-bell3"></i>
                     </div>
-                    <h5>218</h5>
-                    <p>Alerts</p>
+                    <h5><?= $count_masuk; ?></h5>
+                    <p>Pesanan Masuk</p>
                 </a>
                 <a href="#" class="block-140">
                     <div class="icon warning">
                         <i class="icon-location4"></i>
                     </div>
-                    <h5>549</h5>
-                    <p>Locations</p>
+                    <h5><?= $count_member; ?></h5>
+                    <p>Member</p>
                 </a>
             </div>
-            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6">
+            <div class="col-xl-3 col-lg-2 col-md-6 col-sm-6">
                 <a href="#" class="block-140">
                     <div class="icon danger">
                         <i class="icon-archive3"></i>
                     </div>
-                    <h5>367</h5>
-                    <p>Pages</p>
+                    <h5><?= $count_validasi; ?></h5>
+                    <p>Validasi Masuk</p>
                 </a>
                 <a href="#" class="block-140">
-                    <div class="icon info">
-                        <i class="icon-download5"></i>
+                    <div class="icon pink">
+                        <i class="icon-thumbs-up2"></i>
                     </div>
-                    <h5>854</h5>
-                    <p>Downloads</p>
+                    <h5><?= $count_pegawai; ?></h5>
+                    <p>Tim Solid</p>
                 </a>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
                 <a class="block-300 center-text">
                     <div class="user-profile">
-                        <img src="<?= base_url(); ?>/assets/admin/img/avatar1.svg" class="profile-thumb"
+                        <?php if (empty(user()->foto)) : ?>
+                        <img src="<?= base_url(); ?>/user_image/default.jpg" class="profile-thumb" alt="User Thumb">
+                        <?php else : ?>
+                        <img src="<?= base_url(); ?>/user_image/<?= user()->foto; ?>" class="profile-thumb"
                             alt="User Thumb">
-                        <h5 class="profile-name">Yuki Hayashi</h5>
-                        <h6 class="profile-designation">UX Designer</h6>
-                        <p class="profile-location">Japan</p>
+                        <?php endif; ?>
+                        <h5 class="profile-name"><?= user()->username; ?></h5>
+                        <?php if (in_groups("super admin")) : ?>
+                        <h6 class="profile-designation">Admin</h6>
+                        <?php else : ?>
+                        <?php endif; ?>
+                        <p class="profile-location"><?= user()->email; ?></p>
                         <div class="ml-5 mr-5 chartist custom-two">
                             <div class="team-act"></div>
                         </div>
@@ -101,115 +97,69 @@
         <!-- Row end -->
         <!-- Row start -->
         <div class="row gutters">
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <div class="col-xl-5 col-lg-6 col-md-6 col-sm-6">
                 <div class="card">
-                    <div class="card-header">Statistics</div>
+                    <div class="card-header">Rincian Sistem</div>
                     <div class="card-body">
                         <ul class="stats">
                             <li>
                                 <span class="icon">
-                                    <i class="icon-shopping-basket"></i>
+                                    <i class="icon-network"></i>
                                 </span>
-                                Once a buyer completes checkout and
+                                Dikembangkan Dengan Codeigniter 4
                             </li>
                             <li>
                                 <span class="icon">
-                                    <i class="icon-fire"></i>
+                                    <i class="icon-info4"></i>
                                 </span>
-                                A new ticket opened
-                            </li>
-                            <li>
-                                <span class="icon">
-                                    <i class="icon-camera"></i>
-                                </span>
-                                Thanks Sarah, I need your profile
+                                Versi 1.0 - Codename Beta
                             </li>
                             <li>
                                 <span class="icon">
                                     <i class="icon-lightbulb"></i>
                                 </span>
-                                That's A great idea!
+                                Hak Cipta Milik
                             </li>
                             <li>
                                 <span class="icon">
-                                    <i class="icon-emoji-happy"></i>
+                                    <i class="icon-mail6"></i>
                                 </span>
-                                Tell us what you think
-                            </li>
-                            <li>
-                                <span class="icon">
-                                    <i class="icon-fire"></i>
-                                </span>
-                                A new item sold
+                                ganatech.id@gmail.com
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <div class="col-xl-7 col-lg-6 col-md-6 col-sm-6">
                 <div class="card">
-                    <div class="card-header">Conversation</div>
+                    <div class="card-header">Aktifitas Terakhir</div>
                     <div class="customScroll">
                         <div class="card-body">
                             <ul class="message-wrapper">
-                                <li class="in">
-                                    <img class="avatar" alt="48x48"
-                                        src="<?= base_url(); ?>/assets/admin/img/avatar2.svg" />
-                                    <div class="message">
-                                        <a href="#" class="name">Elon Musk</a>
-                                        <span class="date-time">Jan 18th, 2017</span>
-                                        <div class="body">
-                                            Convergence target enable syndicate <span>grow</span> end-to-end life-hacks,
-                                            integrate engage <span>podcasting</span>."
-                                        </div>
-                                    </div>
-                                </li>
+                                <?php
+                                $i = 1;
+                                foreach ($status_akhir as $s) :
+                                ?>
+                                <?php if ($i++ % 2 == 0) : ?>
                                 <li class="out">
-                                    <div class="empty-avatar">AS</div>
-                                    <div class="message">
-                                        <a href="#" class="name">Angela Serkel</a>
-                                        <span class="date-time">Jan 15th, 2017</span>
-                                        <div class="body">
-                                            Transition, <span>widgets</span> users remix dynamic 24/365 holistic network
-                                            effects <span>communities</span>, users, leading-edge e-services social."
-                                        </div>
-                                    </div>
-                                </li>
+                                    <?php else : ?>
                                 <li class="in">
+                                    <?php endif; ?>
                                     <img class="avatar" alt="48x48"
                                         src="<?= base_url(); ?>/assets/admin/img/avatar2.svg" />
                                     <div class="message">
-                                        <a href="#" class="name">Nkio Toyoda</a>
-                                        <span class="date-time">Jan 10th, 2017</span>
+                                        <a href="#" class="name">Pesanan Baru Nomor <?= $s->kode_pesanan; ?></a>
+                                        <span class="date-time"><?= date('d F Y H:i', strtotime($s->created_at)); ?>
+                                            WITA</span>
                                         <div class="body">
-                                            Need some <span>interesting looking</span> for your work in progress
-                                            end-to-end life-hacks, integrate engage <span>podcasting.</span>
+                                            Pesanan Masuk Baru Oleh Member <kbd><?= $s->username; ?></kbd>, Mohon Dicek
+                                            Pada Bagian
+                                            Data
+                                            Reservasi
                                         </div>
                                     </div>
                                 </li>
-                                <li class="out">
-                                    <div class="empty-avatar red">VK</div>
-                                    <div class="message">
-                                        <a href="#" class="name">Viloke Kemishy</a>
-                                        <span class="date-time">Jan 12th, 2017</span>
-                                        <div class="body">
-                                            Transition, <span>widgets</span> users remix dynamic 24/365 holistic network
-                                            effects <span>communities</span>, users, leading-edge e-services social."
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="in">
-                                    <img class="avatar" alt="48x48"
-                                        src="<?= base_url(); ?>/assets/admin/img/avatar2.svg" />
-                                    <div class="message">
-                                        <a href="#" class="name">Devivo Gumevx</a>
-                                        <span class="date-time">Jan 5th, 2017</span>
-                                        <div class="body">
-                                            Need some <span>interesting looking</span> for your work in progress
-                                            end-to-end life-hacks, integrate engage <span>podcasting.</span>
-                                        </div>
-                                    </div>
-                                </li>
+                                <?php endforeach; ?>
                             </ul>
                         </div>
                     </div>
