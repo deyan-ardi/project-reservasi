@@ -390,7 +390,7 @@ class Admin extends BaseController
                 'username' => $username,
                 'email' => $valid,
                 'jabatan' => 'required',
-                'no_tlp' => 'required|integer|alpha_numeric',
+                'no_tlp' => 'integer|alpha_numeric',
                 'foto' => 'max_size[foto,1024]|mime_in[foto,image/jpg,image/jpeg,image/png]|ext_in[foto,png,jpg,jpeg]',
 
             ]);
@@ -568,7 +568,7 @@ class Admin extends BaseController
             $formUbah = $this->validate([
                 'username' => $username,
                 'email' => $valid,
-                'no_tlp' => 'required|integer|alpha_numeric',
+                'no_tlp' => 'integer|alpha_numeric',
                 'jabatan' => 'required',
                 'foto' => 'max_size[foto,1024]|mime_in[foto,image/jpg,image/jpeg,image/png]|ext_in[foto,png,jpg,jpeg]',
 

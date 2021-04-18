@@ -1,63 +1,84 @@
-# CodeIgniter 4 Application Starter
+# Sistem Informasi Reservasi
 
-## What is CodeIgniter?
+## Pre-Request
+- git
+- composer
+- xampp/laragon
+- teks editor (disarankan visual code)
+- Versi php minimal `php 7.2`
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](http://codeigniter.com).
-
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
-
-More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
-
-The user guide corresponding to this version of the framework can be found
-[here](https://codeigniter4.github.io/userguide/).
-
-## Installation & updates
-
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
-
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
-
-## Setup
-
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
-
-## Important Change with index.php
-
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
-
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
-
-**Please** read the user guide for a better explanation of how CI4 works!
-
-## Repository Management
-
-We use Github issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
-
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
-
-## Server Requirements
-
-PHP version 7.2 or higher is required, with the following extensions installed:
-
+Pastikan beberapa ekstension ini aktif (secara default sudah aktif)
 - [intl](http://php.net/manual/en/intl.requirements.php)
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
-
+- [libcurl](http://php.net/manual/en/curl.requirements.php) i
 Additionally, make sure that the following extensions are enabled in your PHP:
 
 - json (enabled by default - don't turn it off)
 - [mbstring](http://php.net/manual/en/mbstring.installation.php)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
 - xml (enabled by default - don't turn it off)
+
+## Installation & updates
+
+### Clone Repositori
+- Pergi ke folder `xampp/htdocs` lalu klik kanan pilih `git bash here`
+- Clone repositori dengan syntax `git clone https://github.com/deyan-ardi/project-reservasi.git`
+
+### Mengimport Database
+- Hidupkan XAMPP (Apache dan Mysql)
+- Buka folder `project-reservasi` yang ada pada folder `xampp/htdocs`
+- Pada browser akses `localhost/phpmyadmin`
+- Pada phpmyadmin Buat Database baru dengan nama `db_reservasi_fix`
+- Pada phpmyadmin, pilih database `db_reservasi_fix` lalu pilih `impor`
+- Pada bagian `Berkas Untuk Impor`, pilih berkas yang ada pada `project-reservasi/sql/db_reservasi_fix.sql`
+- Setelah berhasil diimpor, selanjutnya buka `project-reservasi` pada `Visual Studio Code`
+- Kemudian liat pada root repositori, apakah ada file dengan nama `.env`? Jika tidak, rename file `env_rename` menjadi `.env`. 
+
+### Folder Vendor
+Folder Vendor merupakan folder system dari Codeigniter 4, terkadang ketika mengupload ke github folder ini tidak disertakan. Untuk itu silahkan dilihat, apakah folder `vendor` ada pada root repositori
+- Jika folder `vendor` tidak ada di root repositori, silahkan buka `Visual Studio Code`, kemudian pilih `Terminal` yang ada disamping bar `Help` pada bar yang ada diatas `Visual Studio Code`.
+- Pilih `New Terminal`, makan akan muncul terminal dibawah `Visual Studio Code`
+- Tulis syntax `composer update`, maka composer akan melakukan update terhadap repositori
+- Jika berhasil, maka seharusnya sekarang folder vendor ada pada root repositori
+
+## Menjalankan Project
+Pastikan proses sebelumnya sudah berhasil dilakukan dan tanpa ada error, selanjutnya untuk menjalankan project silahkan hidupkan terlebih dahulu XAMPP (Mysql dan Apache), kemudian buka `project-reservasi` pada Visual Studio Code dan pilih `Terminal` lalu `New Terminal`.
+
+Selanjutnya, tuliskan syntax `php spark serve`, selanjutnya buka browser lalu tuliskan `localhost:8080/`. Jika tidak ada masalah seharusnya aplikasi telah berhasil dijalankan
+
+## Membuat akun
+Untuk membuat akun, silahkan pilih `masuk` lalu masukkan data yang diminta, pastikan email benar. Selanjutnya periksa email anda untuk mendapatkan kode aktivasi
+
+## Membuat super admin
+Secara default, setelah melakukan pendaftaran maka user yang mendaftar akan langsung masuk sebagai `member`, namun karena kita butuh akun yang menjadi super admin dari aplikasi ini, maka kita harus melakukan hal berikut
+
+Setelah berhasil membuat akun, selanjutnya untuk membuat `Super Admin` silahkan buka `localhost/phpmyadmin` kemudian pilih `db_reservasi_fix` lalu pilih tabel `auth_groups_users`, perhatikan pada kolom `user_id`, pilih `ubah` pada id user yang ingin diubah jabatannya. Kemudian ganti `group_id` dengan angka 1 kemudian simpan.
+
+Kode Jabatan
+1 => Super Admin
+2 => Admin
+3 => User/Member
+
+Setelah itu, silahkan masuk ke halaman `localhost:8080/login`, lalu masukkan username dan password dari akun `Super Admin` tadi
+
+## Membuat admin
+Untuk membuat akun admin, silahkan lakukan pendaftaran melalui menu register yang ada pada halaman `localhost:8080/register`, masukkan data yang diminta, kemudian cek email untuk mendapatkan kode aktivasi. Secara default, akun yang baru dibuat ini akan masuk kedalam jabatan `user/member`, untuk menjadikannya admin, lakukan cara berikut.
+
+- Login menggunakan akun `Super Admin` pada halaman `localhost:8080/login`, setelah masuk ke Dashboard, kemudian pilih `manajemen user`. Pilih tombol `ubah` pada user yang ingin dijadikan `admin`
+- Setelah masuk ke menu ubah, silahkan pilih `staff` pada pilihan paling bawah lalu `simpan`
+
+## Melakukan update repositori
+Karena kita sudah melakukan clone repositori, maka seharusnya nanti jika dari `developer` melakukan update repositori, Anda cukup melakukan dua hal berikut
+- Buka `project-resevasi` pada `Visual Studio Code` lalu pilih  `Terminal => New Terminal`
+- Tuliskan syntax `git fetch origin master`, lalu enter
+- Setelah itu, tuliskan syntax `git pull origin master`, lalu enter
+
+Seharusnya setelah itu, maka aplikasi otomatis diperbaharui
+
+## Fitur yang belum
+- Print Laporan Dalam Bentuk Excel
+
+## Bug dan Laporan
+Silahkan hubungi `Developer` jika menemukan bug
+
+
+

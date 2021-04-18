@@ -81,7 +81,7 @@
                                 <input type="number" min="8000000000" name="no_tlp"
                                     value="<?= (old('no_tlp')) ? old('no_tlp') : ucWords($users[0]->no_tlp); ?>"
                                     class="form-control <?php if ($validation->getError('no_tlp')) : ?>is-invalid<?php endif ?>"
-                                    id="no_tlp" placeholder="+62" required>
+                                    id="no_tlp" placeholder="+62">
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('no_tlp'); ?>
                                 </div>
