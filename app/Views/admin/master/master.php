@@ -150,6 +150,7 @@
                                         <a href='<?= base_url(); ?>/admin/manajemen-kamar'>Manajemen Kamar</a>
                                         <?php endif; ?>
                                     </li>
+                                    <?php if(in_groups('super_user')): ?>
                                     <li>
                                         <?php if ($id == "3") : ?>
                                         <a href='<?= base_url(); ?>/admin/manajemen-pegawai'
@@ -167,6 +168,7 @@
                                             User</a>
                                         <?php endif; ?>
                                     </li>
+                                    <?php endif; ?>
                                 </ul>
                             </li>
 

@@ -85,6 +85,7 @@
                         <?php if (in_groups("super admin")) : ?>
                         <h6 class="profile-designation">Admin</h6>
                         <?php else : ?>
+                        <h6 class="profile-designation">Staff</h6>
                         <?php endif; ?>
                         <p class="profile-location"><?= user()->email; ?></p>
                         <div class="ml-5 mr-5 chartist custom-two">

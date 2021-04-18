@@ -560,7 +560,7 @@ class Admin extends BaseController
             } else {
                 $valid = 'required|valid_email|valid_emails|is_unique[users.email]';
             }
-            if ($users[0]->username == $this->request->getPost('username')) {
+            if (ucWords($users[0]->username) == $this->request->getPost('username')) {
                 $username = 'required';
             } else {
                 $username = 'required|is_unique[users.username]';
