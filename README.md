@@ -75,7 +75,17 @@ Karena kita sudah melakukan clone repositori, maka seharusnya nanti jika dari `d
 Seharusnya setelah itu, maka aplikasi otomatis diperbaharui
 
 ## Fitur yang belum
-- Front End
+- Seluruh Fitur Sudah Dibuat
+
+### Assets yang diperlukan
+Untuk pembuatan tampilan website, Saya membutuhkan beberapa asset berikut
+- Gambar Bungalow (Kamar, Keadaan Lingkungan, Kantor, Dll)
+- Deskripsi Bungalow (Bisa sejarahnya, keunggulan, dll)
+- Video Bungalownya (Upload di youtube)
+- No Telp, Email, Instagram, Facebook, dan media sosial lain (yang dimiliki)
+- Deskripsi terkait dengan makanan, layanan yang disediakan, dll
+- Data Kamar dan Kategori Kamar (disertai gambar masing-masing kamar)
+
 
 ## Bug dan Laporan
 Silahkan hubungi `Developer` jika menemukan bug

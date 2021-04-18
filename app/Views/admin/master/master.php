@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="<?= base_url(); ?>/assets/admin/img/favicon.ico" />
-    <title><?= $title; ?> - Sistem Blablabla</title>
+    <link rel="shortcut icon" href="<?= base_url(); ?>/assets/icon.ico" />
+    <title><?= $title; ?> - Gria Semalung Bungalow</title>
 
     <!-- Common CSS -->
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/css/bootstrap.min.css" />
@@ -55,8 +55,8 @@
                         </a>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-4">
-                        <a href="<?= base_url(); ?>/assets/admin/index-2.html" class="logo">
-                            <img src="<?= base_url(); ?>/assets/admin/img/unify.png" alt="Unify Admin Dashboard" />
+                        <a href="<?= base_url(); ?>/admin" class="logo">
+                            <img src="<?= base_url(); ?>/assets/admin/img/bungalow.png" alt="Unify Admin Dashboard" />
                         </a>
                     </div>
                     <div class="col-xl-5 col-lg-5 col-md-5 col-sm-3 col-4">
@@ -150,7 +150,7 @@
                                         <a href='<?= base_url(); ?>/admin/manajemen-kamar'>Manajemen Kamar</a>
                                         <?php endif; ?>
                                     </li>
-                                    <?php if(in_groups('super_user')): ?>
+                                    <?php if (in_groups('super admin')) : ?>
                                     <li>
                                         <?php if ($id == "3") : ?>
                                         <a href='<?= base_url(); ?>/admin/manajemen-pegawai'

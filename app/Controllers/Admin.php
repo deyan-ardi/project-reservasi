@@ -1095,7 +1095,7 @@ class Admin extends BaseController
     public function pesanan_tervalidasi()
     {
         $data = [
-            "title" => "Data Validasi Masuk Panel",
+            "title" => "Data Pesanan Tervalidasi Panel",
             "id" => "7",
             "pesanan_masuk" => $this->PesananModel->getAllPesananTervalidasi(),
             "rincian_pesanan" => $this->KeranjangModel->getAllRincian(),
@@ -1207,7 +1207,7 @@ class Admin extends BaseController
     public function info_website()
     {
         $data = [
-            "title" => "Data Validasi Masuk Panel",
+            "title" => "Informasi Repositori Sistem Panel",
             "id" => "9",
         ];
         if (logged_in() && in_groups('user')) {

@@ -343,17 +343,16 @@
         }
 
         function submitMSGSub(valid, msg) {
-            if (valid) {
-                var msgClasses = "validation-success";
-            } else {
-                var msgClasses = "validation-danger";
-            }
-            $("#validator-newsletter").removeClass().addClass(msgClasses).text(msg);
+          if (valid) {
+            var msgClasses = "validation-success";
+          } else {
+            var msgClasses = "validation-danger";
+          }
+          $("#validator-newsletter")
+            .removeClass()
+            .addClass(msgClasses)
+            .text(msg);
         }
-        $(".newsletter-form").ajaxChimp({
-            url: "https://envytheme.us20.list-manage.com/subscribe/post?u=60e1ffe2e8a68ce1204cd39a5&amp;id=42d6d188d9",
-            callback: callbackFunction
-        });
     });
 })(jQuery);
 

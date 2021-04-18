@@ -30,13 +30,8 @@
                 </ul>
                 <div class="single-room-content">
                     <h3><?= $kamar[0]->nama_kamar; ?></h3>
-                    <ul class="star-list">
-                        <li><i class="fas fa-star"></i></li>
-                        <li><i class="fas fa-star"></i></li>
-                        <li><i class="fas fa-star"></i></li>
-                        <li><i class="fas fa-star"></i></li>
-                        <li><i class="fas fa-star"></i></li>
-                    </ul>
+                    <p>Diupload oleh <?= ucWords($kamar[0]->created_by); ?> pada tanggal
+                        <?= date('d F Y H:i', strtotime($kamar[0]->created_at)); ?> WITA</p>
                     <p style="text-align: justify;"><?= $kamar[0]->deskripsi_kamar; ?></p>
                 </div>
             </div>
@@ -55,7 +50,10 @@
                                         <option value="0">Tidak Sertakan Sarapan</option>
                                         <option value="1">Sertakan Sarapan</option>
                                     </select>
-                                    <label class="mt-3"> <sup>)*</sup> Jika Anda Ingin Menyertakan
+                                    <label class="mt-3" style="line-height:normal; text-align:justify;"> <sup>)*</sup>
+                                        Jika
+                                        Anda Ingin
+                                        Menyertakan
                                         Sarapan, Anda
                                         Akan Dikenakan Biaya Tambahan Sebesar Rp.<?= BIAYA_LAYANAN; ?> dengan rincian 1x
                                         Sarapan Pagi, 1x Sarapan Siang, 1x Sarapan Malam. Menu Sarapan dapat dipilih
@@ -64,6 +62,7 @@
                             </div>
                             <div class="col-lg-12 col-md-12">
                                 <div class="send-btn">
+                                    <?php if (logged_in()) : ?>
                                     <?php if (empty(user()->alamat) || empty(user()->ttl) || empty(user()->foto) || empty(user()->no_tlp)) : ?>
                                     <a href="<?= base_url(); ?>/pengaturan-profil/<?= user()->id; ?>"
                                         class="send-btn-one">Lengkapi Data
@@ -71,6 +70,9 @@
                                     <?php else : ?>
                                     <button class="send-btn-one" type="submit" name="submit" value="Submit">Booking
                                         Sekarang</button>
+                                    <?php endif; ?>
+                                    <?php else : ?>
+                                    <a href="<?= base_url(); ?>/login" class="send-btn-one">Booking Sekarang</a>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -81,7 +83,8 @@
                     <div class="single-room-map">
                         <div class="single-room-map-area">
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387190.2799090714!2d-74.25987368715496!3d40.697670064588735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sbd!4v1570689677254!5m2!1sen!2sbd"></iframe>
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3946.944690660396!2d115.58206805042322!3d-8.407093293924122!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd20696b58cb321%3A0x9e03589009feec45!2sGeria%20Semalung%20Bungalow!5e0!3m2!1sid!2sid!4v1618751233390!5m2!1sid!2sid"
+                                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                         </div>
                     </div>
                 </div>
@@ -94,7 +97,7 @@
 <section class="popular-room-section">
     <div class="container">
         <div class="popular-content">
-            <h3>Popular Room</h3>
+            <h3>Kamar Populer</h3>
         </div>
         <div class="popular-slider owl-carousel owl-theme">
             <?php foreach ($all as $k) : ?>
@@ -109,10 +112,6 @@
                 <div class="room-content">
                     <h3><?= $k->nama_kamar ?> </h3>
                     <p style="text-align: justify;">Kategori Kamar : <?= $k->nama_kategori; ?></p>
-                    <p style="text-align: justify;">Rating Kamar : <i class="fa fa-star " style="color: #cfa97a;"></i>
-                        <i class="fa fa-star " style="color: #cfa97a;"></i> <i class="fa fa-star "
-                            style="color: #cfa97a;"></i>
-                    </p>
                     <div class="room-btn">
                         <a href="<?= base_url(); ?>/detail-kamar/<?= $k->id_kamar; ?>" class="room-btn-one">Selengkapnya
                             <i class="fa fa-arrow-right"></i>

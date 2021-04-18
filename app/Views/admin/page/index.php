@@ -12,7 +12,7 @@
                     </div>
                     <div class="page-title">
                         <h5>Dashboard</h5>
-                        <h6 class="sub-heading">Selamat Datang Di Dashboard Sistem BLABLABLA</h6>
+                        <h6 class="sub-heading">Selamat Datang Di Dashboard Sistem Reservasi Gria Semalung Bungalow</h6>
                     </div>
                 </div>
             </div>

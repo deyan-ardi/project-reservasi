@@ -60,4 +60,10 @@ class PesananModels extends Model
         $this->select('pesanan.*,users.username');
         return $this->join('users', 'users.id = pesanan.id_user')->limit(3)->orderBy('created_at', 'ASC')->get()->getResult();
     }
+    public function cekReadyKamarByPesanan($id_kamar)
+    {
+        $this->select('pesanan.*,keranjang.id_kamar');
+        $this->join('keranjang', 'keranjang.id_pesanan = pesanan.id_pesanan');
+        return $this->where('keranjang.id_kamar', $id_kamar)->where('status_menginap', 1)->get()->getResult();
+    }
 }

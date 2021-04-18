@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <?= $this->include("user/master/css"); ?>
-    <title><?= $title; ?> - Hotel & Accommodation Booking HTML Template</title>
-    <link rel="icon" type="image/png" href="<?= base_url() ?>/assets/user/img/favicon.jpg">
+    <title><?= $title; ?> - Gria Semalung Bungalow</title>
+    <link rel="icon" type="image/png" href="<?= base_url() ?>/assets/icon.ico">
 </head>
 
 <body>
@@ -26,15 +26,15 @@
         <div class="overtop-mobile-nav">
             <div class="logo">
                 <a href="<?= base_url(); ?>">
-                    <img src="<?= base_url(); ?>/assets/user/img/logo.png" alt="logo">
+                    <img src="<?= base_url(); ?>/assets/icon.png" alt="logo">
                 </a>
             </div>
         </div>
         <div class="overtop-nav">
             <div class="container">
                 <nav class="navbar navbar-expand-md navbar-light">
-                    <a class="navbar-brand" href="<?= base_url(); ?>"><img
-                            src="<?= base_url(); ?>/assets/user/img/logo.png" alt="logo"></a>
+                    <a class="navbar-brand" href="<?= base_url(); ?>"><img src="<?= base_url(); ?>/assets/icon.png"
+                            alt="logo" width="75px"></a>
                     <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                         <ul class="navbar-nav m-auto">
                             <li class="nav-item">
@@ -138,7 +138,7 @@
                 <div class="col-lg-5 col-md-6 col-sm-6">
                     <div class="fooetr-item">
                         <div class="footer-logo">
-                            <img src="<?= base_url(); ?>/assets/user/img/logo.png" alt="image">
+                            <img src="<?= base_url(); ?>/assets/icon.png" width="75px" alt="image">
                         </div>
                         <div class="footer-text">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
@@ -172,12 +172,12 @@
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer-content">
-                        <h2>About Overtop</h2>
+                        <h2>Kontak Kami</h2>
                     </div>
                     <ul class="footer-info">
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            25 street, west cruch, Newzeland
+                            Jl.Tanah Lengis, Ababi, Abang, Kabupaten Karangasem, Bali 80852
                         </li>
                         <li>
                             <i class="fa fa-phone"></i>
@@ -185,56 +185,39 @@
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <a href="https://templates.envytheme.com/cdn-cgi/l/email-protection" class="__cf_email__"
-                                data-cfemail="412e372433352e3101262c20282d6f222e2c">[email&#160;protected]</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-fax"></i>
-                            +82549745548
+                            <a href="mailto:">mail@gmail.com</a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6 col-sm-6">
                     <div class="footer-content">
-                        <h2>Hotel</h2>
+                        <h2>Bungalow</h2>
                     </div>
                     <ul class="footer-list">
                         <li>
-                            <a href="#">Accomodation</a>
+                            <a href="<?= base_url(); ?>/daftar-kamar">Akomodasi</a>
                         </li>
                         <li>
-                            <a href="#">Photo Video</a>
+                            <a href="<?= base_url(); ?>/tentang-kami">Tentang Kami</a>
                         </li>
                         <li>
-                            <a href="#">Peckages</a>
-                        </li>
-                        <li>
-                            <a href="#">Restaurent</a>
-                        </li>
-                        <li>
-                            <a href="#">Wedding</a>
+                            <a href="<?= base_url(); ?>/kontak-kami">Kontak Kami</a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6 col-sm-6">
                     <div class="footer-content">
-                        <h2>Inquiries</h2>
+                        <h2>Layanan</h2>
                     </div>
                     <ul class="footer-list">
                         <li>
-                            <a href="#">About Seasons</a>
+                            <a href="<?= base_url(); ?>/login">Login</a>
                         </li>
                         <li>
-                            <a href="#">Rooms</a>
+                            <a href="<?= base_url(); ?>/register">Register</a>
                         </li>
                         <li>
-                            <a href="#">Gift Card</a>
-                        </li>
-                        <li>
-                            <a href="#">Press Room</a>
-                        </li>
-                        <li>
-                            <a href="#">Contact</a>
+                            <a href="<?= base_url(); ?>/forgot">Lupa Password</a>
                         </li>
                     </ul>
                 </div>
@@ -245,8 +228,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-7">
                         <div class="footer-bottom-content">
-                            <p>Copyright <i class="far fa-copyright"></i> 2021 Overtop. All Rights Reserved by <a
-                                    href="https://envytheme.com/" target="_blank">EnvyTheme</a></p>
+                            <p>Copyright <i class="far fa-copyright"></i><?= date('Y'); ?>. Ganatech ID</p>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-5">

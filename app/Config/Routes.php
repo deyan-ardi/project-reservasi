@@ -40,6 +40,7 @@ $routes->get('/', 'Home::index');
 $routes->get('/tentang-kami','Home::about');
 $routes->get('/daftar-kamar','Home::daftar_kamar');
 $routes->get('/kontak-kami','Home::kontak');
+$routes->post('/kontak-kami', 'Home::kontak');
 $routes->get('/booking-sekarang', 'Home::booking', ['filter' => 'role:user']);
 $routes->post('/booking-sekarang', 'Home::booking', ['filter' => 'role:user']);
 $routes->get('/detail-kamar/(:num)', 'Home::detail_kamar/$1');

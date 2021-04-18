@@ -20,6 +20,7 @@ class Home extends BaseController
 		$this->PesananModel = new PesananModels();
 		$this->KeranjangModel = new KeranjangModels();
 		$this->form_validation = \Config\Services::validation();
+		$this->email = \Config\Services::email();
 	}
 	public function index()
 	{
@@ -40,11 +41,31 @@ class Home extends BaseController
 			"id" => "1",
 			"keranjang" => $keranjang,
 			"data_keranjang" => $data_keranjang,
+			"all" => $this->KamarModel->getAllKamar(),
 		];
 		if (logged_in() && !in_groups('user')) {
 			return redirect()->to('/admin');
+		} else {
+			if ($this->request->getPost('submit')) {
+				$check_in = date('Y-m-d', strtotime($this->request->getPost('check-in')));
+				$check_out = date('Y-m-d', strtotime($this->request->getPost('check-out')));
+				if (new \Datetime($check_out) < new \Datetime($check_in)) {
+					session()->setFlashdata('gagal', "Tanggal Check Out Tidak dapat Lebih Kecil Dari Tanggal Check In");
+					return redirect()->to('/');
+				} else {
+					$cari = $this->PesananModel->cekReadyKamarByPesanan($this->request->getPost('kamar'));
+					if (new \Datetime($check_in) <= new \Datetime($cari[0]->check_in) && new \Datetime($check_out) <= new \Datetime($cari[0]->check_in)) {
+						session()->setFlashdata('berhasil', "Kamar Tersedia");
+						return redirect()->to('/');
+					} else {
+						session()->setFlashdata('gagal', "Kamar Sudah Dibooking");
+						return redirect()->to('/');
+					}
+				}
+			} else {
+				return view("user/page/index", $data);
+			}
 		}
-		return view("user/page/index", $data);
 	}
 	public function about()
 	{
@@ -61,7 +82,7 @@ class Home extends BaseController
 			$data_keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan, "count");
 		}
 		$data = [
-			"title" => "About",
+			"title" => "Tentang Kami",
 			"id" => "2",
 			"keranjang" => $keranjang,
 			"data_keranjang" => $data_keranjang,
@@ -116,11 +137,52 @@ class Home extends BaseController
 			"id" => "4",
 			"keranjang" => $keranjang,
 			"data_keranjang" => $data_keranjang,
+			'validation' => $this->form_validation,
 		];
 		if (logged_in() && !in_groups('user')) {
 			return redirect()->to('/admin');
+		} else {
+			if (!empty($this->request->getPost('submit'))) {
+				$contactEmail = $this->validate([
+					'name' => 'required',
+					'email' => 'required|valid_email|valid_emails',
+					'subject' => 'required',
+					'message' => 'required',
+				]);
+
+				if (!$contactEmail) {
+					return redirect()->to('/kontak-kami')->withInput();
+				} else {
+					$UserAgent = $this->request->getUserAgent();
+					if ($UserAgent->isBrowser()) {
+						$currentAgent = $UserAgent->getBrowser() . ' ' . $UserAgent->getVersion();
+					} elseif ($UserAgent->isRobot()) {
+						$currentAgent = $this->agent->robot();
+					} elseif ($UserAgent->isMobile()) {
+						$currentAgent = $UserAgent->getMobile();
+					} else {
+						$currentAgent = 'Unidentified User Agent';
+					}
+
+					$message = "[ Email Pengirim : " . $this->request->getPost('email') . ", IP Address : " . $this->request->getIpAddress() . ", Platform : " . $UserAgent->getPlatform() . ",Browser : " . $currentAgent . " ] ~ " . $this->request->getPost('message');
+					$this->email->setTo('riyan.clsg11@gmail.com');
+					$this->email->setFrom($this->request->getPost('email'), "From [ " . $this->request->getPost('name') . " ]");
+					$this->email->setSubject($this->request->getPost('subject'));
+					$this->email->setMessage($message);
+					if ($this->email->send()) {
+						session()->setFlashdata('berhasil', 'Email Berhasil Dikirim');
+						return redirect()->to('/kontak-kami');
+					} else {
+						// $errors = $this->email->printDebugger(['headers']);
+						// print_r($errors);
+						session()->setFlashdata('gagal', '500 - Internal Server Error');
+						return redirect()->to('/kontak-kami');
+					}
+				}
+			} else {
+				return view("user/page/contact", $data);
+			}
 		}
-		return view("user/page/contact", $data);
 	}
 	public function konfirmasi_selesai($id_pesanan = null)
 	{

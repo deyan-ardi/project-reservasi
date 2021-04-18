@@ -11,7 +11,7 @@
                     </div>
                     <div class="page-title">
                         <h5>Informasi Website</h5>
-                        <h6 class="sub-heading">Informasi Sistem Yang Digunakan
+                        <h6 class="sub-heading">Informasi Repositori Sistem
                         </h6>
                     </div>
                 </div>
@@ -27,10 +27,11 @@
                     <div class="card-header">Versi Website 1.0 - Beta</div>
                     <div class="card-body">
                         <h4 class="card-title">Tim Pengembang</h4>
-                        <p class="card-text">Website ini sepenuhnya dikembangkan oleh ...... sebagai bahan dalam .....
-                            Website ini dikembangkan dengan framework Codeigniter 4
+                        <p class="card-text">Website ini sepenuhnya dikembangkan oleh Natha Griyana sebagai bahan dalam
+                            pengembangan skripsi dengan judul ""
                         </p>
-                        <a href="#" class="btn btn-primary">Lihat Repositori</a>
+                        <a href="https://github.com/deyan-ardi/project-reservasi" class="btn btn-primary btn-sm">Lihat
+                            Repositori</a>
                     </div>
                 </div>
             </div>

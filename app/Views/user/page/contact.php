@@ -67,49 +67,53 @@
             <div class="col-lg-6">
                 <div class="contact-area">
                     <div class="contactForm">
-                        <form id="contactForm">
+                        <form id="contactForm" method="POST" action="">
+                            <?= csrf_field() ?>
                             <div class="row">
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                        <input type="text" name="name" id="name" class="form-control" required
-                                            data-error="Please enter your name" placeholder="Your Name">
-                                        <div class="help-block with-errors"></div>
+                                        <input type="text" name="name" id="nama"
+                                            class="form-control <?php if ($validation->getError('name')) : ?>is-invalid<?php endif ?>"
+                                            required placeholder="Nama Anda">
+                                        <div class="invalid-feedback">
+                                            <?= $validation->getError("name"); ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="form-group">
-                                        <input type="email" name="email" id="email" class="form-control" required
-                                            data-error="Please enter your email" placeholder="Your Email">
-                                        <div class="help-block with-errors"></div>
+                                        <input type="email" name="email" id="email"
+                                            class="form-control  <?php if ($validation->getError('name')) : ?>is-invalid<?php endif ?>"
+                                            required placeholder="Email Anda">
+                                        <div class="invalid-feedback">
+                                            <?= $validation->getError("email"); ?>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-sm-6">
+                                <div class="col-lg-12 col-sm-6">
                                     <div class="form-group">
-                                        <input type="text" name="phone_number" id="phone_number" required
-                                            data-error="Please enter your number" class="form-control"
-                                            placeholder="Your Phone">
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="form-group">
-                                        <input type="text" name="msg_subject" id="msg_subject" class="form-control"
-                                            required data-error="Please enter your subject" placeholder="Your Subject">
-                                        <div class="help-block with-errors"></div>
+                                        <input type="text" name="subject" id="msg_subject"
+                                            class="form-control  <?php if ($validation->getError('name')) : ?>is-invalid<?php endif ?>"
+                                            required placeholder="Subjek">
+                                        <div class="invalid-feedback">
+                                            <?= $validation->getError("subject"); ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <textarea name="message" class="form-control" id="message" cols="30" rows="5"
-                                            required data-error="Write your message"
-                                            placeholder="Your Message"></textarea>
-                                        <div class="help-block with-errors"></div>
+                                        <textarea name="message"
+                                            class="form-control  <?php if ($validation->getError('name')) : ?>is-invalid<?php endif ?>"
+                                            id="message" cols="30" rows="5" required placeholder="Pesan"></textarea>
+                                        <div class="invalid-feedback">
+                                            <?= $validation->getError("message"); ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="send-btn">
-                                        <button type="submit" class="send-btn-one">
-                                            Send Message
+                                        <button type="submit" name="submit" value="Submit" class="send-btn-one">
+                                            Kirim Pesan
                                         </button>
                                     </div>
                                     <div id="msgSubmit" class="h3 text-center hidden"></div>
