@@ -80,6 +80,8 @@ $routes->get('/admin/tolak-bukti/(:num)', 'Admin::tolak_bukti/$1', ['filter' => 
 $routes->get('/admin/check-in-tamu/(:num)', 'Admin::check_in/$1', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/check-out-tamu/(:num)', 'Admin::check_out/$1', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/laporan-pesanan', 'Admin::laporan_pesanan', ['filter' => 'role:admin,super admin']);
+$routes->get('/admin/cetak-laporan/(:num)', 'Admin::export_laporan/$1', ['filter' => 'role:admin,super admin']);
+$routes->post('/admin/cetak-laporan', 'Admin::export_laporan', ['filter' => 'role:admin,super admin']);
 
 // Super Admin Routes
 $routes->get('/admin/hapus-kamar/(:num)', 'Admin::hapus_kamar/$1', ['filter' => 'role:super admin']);

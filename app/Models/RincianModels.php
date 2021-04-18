@@ -17,4 +17,12 @@ class RincianModels extends Model
     {
         return $this->get()->getNumRows();
     }
+    public function getAllWhere($dari, $sampai)
+    {
+        return  $this->where('created_at >=', $dari)->where('created_at <=', $sampai)->get()->getResultArray();
+    }
+    public function getAllWherePesanan($id_pesanan)
+    {
+        return $this->where('id_rincian', $id_pesanan)->get()->getResultArray();
+    }
 }

@@ -75,7 +75,7 @@ Karena kita sudah melakukan clone repositori, maka seharusnya nanti jika dari `d
 Seharusnya setelah itu, maka aplikasi otomatis diperbaharui
 
 ## Fitur yang belum
-- Print Laporan Dalam Bentuk Excel
+- Front End
 
 ## Bug dan Laporan
 Silahkan hubungi `Developer` jika menemukan bug

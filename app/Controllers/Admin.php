@@ -1216,5 +1216,34 @@ class Admin extends BaseController
         return view("admin/page/info_website", $data);
     }
 
+    // Unduh Excel
+    public function export_laporan($id_pesanan = null)
+    {
 
+        if (logged_in() && in_groups('user')) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            if (!empty($id_pesanan)) {
+                $cari = $this->RincianModel->getAllWherePesanan($id_pesanan);
+                $data = [
+                    "laporan" => $cari,
+                    "status" => 1,
+                    "name" => "Cetak-Manual-Laporan",
+                ];
+                return view("cetak/export_laporan", $data);
+            } else {
+                if (!empty($this->request->getPost('submit'))) {
+                    $dari = $this->request->getPost('dari_tgl') . " 00:00:00";
+                    $sampai = $this->request->getPost('sampai_tgl') . " 00:00:00";
+                    $all = $this->RincianModel->getAllWhere($dari, $sampai);
+                    $data = [
+                        "laporan" => $all,
+                        "status" => 2,
+                        "name" => "Cetak-Keseluruhan-Laporan"
+                    ];
+                    return view("cetak/export_laporan", $data);
+                }
+            }
+        }
+    }
 }
