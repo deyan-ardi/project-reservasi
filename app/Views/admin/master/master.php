@@ -15,9 +15,6 @@
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/css/main.css" />
 
     <!-- Other CSS includes plugins - Cleanedup unnecessary CSS -->
-    <!-- Chartist css -->
-    <link href="<?= base_url(); ?>/assets/admin/vendor_admin/chartist/css/chartist.min.css" rel="stylesheet" />
-    <link href="<?= base_url(); ?>/assets/admin/vendor_admin/chartist/css/chartist-custom.css" rel="stylesheet" />
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/vendor_admin/datatables/dataTables.bs4.css" />
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/vendor_admin/datatables/dataTables.bs4-custom.css" />
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/vendor_admin/sweetalert/sweetalert2.css">
