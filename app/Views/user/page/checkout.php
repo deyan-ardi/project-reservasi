@@ -120,10 +120,18 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-lg-8">
-                                            <input type="text" id="total_bayar" disabled class="form-control"
-                                                value="Total Wajib Bayar = Pilih Tanggal Terlebih Dahulu">
+                                            <input type="text" id="kode_unik" disabled class="form-control"
+                                                value="Kode Unik = Pilih Tanggal Terlebih Dahulu">
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-8">
+                                            <input type="text" id="total_bayar" disabled class="form-control"
+                                                value="Total Wajib Bayar = Pilih Tanggal Terlebih Dahulu"
+                                                name="total_bayar">
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="total_bayar" id="total_value">
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
@@ -366,6 +374,21 @@
                                     </td>
                                     <td>
                                         <p><?= date('d F Y', strtotime($data_pesanan[0]->check_out)); ?></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <?php
+                                                $check_out = new \Datetime($data_pesanan[0]->check_out);
+                                                $check_in = new \Datetime($data_pesanan[0]->check_in);
+                                                $lama = $check_in->diff($check_out) ?>
+                                    <td>
+                                        <p>Lama Menginap</p>
+                                    </td>
+                                    <td>
+                                        <p>:</p>
+                                    </td>
+                                    <td>
+                                        <p><?= $lama->d; ?> Hari</p>
                                     </td>
                                 </tr>
                                 <tr>

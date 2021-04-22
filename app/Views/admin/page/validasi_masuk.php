@@ -209,7 +209,11 @@
                                                     </ul>
                                                     <?php endif; ?>
                                                     <?php endforeach; ?>
-
+                                                    <?php
+                                                        $check_out = new \Datetime($d->check_out);
+                                                        $check_in = new \Datetime($d->check_in);
+                                                        $lama = $check_in->diff($check_out) ?>
+                                                    <h6 class="mt-4">Lama Menginap : <?= $lama->d; ?> Hari</h6>
                                                     <h6 class="mt-4">Hubungi Tamu</h6>
                                                     <ul>
                                                         <li>

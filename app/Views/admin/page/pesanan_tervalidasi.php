@@ -106,6 +106,12 @@
                                                 data-target="#perpanjang-<?= $d->id_pesanan; ?>"><button type="button"
                                                     class="btn btn-warning btn-sm mt-2">Perpanjang</button>
                                             </a><br>
+                                            <?php elseif ($d->status_menginap == 3) : ?>
+                                            <a
+                                                href="<?= base_url(); ?>/admin/konfirmasi-pesanan/<?= $d->id_pesanan; ?>"><button
+                                                    type="button" class="btn btn-success btn-sm mt-2">Pesanan
+                                                    Selesai</button>
+                                            </a><br>
                                             <?php endif; ?>
                                             <?php if (in_groups("super admin")) : ?>
                                             <a href="<?= base_url(); ?>/admin/hapus-tamu/<?= $d->id_pesanan; ?>"
@@ -254,7 +260,11 @@
                                                     </ul>
                                                     <?php endif; ?>
                                                     <?php endforeach; ?>
-
+                                                    <?php
+                                                        $check_out = new \Datetime($d->check_out);
+                                                        $check_in = new \Datetime($d->check_in);
+                                                        $lama = $check_in->diff($check_out) ?>
+                                                    <h6 class="mt-4">Lama Menginap : <?= $lama->d; ?> Hari</h6>
                                                     <h6 class="mt-4">Hubungi Tamu</h6>
                                                     <ul>
                                                         <li>

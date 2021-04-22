@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="<?= base_url() ?>/assets/user/css/meanmenu.css">
 
-<link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/vendor/sweetalert/sweetalert2.css">
+<link rel="stylesheet" href="<?= base_url(); ?>/assets/user/css/sweetalert2.css">
 
 <link rel="stylesheet" href="<?= base_url() ?>/assets/user/css/slick.min.css">
 

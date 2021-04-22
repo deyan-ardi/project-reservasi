@@ -300,14 +300,15 @@ class Home extends BaseController
 					'check-out' => 'required|valid_date[Y-m-d]',
 					'dewasa' => 'required',
 					'anak' => 'required',
-				]);
-				if (!$formCheckout) {
-					return redirect()->to('/booking-sekarang ')->withInput();
-				} else {
+					]);
+					if (!$formCheckout) {
+						return redirect()->to('/booking-sekarang ')->withInput();
+					} else {
 					$updatePesanan = $this->PesananModel->save([
 						"id_pesanan" => $pesanan[0]->id_pesanan,
 						'status_keranjang' => 0,
 						'status_pesanan' => 1,
+						'total_bayar' => $this->request->getPost('total_bayar'),
 						"tamu_dewasa" => $this->request->getPost('dewasa'),
 						"tamu_anak" => $this->request->getPost('anak'),
 						"pesan" => $this->request->getPost('catatan'),

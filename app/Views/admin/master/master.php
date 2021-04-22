@@ -16,11 +16,11 @@
 
     <!-- Other CSS includes plugins - Cleanedup unnecessary CSS -->
     <!-- Chartist css -->
-    <link href="<?= base_url(); ?>/assets/admin/vendor/chartist/css/chartist.min.css" rel="stylesheet" />
-    <link href="<?= base_url(); ?>/assets/admin/vendor/chartist/css/chartist-custom.css" rel="stylesheet" />
-    <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/vendor/datatables/dataTables.bs4.css" />
-    <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/vendor/datatables/dataTables.bs4-custom.css" />
-    <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/vendor/sweetalert/sweetalert2.css">
+    <link href="<?= base_url(); ?>/assets/admin/vendor_admin/chartist/css/chartist.min.css" rel="stylesheet" />
+    <link href="<?= base_url(); ?>/assets/admin/vendor_admin/chartist/css/chartist-custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/vendor_admin/datatables/dataTables.bs4.css" />
+    <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/vendor_admin/datatables/dataTables.bs4-custom.css" />
+    <link rel="stylesheet" href="<?= base_url(); ?>/assets/admin/vendor_admin/sweetalert/sweetalert2.css">
 
 </head>
 
@@ -264,18 +264,18 @@
     <script src="<?= base_url(); ?>/assets/admin/js/jquery.js"></script>
     <script src="<?= base_url(); ?>/assets/admin/js/tether.min.js"></script>
     <script src="<?= base_url(); ?>/assets/admin/js/bootstrap.min.js"></script>
-    <script src="<?= base_url(); ?>/assets/admin/vendor/unifyMenu/unifyMenu.js"></script>
-    <script src="<?= base_url(); ?>/assets/admin/vendor/onoffcanvas/onoffcanvas.js"></script>
+    <script src="<?= base_url(); ?>/assets/admin/vendor_admin/unifyMenu/unifyMenu.js"></script>
+    <script src="<?= base_url(); ?>/assets/admin/vendor_admin/onoffcanvas/onoffcanvas.js"></script>
     <script src="<?= base_url(); ?>/assets/admin/js/moment.js"></script>
 
     <!-- Data Tables -->
-    <script src="<?= base_url(); ?>/assets/admin/vendor/datatables/dataTables.min.js"></script>
-    <script src="<?= base_url(); ?>/assets/admin/vendor/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/admin/vendor_admin/datatables/dataTables.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/admin/vendor_admin/datatables/dataTables.bootstrap.min.js"></script>
     <!-- Custom Data tables -->
-    <script src="<?= base_url(); ?>/assets/admin/vendor/datatables/custom/custom-datatables.js"></script>
+    <script src="<?= base_url(); ?>/assets/admin/vendor_admin/datatables/custom/custom-datatables.js"></script>
 
     <!-- Sweetalert -->
-    <script src="<?= base_url(); ?>/assets/admin/vendor/sweetalert/sweetalert2.js"></script>
+    <script src="<?= base_url(); ?>/assets/admin/vendor_admin/sweetalert/sweetalert2.js"></script>
     <!-- Common JS -->
     <script src="<?= base_url(); ?>/assets/admin/js/common.js"></script>
     <script>

@@ -98,8 +98,16 @@
     <table class="table mt-5 col-lg-4">
         <tbody>
             <tr>
-                <td>PPN</td>
-                <td>0</td>
+                <?php
+                $check_out = new \Datetime($data_pesanan[0]->check_out);
+                $check_in = new \Datetime($data_pesanan[0]->check_in);
+                $lama = $check_in->diff($check_out) ?>
+                <td>
+                    <p>Lama Menginap</p>
+                </td>
+                <td>
+                    <p><?= $lama->d; ?> Hari</p>
+                </td>
             </tr>
             <tr>
                 <td>Wajib Bayar</td>

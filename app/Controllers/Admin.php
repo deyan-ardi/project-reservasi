@@ -381,7 +381,7 @@ class Admin extends BaseController
             } else {
                 $valid = 'required|valid_email|valid_emails|is_unique[users.email]';
             }
-            if ($users[0]->username == $this->request->getPost('username')) {
+            if (ucWords($users[0]->username) == $this->request->getPost('username')) {
                 $username = 'required';
             } else {
                 $username = 'required|is_unique[users.username]';
@@ -689,7 +689,7 @@ class Admin extends BaseController
                 } else {
                     $valid = 'required|valid_email|valid_emails|is_unique[users.email]';
                 }
-                if ($users[0]->username == $this->request->getPost('username')) {
+                if (ucWords($users[0]->username) == $this->request->getPost('username')) {
                     $username = 'required';
                 } else {
                     $username = 'required|is_unique[users.username]';
@@ -832,6 +832,46 @@ class Admin extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         return view("admin/page/pesanan_masuk", $data);
+    }
+
+    public function konfirmasi_pesanan($id_pesanan = null)
+    {
+        $cari = $this->PesananModel->getPesananUser($id_pesanan);
+        if (logged_in() && in_groups('user') || empty($cari)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            if (empty($cari)) {
+                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+            } else {
+                if ($cari[0]->status_menginap == 3) {
+                    $updateStatus = $this->RincianModel->save([
+                        "kode_pesanan" => $cari[0]->kode_pesanan,
+                        "nama_pemesan" => $cari[0]->username,
+                        "check_in" => $cari[0]->check_in,
+                        "check_out" => $cari[0]->check_out,
+                        "pay_date" => $cari[0]->pay_date,
+                        "tamu_dewasa" => $cari[0]->tamu_dewasa,
+                        "tamu_anak" => $cari[0]->tamu_anak,
+                        "total_bayar" => $cari[0]->total_bayar,
+                    ]);
+                    if ($updateStatus) {
+                        $hapusBukti = unlink('transfer_image/' . $cari[0]->bukti_bayar);
+                        if ($hapusBukti) {
+                            if ($this->PesananModel->delete($id_pesanan)) {
+                                session()->setFlashdata('berhasil', "Berhasil Mengkonfirmasi");
+                                return redirect()->to('/admin/pesanan-tervalidasi');
+                            } else {
+                                session()->setFlashdata('gagal', "Gagal Mengkonfirmasi");
+                                return redirect()->to('/admin/pesanan-tervalidasi');
+                            }
+                        }
+                    } else {
+                        session()->setFlashdata('gagal', "Gagal Mengkonfirmasi");
+                        return redirect()->to('/admin/pesanan-tervalidasi');
+                    }
+                }
+            }
+        }
     }
     public function terima_pesanan($id_pesanan = null)
     {
