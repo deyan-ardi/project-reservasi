@@ -408,7 +408,7 @@ class Admin extends BaseController
                             base64_encode(
                                 hash('sha384', $this->request->getPost('password'), true)
                             ),
-                            PASSWORD_BCRYPT,
+                            PASSWORD_DEFAULT,
                             $hashOptions
                         );
                     } else {
@@ -587,7 +587,7 @@ class Admin extends BaseController
                             base64_encode(
                                 hash('sha384', $this->request->getPost('password'), true)
                             ),
-                            PASSWORD_BCRYPT,
+                            PASSWORD_DEFAULT,
                             $hashOptions
                         );
                     } else {
@@ -715,7 +715,7 @@ class Admin extends BaseController
                                 base64_encode(
                                     hash('sha384', $this->request->getPost('password'), true)
                                 ),
-                                PASSWORD_BCRYPT,
+                                PASSWORD_DEFAULT,
                                 $hashOptions
                             );
                             $status = true;
