@@ -55,8 +55,8 @@
                                         Anda Ingin
                                         Menyertakan
                                         Sarapan, Anda
-                                        Akan Dikenakan Biaya Tambahan Sebesar Rp.<?= BIAYA_LAYANAN; ?> dengan rincian 1x
-                                        Sarapan Pagi, 1x Sarapan Siang, 1x Sarapan Malam. Menu Sarapan dapat dipilih
+                                        Akan Dikenakan Biaya Tambahan Sebesar Rp.<?= BIAYA_LAYANAN; ?> untuk sarapan
+                                        pagi. Menu Sarapan dapat dipilih
                                         ketika Anda berada di Penginapan</label>
                                 </div>
                             </div>

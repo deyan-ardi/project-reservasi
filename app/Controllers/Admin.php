@@ -9,6 +9,7 @@ use App\Models\KamarModels;
 use App\Models\PesananModels;
 use App\Models\KeranjangModels;
 use App\Models\RincianModels;
+
 class Admin extends BaseController
 {
     protected $UserModel, $JabatanModel, $KamarModel, $service_img, $PesananModel, $KeranjangModel, $RincianModel;
@@ -71,7 +72,7 @@ class Admin extends BaseController
         if (!empty($this->request->getPost('submit'))) {
             $formUbah = $this->validate([
                 'nama' => 'required|alpha_numeric_space',
-                'nomor' => 'required|integer',
+                'nomor' => 'required|integer|is_unique[manajemen_kamar.no_kamar]',
                 'harga' => 'required|integer',
                 'kategori' => 'required',
                 'deskripsi' => 'required',
@@ -86,9 +87,9 @@ class Admin extends BaseController
                     $namaFoto = $file->getRandomName();
                     $file->move('room_image', $namaFoto);
                     $thumbnail = $this->service_img
-                        ->withFile(ROOTPATH . 'public/room_image/' . $namaFoto)
+                        ->withFile('room_image/' . $namaFoto)
                         ->fit(510, 400, 'center')
-                        ->save(ROOTPATH . 'public/room_image/' . $namaFoto);
+                        ->save('room_image/' . $namaFoto);
                     if ($thumbnail) {
                         array_push($arr, ["kamar" => $namaFoto]);
                     }
@@ -177,9 +178,9 @@ class Admin extends BaseController
                             $namaFoto = $file->getRandomName();
                             $file->move('room_image', $namaFoto);
                             $thumbnail = $this->service_img
-                                ->withFile(ROOTPATH . 'public/room_image/' . $namaFoto)
+                                ->withFile('room_image/' . $namaFoto)
                                 ->fit(510, 400, 'center')
-                                ->save(ROOTPATH . 'public/room_image/' . $namaFoto);
+                                ->save('room_image/' . $namaFoto);
                             if ($thumbnail) {
                                 array_push($arr, ["kamar" => $namaFoto]);
                             }
@@ -742,9 +743,9 @@ class Admin extends BaseController
                         $fotoProfil->move('user_image', $namaFoto);
 
                         $thumbnail = $this->service_img
-                            ->withFile(ROOTPATH . 'public/user_image/' . $namaFoto)
+                            ->withFile('user_image/' . $namaFoto)
                             ->fit(250, 250, 'center')
-                            ->save(ROOTPATH . 'public/user_image/' . $namaFoto);
+                            ->save('user_image/' . $namaFoto);
                         if ($thumbnail) {
                             // Cek apakah gambar didatabase masih kosong atau tidak, jika kosong maka jangan lakukan unlink
                             if ($users[0]->foto != null) {
@@ -881,53 +882,53 @@ class Admin extends BaseController
         } else {
             if ($cari['status_pesanan'] == 1) {
                 // Send Email Ada Disini
-                $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
-                foreach ($cekKamar as $kamar) {
-                    if ($kamar->status_kamar == 1) {
-                        $val = false;
-                        $nKamar = $kamar->nama_kamar;
-                        break;
-                    } else {
-                        $val = true;
-                    }
-                }
-                if ($val == false) {
-                    session()->setFlashdata('gagal', $nKamar . " Sudah Dipesan Sebelumnya");
+                // $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
+                // foreach ($cekKamar as $kamar) {
+                //     if ($kamar->status_kamar == 1) {
+                //         $val = false;
+                //         $nKamar = $kamar->nama_kamar;
+                //         break;
+                //     } else {
+                //         $val = true;
+                //     }
+                // }
+                // if ($val == false) {
+                //     session()->setFlashdata('gagal', $nKamar . " Sudah Dipesan Sebelumnya");
+                //     return redirect()->to('/admin/pesanan-masuk');
+                // } else {
+                // foreach ($cekKamar as $upKamar) {
+                //     $updateKamar = $this->KamarModel->save([
+                //         "id_kamar" => $upKamar->id_kamar,
+                //         "status_kamar" => 1,
+                //     ]);
+                //     if ($updateKamar) {
+                //         $upDate = true;
+                //     } else {
+                //         $upDate = false;
+                //         break;
+                //     }
+                // }
+                // if ($upDate == true) {
+                $terima = $this->PesananModel->save([
+                    "id_pesanan" => $id_pesanan,
+                    "accept_date" => date('Y-m-d H:i:s'),
+                    "due_date" => date('Y-m-d H:i:s', time() + (60 * 120)),
+                    "status_keranjang" => 0,
+                    "status_pesanan" => 0,
+                    "status_bukti" => 1,
+                ]);
+                if ($terima) {
+                    session()->setFlashdata('berhasil', "Pesanan Berhasil Diterima");
                     return redirect()->to('/admin/pesanan-masuk');
                 } else {
-                    foreach ($cekKamar as $upKamar) {
-                        $updateKamar = $this->KamarModel->save([
-                            "id_kamar" => $upKamar->id_kamar,
-                            "status_kamar" => 1,
-                        ]);
-                        if ($updateKamar) {
-                            $upDate = true;
-                        } else {
-                            $upDate = false;
-                            break;
-                        }
-                    }
-                    if ($upDate == true) {
-                        $terima = $this->PesananModel->save([
-                            "id_pesanan" => $id_pesanan,
-                            "accept_date" => date('Y-m-d H:i:s'),
-                            "due_date" => date('Y-m-d H:i:s', time() + (60 * 120)),
-                            "status_keranjang" => 0,
-                            "status_pesanan" => 0,
-                            "status_bukti" => 1,
-                        ]);
-                        if ($terima) {
-                            session()->setFlashdata('berhasil', "Pesanan Berhasil Diterima");
-                            return redirect()->to('/admin/pesanan-masuk');
-                        } else {
-                            session()->setFlashdata('gagal', "Pesanan Gagal Diterima");
-                            return redirect()->to('/admin/pesanan-masuk');
-                        }
-                    } else {
-                        session()->setFlashdata('gagal', "Pesanan Gagal Diterima");
-                        return redirect()->to('/admin/pesanan-masuk');
-                    }
+                    session()->setFlashdata('gagal', "Pesanan Gagal Diterima");
+                    return redirect()->to('/admin/pesanan-masuk');
                 }
+                // } else {
+                //     session()->setFlashdata('gagal', "Pesanan Gagal Diterima");
+                //     return redirect()->to('/admin/pesanan-masuk');
+                // }
+                // }
             }
         }
     }
@@ -1181,21 +1182,57 @@ class Admin extends BaseController
         if (logged_in() && in_groups('user') || empty($cari)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         } else {
+            $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
             if ($cari['status_menginap'] == 1) {
-                $terima = $this->PesananModel->save([
-                    "id_pesanan" => $id_pesanan,
-                    "status_keranjang" => 0,
-                    "status_pesanan" => 0,
-                    "status_bukti" => 0,
-                    "status_menginap" => 2,
-                ]);
-                if ($terima) {
-                    session()->setFlashdata('berhasil', "Status Tamu Berhasil Diupdate");
-                    return redirect()->to('/admin/pesanan-tervalidasi');
-                } else {
-                    session()->setFlashdata('gagal', "Status Tamu Gagal Diupdate");
-                    return redirect()->to('/admin/pesanan-tervalidasi');
+                $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
+                foreach ($cekKamar as $kamar) {
+                    if ($kamar->status_kamar == 1) {
+                        $val = false;
+                        $nKamar = $kamar->nama_kamar;
+                        break;
+                    } else {
+                        $val = true;
+                    }
                 }
+                if ($val == false) {
+                    session()->setFlashdata('gagal', $nKamar . " Masih Berisi Tamu");
+                    return redirect()->to('/admin/pesanan-masuk');
+                } else {
+                    foreach ($cekKamar as $upKamar) {
+                        $updateKamar = $this->KamarModel->save([
+                            "id_kamar" => $upKamar->id_kamar,
+                            "status_kamar" => 1,
+                        ]);
+                        if ($updateKamar) {
+                            $upDate = true;
+                        } else {
+                            $upDate = false;
+                            break;
+                        }
+                    }
+                    if ($upDate == true) {
+                        $terima = $this->PesananModel->save([
+                            "id_pesanan" => $id_pesanan,
+                            "status_keranjang" => 0,
+                            "status_pesanan" => 0,
+                            "status_bukti" => 0,
+                            "status_menginap" => 2,
+                        ]);
+                        if ($terima) {
+                            session()->setFlashdata('berhasil', "Status Tamu Berhasil Diupdate");
+                            return redirect()->to('/admin/pesanan-tervalidasi');
+                        } else {
+                            session()->setFlashdata('gagal', "Status Tamu Gagal Diupdate");
+                            return redirect()->to('/admin/pesanan-tervalidasi');
+                        }
+                    } else {
+                        session()->setFlashdata('gagal', "Pesanan Gagal Diterima");
+                        return redirect()->to('/admin/pesanan-masuk');
+                    }
+                }
+            } else {
+                session()->setFlashdata('gagal', "Pesanan Gagal Diterima");
+                return redirect()->to('/admin/pesanan-masuk');
             }
         }
     }

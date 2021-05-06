@@ -54,11 +54,16 @@ class Home extends BaseController
 					return redirect()->to('/');
 				} else {
 					$cari = $this->PesananModel->cekReadyKamarByPesanan($this->request->getPost('kamar'));
-					if (new \Datetime($check_in) <= new \Datetime($cari[0]->check_in) && new \Datetime($check_out) <= new \Datetime($cari[0]->check_in)) {
-						session()->setFlashdata('berhasil', "Kamar Tersedia");
-						return redirect()->to('/');
+					if (!empty($cari)) {
+						if (new \Datetime($check_in) <= new \Datetime($cari[0]->check_in) && new \Datetime($check_out) <= new \Datetime($cari[0]->check_in)) {
+							session()->setFlashdata('berhasil', "Kamar Tersedia");
+							return redirect()->to('/');
+						} else {
+							session()->setFlashdata('gagal', "Kamar Sudah Dibooking");
+							return redirect()->to('/');
+						}
 					} else {
-						session()->setFlashdata('gagal', "Kamar Sudah Dibooking");
+						session()->setFlashdata('berhasil', "Kamar Tersedia");
 						return redirect()->to('/');
 					}
 				}
@@ -205,8 +210,17 @@ class Home extends BaseController
 						"total_bayar" => $cari[0]->total_bayar,
 					]);
 					if ($updateStatus) {
-						$hapusBukti = unlink('transfer_image/' . $cari[0]->bukti_bayar);
-						if ($hapusBukti) {
+						if (!empty($cari[0]->bukti_bayar)) {
+							$hapusBukti = unlink('transfer_image/' . $cari[0]->bukti_bayar);
+							if ($hapusBukti) {
+								$status = true;
+							} else {
+								$status = false;
+							}
+						} else {
+							$status = true;
+						}
+						if ($status) {
 							if ($this->PesananModel->delete($id_pesanan)) {
 								session()->setFlashdata('berhasil', "Berhasil Mengkonfirmasi");
 								return redirect()->to('/booking-sekarang');
@@ -232,8 +246,17 @@ class Home extends BaseController
 			if (empty($cari)) {
 				throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 			} else {
-				$hapusBukti = unlink('transfer_image/' . $cari[0]->bukti_bayar);
-				if ($hapusBukti) {
+				if (!empty($cari[0]->bukti_bayar)) {
+					$hapusBukti = unlink('transfer_image/' . $cari[0]->bukti_bayar);
+					if ($hapusBukti) {
+						$status = true;
+					} else {
+						$status = false;
+					}
+				} else {
+					$status = true;
+				}
+				if ($status) {
 					if ($this->PesananModel->delete($id_pesanan)) {
 						session()->setFlashdata('berhasil', "Berhasil Mengkonfirmasi");
 						return redirect()->to('/booking-sekarang');
@@ -279,7 +302,6 @@ class Home extends BaseController
 			$data_keranjang = $this->KeranjangModel->countKeranjang(user()->id, $cariPesanan[0]->id_pesanan, "count");
 		}
 		$pesanan = $this->PesananModel->getAllPesananWhere(user()->id);
-
 		$data = [
 			"title" => "Booking Kamar",
 			"id" => "5",
@@ -300,27 +322,47 @@ class Home extends BaseController
 					'check-out' => 'required|valid_date[Y-m-d]',
 					'dewasa' => 'required',
 					'anak' => 'required',
-					]);
-					if (!$formCheckout) {
-						return redirect()->to('/booking-sekarang ')->withInput();
+				]);
+				if (!$formCheckout) {
+					return redirect()->to('/booking-sekarang ')->withInput();
+				} else {
+					$cekKamarTersedia = $this->PesananModel->getPesananWhereDate($this->request->getPost('check-in'), $this->request->getPost('check-out'));
+					if (!empty($cekKamarTersedia) && !empty($data_keranjang)) {
+						foreach ($cekKamarTersedia as $kamar) {
+							foreach ($data_keranjang as $data_keranjang) {
+								if ($kamar->id_kamar == $data_keranjang->id_kamar) {
+									$status = true;
+									break;
+								} else {
+									$status = false;
+								}
+							}
+						}
 					} else {
-					$updatePesanan = $this->PesananModel->save([
-						"id_pesanan" => $pesanan[0]->id_pesanan,
-						'status_keranjang' => 0,
-						'status_pesanan' => 1,
-						'total_bayar' => $this->request->getPost('total_bayar'),
-						"tamu_dewasa" => $this->request->getPost('dewasa'),
-						"tamu_anak" => $this->request->getPost('anak'),
-						"pesan" => $this->request->getPost('catatan'),
-						"check_in" => $this->request->getPost('check-in'),
-						"check_out" => $this->request->getPost('check-out'),
-					]);
-					if ($updatePesanan) {
-						session()->setFlashdata('berhasil', "Pesanan Berhasil Dibuat");
+						$status = false;
+					}
+					if ($status) {
+						session()->setFlashdata('gagal', "Pesanan Gagal Dibuat, Ada Kamar Sudah Dipesan Diantara Tanggal Tersebut");
 						return redirect()->to('/booking-sekarang');
 					} else {
-						session()->setFlashdata('gagal', "Pesanan Gagal Dibuat");
-						return redirect()->to('/booking-sekarang');
+						$updatePesanan = $this->PesananModel->save([
+							"id_pesanan" => $pesanan[0]->id_pesanan,
+							'status_keranjang' => 0,
+							'status_pesanan' => 1,
+							'total_bayar' => $this->request->getPost('total_bayar'),
+							"tamu_dewasa" => $this->request->getPost('dewasa'),
+							"tamu_anak" => $this->request->getPost('anak'),
+							"pesan" => $this->request->getPost('catatan'),
+							"check_in" => $this->request->getPost('check-in'),
+							"check_out" => $this->request->getPost('check-out'),
+						]);
+						if ($updatePesanan) {
+							session()->setFlashdata('berhasil', "Pesanan Berhasil Dibuat");
+							return redirect()->to('/booking-sekarang');
+						} else {
+							session()->setFlashdata('gagal', "Pesanan Gagal Dibuat");
+							return redirect()->to('/booking-sekarang');
+						}
 					}
 				}
 			} else if ($this->request->getPost('submit_bukti')) {
@@ -694,5 +736,4 @@ class Home extends BaseController
 			$dompdf->stream("INVOICE-" . date('d-m-Y_H.i.s') . ".pdf");
 		}
 	}
-	
 }
