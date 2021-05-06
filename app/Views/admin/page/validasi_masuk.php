@@ -121,7 +121,7 @@
                                     <!-- Modal -->
                                     <div class="modal fade" id="bukti-<?= $d->id_pesanan; ?>" tabindex="-1"
                                         aria-labelledby="buktiLabel-<?= $d->id_pesanan; ?>" aria-hidden="true">
-                                        <div class="modal-dialog">
+                                        <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="buktiLabel-<?= $d->id_pesanan; ?>">Bukti
@@ -147,8 +147,8 @@
                                                     </div>
                                                     <?php else : ?>
                                                     <div class="img-responsive">
-                                                        <img
-                                                            src="<?= base_url(); ?>/transfer_image/<?= $d->bukti_bayar; ?>">
+                                                        <img src="<?= base_url(); ?>/transfer_image/<?= $d->bukti_bayar; ?>"
+                                                            width="70%">
                                                     </div>
                                                     <?php endif; ?>
                                                     <?php endif; ?>

@@ -1318,7 +1318,6 @@ class Admin extends BaseController
         } else {
             $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari[0]->id_user, $id_pesanan);
             if ($cari[0]->status_menginap == 1) {
-                $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari[0]->id_user, $id_pesanan);
                 foreach ($cekKamar as $kamar) {
                     if ($kamar->status_kamar == 1) {
                         $val = false;
@@ -1330,7 +1329,7 @@ class Admin extends BaseController
                 }
                 if ($val == false) {
                     session()->setFlashdata('gagal', $nKamar . " Masih Berisi Tamu");
-                    return redirect()->to('/admin/pesanan-masuk');
+                    return redirect()->to('/admin/pesanan-tervalidasi');
                 } else {
                     foreach ($cekKamar as $upKamar) {
                         $updateKamar = $this->KamarModel->save([
