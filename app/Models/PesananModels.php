@@ -27,7 +27,7 @@ class PesananModels extends Model
     }
     public function getPesananUser($id_pesanan)
     {
-        $this->select('pesanan.*,users.username');
+        $this->select('pesanan.*,users.username,users.email');
         return $this->join('users', 'users.id = pesanan.id_user')->where('id_pesanan', $id_pesanan)->get()->getResult();
     }
     public function getAllPesananBooking()
@@ -64,13 +64,13 @@ class PesananModels extends Model
     {
         $this->select('pesanan.*,keranjang.id_kamar');
         $this->join('keranjang', 'keranjang.id_pesanan = pesanan.id_pesanan');
-        return $this->where('keranjang.id_kamar', $id_kamar)->where('status_menginap', 1)->get()->getResult();
+        return $this->where('keranjang.id_kamar', $id_kamar)->where('status_menginap', 1)->orWhere('status_menginap', 2)->get()->getResult();
     }
-    public function getPesananWhereDate($check_in, $check_out)
+    public function getPesananWhereDate()
     {
         $this->select('pesanan.*,manajemen_kamar.*');
         $this->join('keranjang', 'keranjang.id_pesanan = pesanan.id_pesanan');
         $this->join('manajemen_kamar', 'manajemen_kamar.id_kamar = keranjang.id_kamar');
-        return $this->where('check_in <=', $check_in)->where('check_out >=', $check_in)->where('check_in <=', $check_out)->where('check_out >=', $check_out)->where('status_menginap', 1)->get()->getResult();
+        return $this->where('status_menginap', 1)->orWhere('status_menginap', 2)->get()->getResult();
     }
 }

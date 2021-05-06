@@ -24,6 +24,7 @@ class Admin extends BaseController
         $this->PesananModel = new PesananModels();
         $this->KeranjangModel = new KeranjangModels();
         $this->form_validation = \Config\Services::validation();
+        $this->email = \Config\Services::email();
     }
     public function index()
     {
@@ -859,8 +860,23 @@ class Admin extends BaseController
                         $hapusBukti = unlink('transfer_image/' . $cari[0]->bukti_bayar);
                         if ($hapusBukti) {
                             if ($this->PesananModel->delete($id_pesanan)) {
-                                session()->setFlashdata('berhasil', "Berhasil Mengkonfirmasi");
-                                return redirect()->to('/admin/pesanan-tervalidasi');
+                                $email_admin = array($cari[0]->email,);
+                                $admin = $this->UserModel->getUserRoleAdmin();
+                                foreach ($admin as $a) {
+                                    array_push($email_admin, $a->email);
+                                }
+                                $message = "Pesanan " . $cari[0]->kode_pesanan . " Telah Dikonfirmasi Oleh Admin";
+                                $this->email->setTo($email_admin);
+                                $this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+                                $this->email->setSubject("Konfirmasi Pesanan Terkonfirmasi");
+                                $this->email->setMessage($message);
+                                if ($this->email->send()) {
+                                    session()->setFlashdata('berhasil', "Berhasil Mengkonfirmasi");
+                                    return redirect()->to('/admin/pesanan-tervalidasi');
+                                } else {
+                                    session()->setFlashdata('berhasil', "Email Tidak Terkirim, Namun Berhasil Mengkonfirmasi");
+                                    return redirect()->to('/admin/pesanan-tervalidasi');
+                                }
                             } else {
                                 session()->setFlashdata('gagal', "Gagal Mengkonfirmasi");
                                 return redirect()->to('/admin/pesanan-tervalidasi');
@@ -876,11 +892,11 @@ class Admin extends BaseController
     }
     public function terima_pesanan($id_pesanan = null)
     {
-        $cari = $this->PesananModel->find($id_pesanan);
+        $cari = $this->PesananModel->getPesananUser($id_pesanan);
         if (logged_in() && in_groups('user') || empty($cari)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         } else {
-            if ($cari['status_pesanan'] == 1) {
+            if ($cari[0]->status_pesanan == 1) {
                 // Send Email Ada Disini
                 // $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
                 // foreach ($cekKamar as $kamar) {
@@ -918,8 +934,23 @@ class Admin extends BaseController
                     "status_bukti" => 1,
                 ]);
                 if ($terima) {
-                    session()->setFlashdata('berhasil', "Pesanan Berhasil Diterima");
-                    return redirect()->to('/admin/pesanan-masuk');
+                    $email_admin = array($cari[0]->email,);
+                    $admin = $this->UserModel->getUserRoleAdmin();
+                    foreach ($admin as $a) {
+                        array_push($email_admin, $a->email);
+                    }
+                    $message = "Pesanan " . $cari[0]->kode_pesanan . " Telah Diterima Oleh Admin";
+                    $this->email->setTo($email_admin);
+                    $this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+                    $this->email->setSubject("Konfirmasi Pesanan Diterima");
+                    $this->email->setMessage($message);
+                    if ($this->email->send()) {
+                        session()->setFlashdata('berhasil', "Pesanan Berhasil Diterima");
+                        return redirect()->to('/admin/pesanan-masuk');
+                    } else {
+                        session()->setFlashdata('berhasil', "Email Tidak Terkirim, Namun Pesanan Pesanan Berhasil Diterima");
+                        return redirect()->to('/admin/pesanan-masuk');
+                    }
                 } else {
                     session()->setFlashdata('gagal', "Pesanan Gagal Diterima");
                     return redirect()->to('/admin/pesanan-masuk');
@@ -934,14 +965,28 @@ class Admin extends BaseController
     }
     public function hapus_pesanan($id_pesanan = null)
     {
-        $cari = $this->PesananModel->find($id_pesanan);
+        $cari = $this->PesananModel->getPesananUser($id_pesanan);
         if (logged_in() && in_groups('user') || empty($cari)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         } else {
-
             if ($this->PesananModel->delete($id_pesanan)) {
-                session()->setFlashdata('berhasil', "Pesanan Berhasil Dihapus");
-                return redirect()->to('/admin/pesanan-masuk');
+                $email_admin = array($cari[0]->email,);
+                $admin = $this->UserModel->getUserRoleAdmin();
+                foreach ($admin as $a) {
+                    array_push($email_admin, $a->email);
+                }
+                $message = "Pesanan " . $cari[0]->kode_pesanan . " Dihapus Oleh Admin, Silahkan Lakukan Pemesanan Ulang";
+                $this->email->setTo($email_admin);
+                $this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+                $this->email->setSubject("Konfirmasi Pesanan Dihapus");
+                $this->email->setMessage($message);
+                if ($this->email->send()) {
+                    session()->setFlashdata('berhasil', "Pesanan Berhasil Dihapus");
+                    return redirect()->to('/admin/pesanan-masuk');
+                } else {
+                    session()->setFlashdata('berhasil', "Email Tidak Terkirim, Namun Pesanan Berhasil Dihapus");
+                    return redirect()->to('/admin/pesanan-masuk');
+                }
             } else {
                 session()->setFlashdata('gagal', "Pesanan Gagal Dihapus");
                 return redirect()->to('/admin/pesanan-masuk');
@@ -950,19 +995,34 @@ class Admin extends BaseController
     }
     public function tolak_pesanan($id_pesanan = null)
     {
-        $cari = $this->PesananModel->find($id_pesanan);
+        $cari = $this->PesananModel->getPesananUser($id_pesanan);
         if (logged_in() && in_groups('user') || empty($cari)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         } else {
-            if ($cari['status_pesanan'] == 1) {
+            if ($cari[0]->status_pesanan == 1) {
                 $tolak = $this->PesananModel->save([
                     "id_pesanan" => $id_pesanan,
                     "status_keranjang" => 0,
                     "status_pesanan" => 2,
                 ]);
                 if ($tolak) {
-                    session()->setFlashdata('berhasil', "Pesanan Berhasil Ditolak");
-                    return redirect()->to('/admin/pesanan-masuk');
+                    $email_admin = array($cari[0]->email,);
+                    $admin = $this->UserModel->getUserRoleAdmin();
+                    foreach ($admin as $a) {
+                        array_push($email_admin, $a->email);
+                    }
+                    $message = "Pesanan " . $cari[0]->kode_pesanan . " Ditolak Oleh Oleh Admin, Silahkan Lakukan Pemesanan Ulang";
+                    $this->email->setTo($email_admin);
+                    $this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+                    $this->email->setSubject("Konfirmasi Pesanan Ditolak");
+                    $this->email->setMessage($message);
+                    if ($this->email->send()) {
+                        session()->setFlashdata('berhasil', "Pesanan Berhasil Ditolak");
+                        return redirect()->to('/admin/pesanan-masuk');
+                    } else {
+                        session()->setFlashdata('berhasil', "Email Tidak Terkirim, Namun Pesanan Berhasil Ditolak");
+                        return redirect()->to('/admin/pesanan-masuk');
+                    }
                 } else {
                     session()->setFlashdata('gagal', "Pesanan Gagal Ditolak");
                     return redirect()->to('/admin/pesanan-masuk');
@@ -1000,11 +1060,11 @@ class Admin extends BaseController
     }
     public function terima_bukti($id_pesanan = null)
     {
-        $cari = $this->PesananModel->find($id_pesanan);
+        $cari = $this->PesananModel->getPesananUser($id_pesanan);
         if (logged_in() && in_groups('user') || empty($cari)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         } else {
-            if ($cari['status_bukti'] == 2) {
+            if ($cari[0]->status_bukti == 2) {
                 $terima = $this->PesananModel->save([
                     "id_pesanan" => $id_pesanan,
                     "status_keranjang" => 0,
@@ -1013,8 +1073,23 @@ class Admin extends BaseController
                     "status_menginap" => 1,
                 ]);
                 if ($terima) {
-                    session()->setFlashdata('berhasil', "Pesanan Berhasil Divalidasi");
-                    return redirect()->to('/admin/validasi-masuk');
+                    $email_admin = array($cari[0]->email,);
+                    $admin = $this->UserModel->getUserRoleAdmin();
+                    foreach ($admin as $a) {
+                        array_push($email_admin, $a->email);
+                    }
+                    $message = "Bukti Pembayaran Untuk Pesanan " . $cari[0]->kode_pesanan . " Telah Diterima Oleh Admin";
+                    $this->email->setTo($email_admin);
+                    $this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+                    $this->email->setSubject("Konfirmasi Bukti Pembayaran Diterima");
+                    $this->email->setMessage($message);
+                    if ($this->email->send()) {
+                        session()->setFlashdata('berhasil', "Pesanan Berhasil Divalidasi");
+                        return redirect()->to('/admin/validasi-masuk');
+                    } else {
+                        session()->setFlashdata('berhasil', "Email Gagal Dikirim, Namun Pesanan Berhasil Divalidasi");
+                        return redirect()->to('/admin/validasi-masuk');
+                    }
                 } else {
                     session()->setFlashdata('gagal', "Pesanan Gagal Divalidasi");
                     return redirect()->to('/admin/validasi-masuk');
@@ -1024,18 +1099,33 @@ class Admin extends BaseController
     }
     public function refresh_pesanan($id_pesanan = null)
     {
-        $cari = $this->PesananModel->find($id_pesanan);
+        $cari = $this->PesananModel->getPesananUser($id_pesanan);
         if (logged_in() && in_groups('user') || empty($cari)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         } else {
-            if ($cari['status_bukti'] == 1 && new \Datetime(date('Y-m-d H:i:s')) > new \Datetime($cari['due_date'])) {
+            if ($cari[0]->status_bukti == 1 && new \Datetime(date('Y-m-d H:i:s')) > new \Datetime($cari[0]->due_date)) {
                 $terima = $this->PesananModel->save([
                     "id_pesanan" => $id_pesanan,
                     "due_date" =>  date('Y-m-d H:i:s', time() + (60 * 120)),
                 ]);
                 if ($terima) {
-                    session()->setFlashdata('berhasil', "Pesanan Berhasil Direfresh");
-                    return redirect()->to('/admin/validasi-masuk');
+                    $email_admin = array($cari[0]->email,);
+                    $admin = $this->UserModel->getUserRoleAdmin();
+                    foreach ($admin as $a) {
+                        array_push($email_admin, $a->email);
+                    }
+                    $message = "Pesanan " . $cari[0]->kode_pesanan . " Telah Direfresh Oleh Admin, Silahkan Upload Bukti Pembayaran";
+                    $this->email->setTo($email_admin);
+                    $this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+                    $this->email->setSubject("Konfirmasi Pesanan Direfresh");
+                    $this->email->setMessage($message);
+                    if ($this->email->send()) {
+                        session()->setFlashdata('berhasil', "Pesanan Berhasil Direfresh");
+                        return redirect()->to('/admin/validasi-masuk');
+                    } else {
+                        session()->setFlashdata('berhasil', "Email Gagal Dikirim, Namun Pesanan Berhasil Direfresh");
+                        return redirect()->to('/admin/validasi-masuk');
+                    }
                 } else {
                     session()->setFlashdata('gagal', "Pesanan Gagal Direfresh");
                     return redirect()->to('/admin/validasi-masuk');
@@ -1045,12 +1135,12 @@ class Admin extends BaseController
     }
     public function tolak_bukti($id_pesanan = null)
     {
-        $cari = $this->PesananModel->find($id_pesanan);
+        $cari = $this->PesananModel->getPesananUser($id_pesanan);
         if (logged_in() && in_groups('user') || empty($cari)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         } else {
-            if ($cari['status_bukti'] == 2) {
-                $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
+            if ($cari[0]->status_bukti == 2) {
+                $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari[0]->id_user, $id_pesanan);
                 foreach ($cekKamar as $upKamar) {
                     $updateKamar = $this->KamarModel->save([
                         "id_kamar" => $upKamar->id_kamar,
@@ -1071,8 +1161,23 @@ class Admin extends BaseController
                         "status_bukti" => 3,
                     ]);
                     if ($tolak) {
-                        session()->setFlashdata('berhasil', "Pesanan Berhasil Ditolak");
-                        return redirect()->to('/admin/validasi-masuk');
+                        $email_admin = array($cari[0]->email,);
+                        $admin = $this->UserModel->getUserRoleAdmin();
+                        foreach ($admin as $a) {
+                            array_push($email_admin, $a->email);
+                        }
+                        $message = "Bukti Pembayaran Pesanan " . $cari[0]->kode_pesanan . " Ditolak Oleh Admin, Silahkan Upload Bukti Pembayaran Baru";
+                        $this->email->setTo($email_admin);
+                        $this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+                        $this->email->setSubject("Konfirmasi Bukti Pembayaran Ditolak");
+                        $this->email->setMessage($message);
+                        if ($this->email->send()) {
+                            session()->setFlashdata('berhasil', "Pesanan Berhasil Ditolak");
+                            return redirect()->to('/admin/validasi-masuk');
+                        } else {
+                            session()->setFlashdata('berhasil', "Email Tidak Terkirim, Namun Pesanan Berhasil Ditolak");
+                            return redirect()->to('/admin/validasi-masuk');
+                        }
                     } else {
                         session()->setFlashdata('gagal', "Pesanan Gagal Ditolak");
                         return redirect()->to('/admin/validasi-masuk');
@@ -1083,11 +1188,11 @@ class Admin extends BaseController
     }
     public function hapus_bukti($id_pesanan = null)
     {
-        $cari = $this->PesananModel->find($id_pesanan);
+        $cari = $this->PesananModel->getPesananUser($id_pesanan);
         if (logged_in() && in_groups('user') || empty($cari)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         } else {
-            $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
+            $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari[0]->id_user, $id_pesanan);
             foreach ($cekKamar as $upKamar) {
                 $updateKamar = $this->KamarModel->save([
                     "id_kamar" => $upKamar->id_kamar,
@@ -1101,8 +1206,8 @@ class Admin extends BaseController
                 }
             }
             if ($upDate) {
-                if (!empty($cari['bukti_bayar'])) {
-                    $hapus_foto = unlink('transfer_image/' . $cari['bukti_bayar']);
+                if (!empty($cari[0]->bukti_bayar)) {
+                    $hapus_foto = unlink('transfer_image/' . $cari[0]->bukti_bayar);
                     if ($hapus_foto) {
                         $status = true;
                     } else {
@@ -1114,8 +1219,23 @@ class Admin extends BaseController
 
                 if ($status) {
                     if ($this->PesananModel->delete($id_pesanan)) {
-                        session()->setFlashdata('berhasil', "Pesanan Berhasil Dihapus");
-                        return redirect()->to('/admin/validasi-masuk');
+                        $email_admin = array($cari[0]->email,);
+                        $admin = $this->UserModel->getUserRoleAdmin();
+                        foreach ($admin as $a) {
+                            array_push($email_admin, $a->email);
+                        }
+                        $message = "Pesanan " . $cari[0]->kode_pesanan . " Dihapus Oleh Admin, Silahkan Melakukan Pemesanan Ulang";
+                        $this->email->setTo($email_admin);
+                        $this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+                        $this->email->setSubject("Konfirmasi Pesanan Dihapus");
+                        $this->email->setMessage($message);
+                        if ($this->email->send()) {
+                            session()->setFlashdata('berhasil', "Pesanan Berhasil Dihapus");
+                            return redirect()->to('/admin/validasi-masuk');
+                        } else {
+                            session()->setFlashdata('berhasil', "Email Gagal Dikirim, Namun Pesanan Berhasil Dihapus");
+                            return redirect()->to('/admin/validasi-masuk');
+                        }
                     } else {
                         session()->setFlashdata('gagal', "Pesanan Gagal Dihapus");
                         return redirect()->to('/admin/validasi-masuk');
@@ -1146,19 +1266,33 @@ class Admin extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         } else {
             if ($this->request->getPost('submit_perpanjangan')) {
-                $cari = $this->PesananModel->find($this->request->getPost('id_pesanan'));
+                $cari = $this->PesananModel->getPesananUser($this->request->getPost('id_pesanan'));
                 if (!empty($cari)) {
-                    if (new \Datetime($cari['check_out']) <= new \Datetime($this->request->getPost('check-out'))) {
-                        $selisih = date_diff(new \Datetime($this->request->getPost('check-out')), new \Datetime($cari['check_out']));
-                        $perlu_bayar = $cari['total_bayar'] * $selisih->d;
-                        $updateCheckout = $this->PesananModel->save([
-                            "id_pesanan" => $cari["id_pesanan"],
+                    if (new \Datetime($cari[0]->check_out) <= new \Datetime($this->request->getPost('check-out'))) {
+                        $selisih = date_diff(new \Datetime($this->request->getPost('check-out')), new \Datetime($cari[0]->check_out));
+                        $perlu_bayar = $cari[0]->total_bayar * $selisih->d;
+                        $updateCheckout = $this->PesananModel->save(["id_pesanan" => $cari[0]->id_pesanan,
                             "check_out" => $this->request->getPost('check-out'),
                             "sisa_bayar" => $perlu_bayar,
                         ]);
                         if ($updateCheckout) {
-                            session()->setFlashdata('berhasil', "Waktu Menginap Berhasil Diperpanjang");
-                            return redirect()->to('/admin/pesanan-tervalidasi');
+                            $email_admin = array($cari[0]->email,);
+                            $admin = $this->UserModel->getUserRoleAdmin();
+                            foreach ($admin as $a) {
+                                array_push($email_admin, $a->email);
+                            }
+                            $message = "Pesanan " . $cari[0]->kode_pesanan . " Diperpanjang Oleh Admin, Selamat Menginap";
+                            $this->email->setTo($email_admin);
+                            $this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+                            $this->email->setSubject("Konfirmasi Pesanan Diperpanjang");
+                            $this->email->setMessage($message);
+                            if ($this->email->send()) {
+                                session()->setFlashdata('berhasil', "Waktu Menginap Berhasil Diperpanjang");
+                                return redirect()->to('/admin/pesanan-tervalidasi');
+                            } else {
+                                session()->setFlashdata('berhasil', "Email Tidak Terkirim, Namun Waktu Menginap Berhasil Diperpanjang");
+                                return redirect()->to('/admin/pesanan-tervalidasi');
+                            }
                         } else {
                             session()->setFlashdata('gagal', "Waktu Menginap Gagal Diperpanjang");
                             return redirect()->to('/admin/pesanan-tervalidasi');
@@ -1178,13 +1312,13 @@ class Admin extends BaseController
     }
     public function check_in($id_pesanan = null)
     {
-        $cari = $this->PesananModel->find($id_pesanan);
+        $cari = $this->PesananModel->getPesananUser($id_pesanan);
         if (logged_in() && in_groups('user') || empty($cari)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         } else {
-            $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
-            if ($cari['status_menginap'] == 1) {
-                $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
+            $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari[0]->id_user, $id_pesanan);
+            if ($cari[0]->status_menginap == 1) {
+                $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari[0]->id_user, $id_pesanan);
                 foreach ($cekKamar as $kamar) {
                     if ($kamar->status_kamar == 1) {
                         $val = false;
@@ -1219,8 +1353,23 @@ class Admin extends BaseController
                             "status_menginap" => 2,
                         ]);
                         if ($terima) {
-                            session()->setFlashdata('berhasil', "Status Tamu Berhasil Diupdate");
-                            return redirect()->to('/admin/pesanan-tervalidasi');
+                            $email_admin = array($cari[0]->email,);
+                            $admin = $this->UserModel->getUserRoleAdmin();
+                            foreach ($admin as $a) {
+                                array_push($email_admin, $a->email);
+                            }
+                            $message = "Hallo Pemesan, Pesanan " . $cari[0]->kode_pesanan . ". Selamat Datang Di Gria Semalung Bungalow. Selamat Menginap";
+                            $this->email->setTo($email_admin);
+                            $this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+                            $this->email->setSubject("Konfirmasi Check In");
+                            $this->email->setMessage($message);
+                            if ($this->email->send()) {
+                                session()->setFlashdata('berhasil', "Status Tamu Berhasil Diupdate");
+                                return redirect()->to('/admin/pesanan-tervalidasi');
+                            } else {
+                                session()->setFlashdata('berhasil', "Email Tidak Terkirim, Namun Status Tamu Berhasil Diupdate");
+                                return redirect()->to('/admin/pesanan-tervalidasi');
+                            }
                         } else {
                             session()->setFlashdata('gagal', "Status Tamu Gagal Diupdate");
                             return redirect()->to('/admin/pesanan-tervalidasi');
@@ -1238,12 +1387,12 @@ class Admin extends BaseController
     }
     public function check_out($id_pesanan = null)
     {
-        $cari = $this->PesananModel->find($id_pesanan);
+        $cari = $this->PesananModel->getPesananUser($id_pesanan);
         if (logged_in() && in_groups('user') || empty($cari)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         } else {
-            if ($cari['status_menginap'] == 2) {
-                $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari['id_user'], $id_pesanan);
+            if ($cari[0]->status_menginap == 2) {
+                $cekKamar = $this->KeranjangModel->getAllReadyKamar($cari[0]->id_user, $id_pesanan);
                 foreach ($cekKamar as $upKamar) {
                     $updateKamar = $this->KamarModel->save([
                         "id_kamar" => $upKamar->id_kamar,
@@ -1257,7 +1406,7 @@ class Admin extends BaseController
                     }
                 }
                 if ($upDate) {
-                    $sudah_bayar = $cari['total_bayar'] + $cari['sisa_bayar'];
+                    $sudah_bayar = $cari[0]->total_bayar + $cari[0]->sisa_bayar;
                     $terima = $this->PesananModel->save([
                         "id_pesanan" => $id_pesanan,
                         "status_keranjang" => 0,
@@ -1268,8 +1417,23 @@ class Admin extends BaseController
                         "sisa_bayar" => 0,
                     ]);
                     if ($terima) {
-                        session()->setFlashdata('berhasil', "Status Tamu Berhasil Diupdate");
-                        return redirect()->to('/admin/pesanan-tervalidasi');
+                        $email_admin = array($cari[0]->email,);
+                        $admin = $this->UserModel->getUserRoleAdmin();
+                        foreach ($admin as $a) {
+                            array_push($email_admin, $a->email);
+                        }
+                        $message = "Hallo Pemesan, Pesanan " . $cari[0]->kode_pesanan . ". Terimakasi Telah Menginap Di Gria Semalung Bungalow. Semoga Harimu Menyenangkan";
+                        $this->email->setTo($email_admin);
+                        $this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+                        $this->email->setSubject("Konfirmasi Check Out");
+                        $this->email->setMessage($message);
+                        if ($this->email->send()) {
+                            session()->setFlashdata('berhasil', "Status Tamu Berhasil Diupdate");
+                            return redirect()->to('/admin/pesanan-tervalidasi');
+                        } else {
+                            session()->setFlashdata('berhasil', "Email Tidak Terkirim, Namun Status Tamu Berhasil Diupdate");
+                            return redirect()->to('/admin/pesanan-tervalidasi');
+                        }
                     } else {
                         session()->setFlashdata('gagal', "Status Tamu Gagal Diupdate");
                         return redirect()->to('/admin/pesanan-tervalidasi');

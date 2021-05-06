@@ -58,6 +58,9 @@ class Home extends BaseController
 						if (new \Datetime($check_in) <= new \Datetime($cari[0]->check_in) && new \Datetime($check_out) <= new \Datetime($cari[0]->check_in)) {
 							session()->setFlashdata('berhasil', "Kamar Tersedia");
 							return redirect()->to('/');
+						} else if (new \Datetime($check_in) >= new \Datetime($cari[0]->check_out) && new \Datetime($check_out) >= new \Datetime($cari[0]->check_out)) {
+							session()->setFlashdata('berhasil', "Kamar Tersedia");
+							return redirect()->to('/');
 						} else {
 							session()->setFlashdata('gagal', "Kamar Sudah Dibooking");
 							return redirect()->to('/');
@@ -222,8 +225,23 @@ class Home extends BaseController
 						}
 						if ($status) {
 							if ($this->PesananModel->delete($id_pesanan)) {
-								session()->setFlashdata('berhasil', "Berhasil Mengkonfirmasi");
-								return redirect()->to('/booking-sekarang');
+								$email_admin = array(user()->email,);
+								$admin = $this->UserModel->getUserRoleAdmin();
+								foreach ($admin as $a) {
+									array_push($email_admin, $a->email);
+								}
+								$message = "Pesanan " . $cari[0]->kode_pesanan . " Telah Dikonfirmasi Selesai Oleh Pemesan";
+								$this->email->setTo($email_admin);
+								$this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+								$this->email->setSubject("Konfirmasi Pesanan Selesai");
+								$this->email->setMessage($message);
+								if ($this->email->send()) {
+									session()->setFlashdata('berhasil', "Berhasil Mengkonfirmasi");
+									return redirect()->to('/booking-sekarang');
+								} else {
+									session()->setFlashdata('berhasil', "Email Tidak Terkirim, Naum Berhasil Mengkonfirmasi");
+									return redirect()->to('/booking-sekarang');
+								}
 							} else {
 								session()->setFlashdata('gagal', "Gagal Mengkonfirmasi");
 								return redirect()->to('/booking-sekarang');
@@ -258,8 +276,23 @@ class Home extends BaseController
 				}
 				if ($status) {
 					if ($this->PesananModel->delete($id_pesanan)) {
-						session()->setFlashdata('berhasil', "Berhasil Mengkonfirmasi");
-						return redirect()->to('/booking-sekarang');
+						$email_admin = array(user()->email,);
+						$admin = $this->UserModel->getUserRoleAdmin();
+						foreach ($admin as $a) {
+							array_push($email_admin, $a->email);
+						}
+						$message = "Pesanan " . $cari[0]->kode_pesanan . " Telah Dikonfirmasi Ulang Oleh Pemesan";
+						$this->email->setTo($email_admin);
+						$this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+						$this->email->setSubject("Konfirmasi Ulang");
+						$this->email->setMessage($message);
+						if ($this->email->send()) {
+							session()->setFlashdata('berhasil', "Berhasil Mengkonfirmasi");
+							return redirect()->to('/booking-sekarang');
+						} else {
+							session()->setFlashdata('berhasil', "Email Tidak Terkirim, Namun Berhasil Mengkonfirmasi");
+							return redirect()->to('/booking-sekarang');
+						}
 					} else {
 						session()->setFlashdata('gagal', "Gagal Mengkonfirmasi");
 						return redirect()->to('/booking-sekarang');
@@ -278,8 +311,23 @@ class Home extends BaseController
 				throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 			} else {
 				if ($this->PesananModel->delete($id_pesanan)) {
-					session()->setFlashdata('berhasil', "Berhasil Dibatalkan");
-					return redirect()->to('/booking-sekarang');
+					$email_admin = array(user()->email,);
+					$admin = $this->UserModel->getUserRoleAdmin();
+					foreach ($admin as $a) {
+						array_push($email_admin, $a->email);
+					}
+					$message = "Pesanan " . $cari[0]->kode_pesanan . " Telah Dibatalkan Oleh Pemesan";
+					$this->email->setTo($email_admin);
+					$this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+					$this->email->setSubject("Konfirmasi Pembatalan Pesanan");
+					$this->email->setMessage($message);
+					if ($this->email->send()) {
+						session()->setFlashdata('berhasil', "Berhasil Dibatalkan");
+						return redirect()->to('/booking-sekarang');
+					} else {
+						session()->setFlashdata('gagal', "Email Tidak Terkirim, Namun Pesanan Berhasil Dibatalkan");
+						return redirect()->to('/booking-sekarang');
+					}
 				} else {
 					session()->setFlashdata('gagal', "Gagal Dibatalkan");
 					return redirect()->to('/booking-sekarang');
@@ -326,13 +374,21 @@ class Home extends BaseController
 				if (!$formCheckout) {
 					return redirect()->to('/booking-sekarang ')->withInput();
 				} else {
-					$cekKamarTersedia = $this->PesananModel->getPesananWhereDate($this->request->getPost('check-in'), $this->request->getPost('check-out'));
+					$cekKamarTersedia = $this->PesananModel->getPesananWhereDate();
+					$check_in = date('Y-m-d', strtotime($this->request->getPost('check-in')));
+					$check_out = date('Y-m-d', strtotime($this->request->getPost('check-out')));
 					if (!empty($cekKamarTersedia) && !empty($data_keranjang)) {
 						foreach ($cekKamarTersedia as $kamar) {
 							foreach ($data_keranjang as $data_keranjang) {
 								if ($kamar->id_kamar == $data_keranjang->id_kamar) {
-									$status = true;
-									break;
+									if (new \Datetime($check_in) <= new \Datetime($kamar->check_in) && new \Datetime($check_out) <= new \Datetime($kamar->check_in)) {
+										$status = false;
+									} else if (new \Datetime($check_in) >= new \Datetime($kamar->check_out) && new \Datetime($check_out) >= new \Datetime($kamar->check_out)) {
+										$status = false;
+									} else {
+										$status = true;
+										break;
+									}
 								} else {
 									$status = false;
 								}
@@ -342,7 +398,7 @@ class Home extends BaseController
 						$status = false;
 					}
 					if ($status) {
-						session()->setFlashdata('gagal', "Pesanan Gagal Dibuat, Ada Kamar Sudah Dipesan Diantara Tanggal Tersebut");
+						session()->setFlashdata('gagal', "Pesanan Gagal Dibuat, Ada Kamar Yang Sudah Dipesan Diantara Tanggal Tersebut");
 						return redirect()->to('/booking-sekarang');
 					} else {
 						$updatePesanan = $this->PesananModel->save([
@@ -357,8 +413,23 @@ class Home extends BaseController
 							"check_out" => $this->request->getPost('check-out'),
 						]);
 						if ($updatePesanan) {
-							session()->setFlashdata('berhasil', "Pesanan Berhasil Dibuat");
-							return redirect()->to('/booking-sekarang');
+							$email_admin = array(user()->email,);
+							$admin = $this->UserModel->getUserRoleAdmin();
+							foreach ($admin as $a) {
+								array_push($email_admin, $a->email);
+							}
+							$message = "Pesanan " . $pesanan[0]->kode_pesanan . " Berhasil Dibuat, Silahkan Tunggu Admin Untuk Mengecek Pesanan Yang Dibuat. Atau Jika Anda Admin Silahkan Cek Pada Bagian Data Reservasi Untuk Memvalidasi Pesanan";
+							$this->email->setTo($email_admin);
+							$this->email->setFrom('ganatech.id@gmail.com', "From Gria Semalung Bungalow");
+							$this->email->setSubject("Konfirmasi Pesanan Sukses Dibuat");
+							$this->email->setMessage($message);
+							if ($this->email->send()) {
+								session()->setFlashdata('berhasil', "Pesanan Berhasil Dibuat");
+								return redirect()->to('/booking-sekarang');
+							} else {
+								session()->setFlashdata('gagal', "Email Tidak Terkirim, Namun Pesanan Berhasil Dibuat");
+								return redirect()->to('/booking-sekarang');
+							}
 						} else {
 							session()->setFlashdata('gagal', "Pesanan Gagal Dibuat");
 							return redirect()->to('/booking-sekarang');
