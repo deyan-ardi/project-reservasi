@@ -50,105 +50,40 @@
 </section>
 
 
+
 <section class="room-section">
     <div class="container">
         <div class="section-title">
-            <span>Accommodation</span>
-            <h3>Discover Our Room</h3>
+            <span>Akomodasi</span>
+            <h3>Temukan Kamar Kami</h3>
         </div>
         <div class="room-slider owl-carousel owl-theme">
+            <?php foreach ($all as $k) : ?>
             <div class="room-item">
                 <div class="room-image">
-                    <img src="<?= base_url(); ?>/assets/user/img/room/1.jpg" alt="image">
+                    <?php $foto = json_decode($k->foto_kamar); ?>
+                    <img src="<?= base_url(); ?>/room_image/<?= $foto[1]->kamar    ?>" alt="image">
                     <div class="night-btn">
-                        <a href="#" class="default-btn-one">$260/Night</a>
+                        <a href="#" class="default-btn-one">Rp. <?= $k->harga_kamar; ?> /Malam</a>
                     </div>
                 </div>
                 <div class="room-content">
-                    <h3>Suite Room</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodt.</p>
+                    <h3><?= $k->no_kamar; ?> - <?= ucWords($k->nama_kamar) ?> </h3>
+                    <p style="text-align: justify;">Kategori Kamar : <?= $k->nama_kategori; ?></p>
                     <div class="room-btn">
-                        <a href="#" class="room-btn-one">Read More
+                        <a href="<?= base_url(); ?>/detail-kamar/<?= $k->id_kamar; ?>" class="room-btn-one">Selengkapnya
                             <i class="fa fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="room-item">
-                <div class="room-image">
-                    <img src="<?= base_url(); ?>/assets/user/img/room/2.jpg" alt="image">
-                    <div class="night-btn">
-                        <a href="#" class="default-btn-one">$260/Night</a>
-                    </div>
-                </div>
-                <div class="room-content">
-                    <h3>Family Room</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodt.</p>
-                    <div class="room-btn">
-                        <a href="#" class="room-btn-one">Read More
-                            <i class="fa fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="room-item">
-                <div class="room-image">
-                    <img src="<?= base_url(); ?>/assets/user/img/room/3.jpg" alt="image">
-                    <div class="night-btn">
-                        <a href="#" class="default-btn-one">$260/Night</a>
-                    </div>
-                </div>
-                <div class="room-content">
-                    <h3>Classic Room</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodt.</p>
-                    <div class="room-btn">
-                        <a href="#" class="room-btn-one">Read More
-                            <i class="fa fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="room-item">
-                <div class="room-image">
-                    <img src="<?= base_url(); ?>/assets/user/img/room/4.jpg" alt="image">
-                    <div class="night-btn">
-                        <a href="#" class="default-btn-one">$260/Night</a>
-                    </div>
-                </div>
-                <div class="room-content">
-                    <h3>Suite Room</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodt.</p>
-                    <div class="room-btn">
-                        <a href="#" class="room-btn-one">Read More
-                            <i class="fa fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="room-item">
-                <div class="room-image">
-                    <img src="<?= base_url(); ?>/assets/user/img/room/5.jpg" alt="image">
-                    <div class="night-btn">
-                        <a href="#" class="default-btn-one">$260/Night</a>
-                    </div>
-                </div>
-                <div class="room-content">
-                    <h3>Classic Room</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmodt.</p>
-                    <div class="room-btn">
-                        <a href="#" class="room-btn-one">Read More
-                            <i class="fa fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
         <div class="view-btn">
-            <a href="#" class="view-btn-one">View All Rooms</a>
+            <a href="<?= base_url(); ?>/daftar-kamar" class="view-btn-one">Lihat Semua</a>
         </div>
     </div>
 </section>
-
 
 <section class="video-section">
     <div class="container">
@@ -249,150 +184,6 @@
                             <img src="<?= base_url(); ?>/assets/user/img/gallery/3.jpg" alt="image">
                             <a href="#" class="popup-btn">Gym</a>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<section class="blog-section bg-color">
-    <div class="container">
-        <div class="section-title">
-            <span>Form Blog</span>
-            <h3>Latest News</h3>
-        </div>
-        <div class="blog-slider owl-carousel owl-theme">
-            <div class="blog-item">
-                <div class="blog-image">
-                    <a href="#">
-                        <img src="<?= base_url(); ?>/assets/user/img/blog/1.png" alt="image">
-                    </a>
-                </div>
-                <div class="blog-content">
-                    <ul class="blog-list">
-                        <li>
-                            <i class="flaticon-avatar"></i>By Admin
-                        </li>
-                        <li>
-                            <i class="flaticon-calendar"></i>6 October 2019
-                        </li>
-                    </ul>
-                    <h3>Electric Feel And of Other Things</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod </p>
-                    <div class="blog-btn">
-                        <a href="#" class="blog-btn-one">Read More <i class="fa fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="blog-item">
-                <div class="blog-image">
-                    <a href="#">
-                        <img src="<?= base_url(); ?>/assets/user/img/blog/2.png" alt="image">
-                    </a>
-                </div>
-                <div class="blog-content">
-                    <ul class="blog-list">
-                        <li>
-                            <i class="flaticon-avatar"></i>By Admin
-                        </li>
-                        <li>
-                            <i class="flaticon-calendar"></i>6 October 2019
-                        </li>
-                    </ul>
-                    <h3>Licina Eget Consects set Convallis</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod </p>
-                    <div class="blog-btn">
-                        <a href="#" class="blog-btn-one">Read More <i class="fa fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="blog-item">
-                <div class="blog-image">
-                    <a href="#">
-                        <img src="<?= base_url(); ?>/assets/user/img/blog/3.png" alt="image">
-                    </a>
-                </div>
-                <div class="blog-content">
-                    <ul class="blog-list">
-                        <li>
-                            <i class="flaticon-avatar"></i>By Admin
-                        </li>
-                        <li>
-                            <i class="flaticon-calendar"></i>6 October 2019
-                        </li>
-                    </ul>
-                    <h3>Cras Ultricies Ligula Sed Magna</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod </p>
-                    <div class="blog-btn">
-                        <a href="#" class="blog-btn-one">Read More <i class="fa fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="blog-item">
-                <div class="blog-image">
-                    <a href="#">
-                        <img src="<?= base_url(); ?>/assets/user/img/blog/1.png" alt="image">
-                    </a>
-                </div>
-                <div class="blog-content">
-                    <ul class="blog-list">
-                        <li>
-                            <i class="flaticon-avatar"></i>By Admin
-                        </li>
-                        <li>
-                            <i class="flaticon-calendar"></i>6 October 2019
-                        </li>
-                    </ul>
-                    <h3>Electric Feel And of Other Things</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod </p>
-                    <div class="blog-btn">
-                        <a href="#" class="blog-btn-one">Read More <i class="fa fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="blog-item">
-                <div class="blog-image">
-                    <a href="#">
-                        <img src="<?= base_url(); ?>/assets/user/img/blog/2.png" alt="image">
-                    </a>
-                </div>
-                <div class="blog-content">
-                    <ul class="blog-list">
-                        <li>
-                            <i class="flaticon-avatar"></i>By Admin
-                        </li>
-                        <li>
-                            <i class="flaticon-calendar"></i>6 October 2019
-                        </li>
-                    </ul>
-                    <h3>Licina Eget Consects set Convallis</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod </p>
-                    <div class="blog-btn">
-                        <a href="#" class="blog-btn-one">Read More <i class="fa fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="blog-item">
-                <div class="blog-image">
-                    <a href="#">
-                        <img src="<?= base_url(); ?>/assets/user/img/blog/3.png" alt="image">
-                    </a>
-                </div>
-                <div class="blog-content">
-                    <ul class="blog-list">
-                        <li>
-                            <i class="flaticon-avatar"></i>By Admin
-                        </li>
-                        <li>
-                            <i class="flaticon-calendar"></i>6 October 2019
-                        </li>
-                    </ul>
-                    <h3>Cras Ultricies Ligula Sed Magna</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod </p>
-                    <div class="blog-btn">
-                        <a href="#" class="blog-btn-one">Read More <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>

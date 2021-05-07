@@ -4,7 +4,7 @@
     <div class="container">
         <div class="page-banner-content">
             <h2>Contact Us</h2>
-            <p><a href="index.html">Home</a> / Contact Us</p>
+            <p><a href="index.html">Beranda</a> / Kontak Kami</p>
         </div>
     </div>
 </section>
@@ -18,8 +18,8 @@
                     <div class="icon">
                         <i class="flaticon-placeholder"></i>
                     </div>
-                    <h4>Address</h4>
-                    <p><a href="#">Exercisplan 4, 111 49 <br> Stockholm, Sweden</a></p>
+                    <h4>Alamat</h4>
+                    <p><a href="#">Jl.Tanah Lengis, Ababi, Abang, Kabupaten Karangasem, Bali 80852 </a></p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">

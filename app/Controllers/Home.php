@@ -94,6 +94,7 @@ class Home extends BaseController
 			"id" => "2",
 			"keranjang" => $keranjang,
 			"data_keranjang" => $data_keranjang,
+			"all" => $this->KamarModel->getAllKamar(),
 		];
 		if (logged_in() && !in_groups('user')) {
 			return redirect()->to('/admin');

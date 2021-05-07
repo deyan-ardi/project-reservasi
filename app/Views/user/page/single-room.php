@@ -110,7 +110,7 @@
                     </div>
                 </div>
                 <div class="room-content">
-                    <h3><?= $k->nama_kamar ?> </h3>
+                    <h3><?= $k->no_kamar; ?> - <?= ucWords($k->nama_kamar) ?> </h3>
                     <p style="text-align: justify;">Kategori Kamar : <?= $k->nama_kategori; ?></p>
                     <div class="room-btn">
                         <a href="<?= base_url(); ?>/detail-kamar/<?= $k->id_kamar; ?>" class="room-btn-one">Selengkapnya

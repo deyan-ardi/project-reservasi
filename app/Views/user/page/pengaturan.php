@@ -105,23 +105,22 @@
                 </div>
                 </form>
             </div>
-        </div>
-        <div class="col-lg-4 col-md-12">
-
-            <div class="sidebar mt-0">
-                <div class="widget widget-map">
-                    <div class="widget-map-area">
-                        <?php if (empty($users[0]->foto)) : ?>
-                        <img src="<?= base_url(); ?>/user_image/default.jpg" class="img-thumbnail img-preview" alt="">
-                        <?php else : ?>
-                        <img src="<?= base_url(); ?>/user_image/<?= $users[0]->foto; ?>"
-                            class="img-thumbnail img-preview" alt="">
-                        <?php endif; ?>
+            <div class="col-lg-4 col-md-12">
+                <div class="sidebar mt-0">
+                    <div class="widget widget-map">
+                        <div class="widget-map-area">
+                            <?php if (empty($users[0]->foto)) : ?>
+                            <img src="<?= base_url(); ?>/user_image/default.jpg" class="img-thumbnail img-preview"
+                                alt="">
+                            <?php else : ?>
+                            <img src="<?= base_url(); ?>/user_image/<?= $users[0]->foto; ?>"
+                                class="img-thumbnail img-preview" alt="">
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </section>
 

@@ -764,12 +764,8 @@
                     </div>
                 </div>
                 <div class="room-content">
-                    <h3><?= $k->nama_kamar ?> </h3>
+                    <h3><?= $k->no_kamar; ?> - <?= ucWords($k->nama_kamar) ?> </h3>
                     <p style="text-align: justify;">Kategori Kamar : <?= $k->nama_kategori; ?></p>
-                    <p style="text-align: justify;">Rating Kamar : <i class="fa fa-star " style="color: #cfa97a;"></i>
-                        <i class="fa fa-star " style="color: #cfa97a;"></i> <i class="fa fa-star "
-                            style="color: #cfa97a;"></i>
-                    </p>
                     <div class="room-btn">
                         <a href="<?= base_url(); ?>/detail-kamar/<?= $k->id_kamar; ?>" class="room-btn-one">Selengkapnya
                             <i class="fa fa-arrow-right"></i>

@@ -42,7 +42,7 @@
                         <p>Check-In</p>
                         <div class="form-group">
                             <input type="text" required name="check-in" id="datepicker" class="form-control"
-                                placeholder="Date">
+                                placeholder="Tanggal">
                             <i class="flaticon-calendar"></i>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <p>Check-Out</p>
                         <div class="form-group">
                             <input type="text" required name="check-out" id="check-datepicker" class="form-control"
-                                placeholder="Date">
+                                placeholder="Tanggal">
                             <i class="flaticon-calendar"></i>
                         </div>
                     </div>
@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 <div class="room-content">
-                    <h3><?= $k->nama_kamar ?> </h3>
+                    <h3><?= $k->no_kamar; ?> - <?= ucWords($k->nama_kamar) ?> </h3>
                     <p style="text-align: justify;">Kategori Kamar : <?= $k->nama_kategori; ?></p>
                     <div class="room-btn">
                         <a href="<?= base_url(); ?>/detail-kamar/<?= $k->id_kamar; ?>" class="room-btn-one">Selengkapnya
@@ -166,7 +166,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="tabs-image">
-                    <img src="<?= base_url(); ?>/assets/user/img/shef.png" alt="image">
+                    <img src="<?= base_url(); ?>/assets/user/img/shef.jpg" alt="image">
                 </div>
             </div>
             <div class="col-lg-6">
@@ -290,7 +290,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6 p-0">
                 <div class="client-image">
-                    <img src="<?= base_url(); ?>/assets/user/img/client.png" alt="image">
+                    <img src="<?= base_url(); ?>/assets/user/img/client.jpg" alt="image">
                 </div>
             </div>
             <div class="col-lg-6 p-0">
