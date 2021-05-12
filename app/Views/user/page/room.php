@@ -3,8 +3,8 @@
 <section class="page-banner">
     <div class="container">
         <div class="page-banner-content">
-            <h2>Room</h2>
-            <p><a href="index.html">Home</a> / Room</p>
+            <h2>Pilihan Kamar</h2>
+            <p><a href="<?= base_url(); ?>">Beranda</a> / Daftar Kamar</p>
         </div>
     </div>
 </section>

@@ -141,29 +141,18 @@
                             <img src="<?= base_url(); ?>/assets/icon.png" width="75px" alt="image">
                         </div>
                         <div class="footer-text">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua. Quis ipsum incididunt ut labore et suspendisse
-                                ultrices gravida. Risus incididunt ut labore et commodo viverra maecenas</p>
+                            <p>Gunakan kesempatan untuk menikmati pelayanan dan fasilitas serta keindahan alam yang
+                                tidak ada di tempat lain di Bali, hanya di Geria Semalung Bungalow</p>
                         </div>
                         <ul>
-                            <li><span>Follow Us:</span></li>
+                            <li><span>Ikuti Kami:</span></li>
                             <li>
-                                <a href="#" target="_blank">
+                                <a href="https://web.facebook.com/geriasemalung" target="_blank">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="#" target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
+                                <a href="https://www.instagram.com/geria_semalung/" target="_blank">
                                     <i class="fab fa-instagram"></i>
                                 </a>
                             </li>
@@ -181,11 +170,11 @@
                         </li>
                         <li>
                             <i class="fa fa-phone"></i>
-                            +25462755, 265497466
+                            +62-363-22116
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <a href="mailto:">mail@gmail.com</a>
+                            <a href="mailto:gsemalung@gmail.com">gsemalung@gmail.com</a>
                         </li>
                     </ul>
                 </div>
@@ -228,7 +217,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-7">
                         <div class="footer-bottom-content">
-                            <p>Copyright <i class="far fa-copyright"></i><?= date('Y'); ?>. Ganatech ID</p>
+                            <p>Copyright <i class="far fa-copyright"></i> <?= date('Y'); ?>. Ganatech ID</p>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-5">

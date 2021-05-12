@@ -14,7 +14,7 @@
                             </div>
                             <div class="banner-video">
                                 <div class="video-btn">
-                                    <a href="https://www.youtube.com/watch?v=bk7McNUjWgw" class="popup-youtube">
+                                    <a href="https://www.youtube.com/watch?v=eCxAEVDDTh4" class="popup-youtube">
                                         <i class="flaticon-play-button"></i>
                                     </a>
                                 </div>
@@ -93,10 +93,12 @@
             <div class="col-lg-4 no-padding">
                 <div class="about-content">
                     <span>Tentang Kami</span>
-                    <h3>Make Your Golden Memory With Us!</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                        labore dolore. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-                        accumsan lacus vel facilisis. </p>
+                    <h3>Ciptakan Memori Emasmu Bersama Kami!</h3>
+                    <p>Geria Semalung Bungalow merupakan pilihan bagi para wisatawan dimana
+                        menawarkan pemandangan yang
+                        indah dengan romansa lembah perbukitan yang berlokasi di belahan Bali Timur dengan 2 jam
+                        perjalanan
+                        dari bandara Ngurah Rai Bali.</p>
                     <div class="about-btn">
                         <a href="<?= base_url(); ?>/tentang-kami" class="about-btn-one">Selanjutnya
                             <i class="fa fa-arrow-right"></i>
@@ -161,130 +163,6 @@
 </section>
 
 
-<div class="tabs-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="tabs-image">
-                    <img src="<?= base_url(); ?>/assets/user/img/shef.jpg" alt="image">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="tabs-area">
-                    <h3>Restaurent</h3>
-                    <ul id="tabs">
-                        <li class="current">
-                            <a href="#bacon">Breakfast</a>
-                        </li>
-                        <li>
-                            <a href="#batfish">Lunch</a>
-                        </li>
-                        <li>
-                            <a href="#tuna">Dinner</a>
-                        </li>
-                    </ul>
-                    <div id="content">
-                        <div id="bacon" class="current content-wrapper animated">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="company-text">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-                                            suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan
-                                            lacus .Lorem Ipsum is simply dummy text of the printing.</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-                                            suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan
-                                            lacus .Lorem Ipsum is simply dummy text of the printing.</p>
-                                    </div>
-                                    <ul class="tabs-list">
-                                        <li>
-                                            Rava Dosa
-                                        </li>
-                                        <li>
-                                            Sprouts Jalfrezi
-                                        </li>
-                                        <li>
-                                            Steamed Dhokla
-                                        </li>
-                                    </ul>
-                                    <div class="tabs-btn">
-                                        <a href="#" class="tabs-btn-one">Read More <i class="fa fa-arrow-right"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="batfish" class="animated content-wrapper">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="company-text">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-                                            suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan
-                                            lacus .Lorem Ipsum is simply dummy text of the printing.</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-                                            suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan
-                                            lacus .Lorem Ipsum is simply dummy text of the printing.</p>
-                                    </div>
-                                    <ul class="tabs-list">
-                                        <li>
-                                            Rava Dosa
-                                        </li>
-                                        <li>
-                                            Sprouts Jalfrezi
-                                        </li>
-                                        <li>
-                                            Steamed Dhokla
-                                        </li>
-                                    </ul>
-                                    <div class="tabs-btn">
-                                        <a href="#" class="tabs-btn-one">Read More <i class="fa fa-arrow-right"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tuna" class="animated content-wrapper">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="company-text">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-                                            suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan
-                                            lacus .Lorem Ipsum is simply dummy text of the printing.</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-                                            suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan
-                                            lacus .Lorem Ipsum is simply dummy text of the printing.</p>
-                                    </div>
-                                    <ul class="tabs-list">
-                                        <li>
-                                            Rava Dosa
-                                        </li>
-                                        <li>
-                                            Sprouts Jalfrezi
-                                        </li>
-                                        <li>
-                                            Steamed Dhokla
-                                        </li>
-                                    </ul>
-                                    <div class="tabs-btn">
-                                        <a href="#" class="tabs-btn-one">Read More <i class="fa fa-arrow-right"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="design-shape">
-                        <img src="<?= base_url(); ?>/assets/user/img/design-shape.png" alt="image">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <section class="client-section">
     <div class="container-fluid">
         <div class="row align-items-center">
@@ -296,7 +174,7 @@
             <div class="col-lg-6 p-0">
                 <div class="client-content">
                     <span>Testimonial</span>
-                    <h3>What Client Say</h3>
+                    <h3>Apa Yang Klien Katakan?</h3>
                     <i class="flaticon-quote"></i>
                 </div>
                 <div class="feedback-slides">
@@ -304,82 +182,62 @@
                         <div>
                             <div class="item">
                                 <div class="single-feedback">
-                                    <p>Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-                                        accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua.</p>
+                                    <p>Pengalaman yang luar biasa, saya sangat kagum dengan keindahan Bali Timur</p>
                                     <h3>John Lucy</h3>
-                                    <span>Web Developer</span>
+                                    <span>Traveler</span>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="single-feedback">
-                                    <p>Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-                                        accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua.</p>
-                                    <h3>John Smith</h3>
-                                    <span>Web Developer</span>
+                                    <p>Tempatnya sangat asri, cocok sebagai tempat bersantai sejenak dari keriuhan kota
+                                    </p>
+                                    <h3>Kadek Artawan</h3>
+                                    <span>Tamu Lokal</span>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="single-feedback">
-                                    <p>Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-                                        accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua.</p>
+                                    <p>This is Amazing, Bali So Beautifull, see you next time...</p>
                                     <h3>Maxwel Warner</h3>
-                                    <span>Web Developer</span>
+                                    <span>Traveler</span>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="single-feedback">
-                                    <p>Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-                                        accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua.</p>
+                                    <p>Pelayanannya sangat luar biasa, makanannya sangat nikmat, sangat cocok disantap
+                                    </p>
                                     <h3>Ross Taylor</h3>
-                                    <span>Web Developer</span>
+                                    <span>Tamu Lokal</span>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="single-feedback">
-                                    <p>Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-                                        accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua.</p>
+                                    <p>Gak sabar liburan lagi ke Bali</p>
                                     <h3>James Anderson</h3>
-                                    <span>Web Developer</span>
+                                    <span>Tamu Lokal</span>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="single-feedback">
-                                    <p>Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-                                        accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua.</p>
+                                    <p>Yang paling berkesan itu, lokasi tempat kita menginap. Bener-bener asri banget,
+                                        udaranya sejuk dan bikin betah deh pokoknya</p>
                                     <h3>Steven Smith</h3>
-                                    <span>Web Developer</span>
+                                    <span>Tamu Lokal</span>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="single-feedback">
-                                    <p>Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-                                        accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua.</p>
+                                    <p>Sayang banget sekarang masih pandemi, padahal udah gak sabar pengen kesana lagi
+                                    </p>
                                     <h3>Steven Lucy</h3>
-                                    <span>Web Developer</span>
+                                    <span>Traveler</span>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="single-feedback">
-                                    <p>Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-                                        accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua.</p>
+                                    <p>Fantastic..</p>
                                     <h3>John Terry</h3>
-                                    <span>Web Developer</span>
+                                    <span>Traveler</span>
                                 </div>
                             </div>
                         </div>

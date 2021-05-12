@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 18 Apr 2021 pada 02.58
+-- Waktu pembuatan: 12 Bulan Mei 2021 pada 13.39
 -- Versi server: 5.7.24
 -- Versi PHP: 7.4.16
 
@@ -47,7 +47,12 @@ INSERT INTO `auth_activation_attempts` (`id`, `ip_address`, `user_agent`, `token
 (5, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0', '18355d5225ebe62c8879edc58fe205fb', '2021-04-05 08:30:50'),
 (6, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0', 'f08fd6ce62e7d21e2a4c330e9ded98ce', '2021-04-05 22:22:03'),
 (7, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.68', 'a705a4de7a4aba45517f1a9bd22ec7e6', '2021-04-05 23:03:55'),
-(8, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0', '16259fca7ee3a0041f700d4e2fa15028', '2021-04-13 21:25:00');
+(8, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0', '16259fca7ee3a0041f700d4e2fa15028', '2021-04-13 21:25:00'),
+(9, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0', '4e594b4dc8e516e555226e00b5891b4d', '2021-04-18 18:46:07'),
+(10, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0', '90431ba4b5f6143ec168e30a25722342', '2021-04-18 18:48:58'),
+(11, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0', '824060d59f2afd11f099b7dac566f9f5', '2021-04-18 22:59:52'),
+(12, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0', '86215676287d8ea2494bf8e5caa8efe0', '2021-05-06 00:09:29'),
+(13, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36 Edg/90.0.818.51', '86215676287d8ea2494bf8e5caa8efe0', '2021-05-06 00:09:50');
 
 -- --------------------------------------------------------
 
@@ -98,9 +103,10 @@ CREATE TABLE `auth_groups_users` (
 --
 
 INSERT INTO `auth_groups_users` (`id`, `group_id`, `user_id`) VALUES
-(2, 1, 4),
-(1, 3, 1),
-(3, 3, 5);
+(1, 1, 1),
+(5, 2, 2),
+(6, 3, 3),
+(7, 3, 4);
 
 -- --------------------------------------------------------
 
@@ -243,7 +249,48 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `email`, `user_id`, `date`, `succ
 (119, '::1', 'riyan@undiksha.ac.id', 5, '2021-04-17 22:59:35', 1),
 (120, '::1', 'riyan.clsg11@gmail.com', 4, '2021-04-17 23:51:07', 1),
 (121, '::1', 'riyan.clsg12@gmail.com', 1, '2021-04-18 00:35:06', 1),
-(122, '::1', 'riyan@undiksha.ac.id', 5, '2021-04-18 00:56:31', 1);
+(122, '::1', 'riyan@undiksha.ac.id', 5, '2021-04-18 00:56:31', 1),
+(123, '::1', 'riyan@undiksha.ac.id', NULL, '2021-04-18 18:42:53', 0),
+(124, '::1', 'riyan@undiksha.ac.id', 1, '2021-04-18 18:47:32', 1),
+(125, '::1', 'riyan@undiksha.ac.id', 1, '2021-04-18 18:49:10', 1),
+(126, '::1', 'riyan.clsg12@gmail.com', 2, '2021-04-18 18:56:29', 1),
+(127, '::1', 'riyan.clsg13@gmail.com', 3, '2021-04-18 22:59:56', 1),
+(128, '::1', 'riyan@undiksha.ac.id', 1, '2021-04-18 23:02:55', 1),
+(129, '::1', 'riyan.clsg11@gmail.com', NULL, '2021-04-22 21:25:46', 0),
+(130, '::1', 'riyan.clsg12@gmail.com', 2, '2021-04-22 21:25:51', 1),
+(131, '::1', 'riyan@undiksha.ac.id', 1, '2021-04-22 21:26:08', 1),
+(132, '::1', 'riyan.clsg13@gmail.com', 3, '2021-04-22 21:26:29', 1),
+(133, '::1', 'riyan@undiksha.ac.id', 1, '2021-04-22 21:32:08', 1),
+(134, '::1', 'riyan@undiksha.ac.id', 1, '2021-04-22 23:11:24', 1),
+(135, '::1', 'riyan@undiksha.ac.id', 1, '2021-04-22 23:21:19', 1),
+(136, '::1', 'riyan.clsg11@gmail.com', NULL, '2021-04-22 23:53:13', 0),
+(137, '::1', 'riyan.clsg13@gmail.com', 3, '2021-04-22 23:53:19', 1),
+(138, '::1', 'riyan.clsg12@gmail.com', 2, '2021-04-23 00:16:59', 1),
+(139, '::1', 'deyan ardi', NULL, '2021-04-23 00:17:28', 0),
+(140, '::1', 'riyan.clsg11@gmail.com', NULL, '2021-04-23 00:17:34', 0),
+(141, '::1', 'aa', NULL, '2021-04-23 00:17:39', 0),
+(142, '::1', 'aada', NULL, '2021-04-23 00:17:49', 0),
+(143, '::1', 'riyan.clsg11@gmail.com', NULL, '2021-04-23 00:22:21', 0),
+(144, '::1', 'riyan.clsg12@gmail.com', 2, '2021-04-23 00:22:29', 1),
+(145, '::1', 'riyan.clsg12@gmail.com', 2, '2021-05-03 18:25:56', 1),
+(146, '::1', 'riyan@undiksha.ac.id', 1, '2021-05-05 23:47:53', 1),
+(147, '::1', 'riyan@undiksha.ac.id', 1, '2021-05-06 00:06:51', 1),
+(148, '::1', 'riyan.clsg13@gmail.com', 3, '2021-05-06 00:07:12', 1),
+(149, '::1', 'riyan@undiksha.ac.id', 1, '2021-05-06 00:07:28', 1),
+(150, '::1', 'ganatech.id@gmail.com', 4, '2021-05-06 00:10:04', 1),
+(151, '::1', 'ganatech.id@gmail.com', 4, '2021-05-06 09:50:14', 1),
+(152, '::1', 'riyan@undiksha.ac.id', 1, '2021-05-06 10:01:36', 1),
+(153, '::1', 'riyan.clsg13@gmail.com', 3, '2021-05-06 10:03:29', 1),
+(154, '::1', 'riyan.clsg12@gmail.com', 2, '2021-05-06 12:38:48', 1),
+(155, '::1', 'ganatech.id@gmail.com', 4, '2021-05-06 12:39:09', 1),
+(156, '::1', 'riyan@undiksha.ac.id', 1, '2021-05-06 12:39:23', 1),
+(157, '::1', 'riyan.clsg13@gmail.com', 3, '2021-05-06 13:28:15', 1),
+(158, '::1', 'ganatech.id@gmail.com', 4, '2021-05-06 21:00:02', 1),
+(159, '::1', 'riyan.clsg13@gmail.com', 3, '2021-05-06 21:00:18', 1),
+(160, '::1', 'riyan@undiksha.ac.id', 1, '2021-05-06 21:28:54', 1),
+(161, '::1', 'riyan.clsg13@gmail.com', 3, '2021-05-07 18:49:36', 1),
+(162, '::1', 'riyan.clsg13@gmail.com', 3, '2021-05-12 21:26:25', 1),
+(163, '::1', 'riyan@undiksha.ac.id', 1, '2021-05-12 21:27:12', 1);
 
 -- --------------------------------------------------------
 
@@ -320,6 +367,14 @@ CREATE TABLE `kategori_kamar` (
   `created_by` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `kategori_kamar`
+--
+
+INSERT INTO `kategori_kamar` (`id_kategori`, `nama_kategori`, `deskripsi`, `created_at`, `created_by`) VALUES
+(3, 'Kamar Single', 'Deskripsi Untuk Kamar Single', '2021-05-12 21:29:18', 'Deyan Ardi'),
+(4, 'Kamar Double', 'Deskripsi Untuk Kamar Double', '2021-05-12 21:29:51', 'Deyan Ardi');
+
 -- --------------------------------------------------------
 
 --
@@ -355,6 +410,14 @@ CREATE TABLE `manajemen_kamar` (
   `created_at` datetime NOT NULL,
   `created_by` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `manajemen_kamar`
+--
+
+INSERT INTO `manajemen_kamar` (`id_kamar`, `nama_kamar`, `deskripsi_kamar`, `harga_kamar`, `foto_kamar`, `id_kategori`, `no_kamar`, `status_kamar`, `rating`, `created_at`, `created_by`) VALUES
+(4, 'Kamar Single 1', 'Kamar ini menawarkan kamar dengan suasan yang sejuk dan asri yang dikelilingi dangan suasana perbukitan. Kamar ini juga dilengkapi dengan teras untuk menikmati pemandangan yang sangat indah dan interior kayu di kamar tidur dan kamar mandi dengan model classic', 250000, '[{\"kamar\":\"1620826317_91de7a1e3bc8106c750e.jpg\"},{\"kamar\":\"1620826318_93e14c3e5524940aaa76.jpg\"},{\"kamar\":\"1620826318_7f2f62095ee985e862e9.jpg\"},{\"kamar\":\"1620826318_76b6206b214397fb1a6e.jpg\"},{\"kamar\":\"1620826318_703f58fb92354a88b7f8.jpg\"},{\"kamar\":\"1620826318_e59210bd98b79d34e64d.jpg\"},{\"kamar\":\"1620826319_6623a2da535130fae315.jpg\"},{\"kamar\":\"1620826319_39203b08b02a12a0d902.jpg\"},{\"kamar\":\"1620826319_99cfc3c50c3f6c958f75.jpg\"},{\"kamar\":\"1620826319_b6a3981cef34a23a10da.jpg\"},{\"kamar\":\"1620826320_9834c4d3afbf984fd217.jpg\"}]', 3, '01', 0, NULL, '2021-05-12 21:32:00', 'Deyan Ardi'),
+(5, 'Kamar Double 1', 'Kamar ini dirancang khusus untuk kenikmatan interaksi sosial, bersama keluarga, teman, atau kombinasi keduanya. Terletak di dalam kompleks taman yang tak bernoda dengan halaman rumput terawat dan spesies flora asli.', 500000, '[{\"kamar\":\"1620826371_4c80c0c88d23d9b99ce8.jpg\"},{\"kamar\":\"1620826372_02cae2a3b2e25872f2d8.jpg\"},{\"kamar\":\"1620826372_93dff920bccddac57f10.jpg\"},{\"kamar\":\"1620826372_b4fe12764b6fc4266194.jpg\"},{\"kamar\":\"1620826373_0436e3c0fbef5edda9c1.jpg\"}]', 4, '02', 0, NULL, '2021-05-12 21:32:53', 'Deyan Ardi');
 
 -- --------------------------------------------------------
 
@@ -398,8 +461,8 @@ CREATE TABLE `pesanan` (
   `tamu_dewasa` int(11) DEFAULT '0',
   `tamu_anak` int(11) DEFAULT '0',
   `pesan` text,
-  `check_in` datetime DEFAULT NULL,
-  `check_out` datetime DEFAULT NULL,
+  `check_in` date DEFAULT NULL,
+  `check_out` date DEFAULT NULL,
   `status_keranjang` int(11) DEFAULT '0',
   `status_pesanan` int(11) DEFAULT '0',
   `status_bukti` int(11) DEFAULT '0',
@@ -454,6 +517,16 @@ CREATE TABLE `users` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `users`
+--
+
+INSERT INTO `users` (`id`, `foto`, `alamat`, `ttl`, `no_tlp`, `email`, `username`, `password_hash`, `reset_hash`, `reset_at`, `reset_expires`, `activate_hash`, `status`, `status_message`, `active`, `force_pass_reset`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, '1619099119_6de58e3e47bac8a6b4c7.png', '', NULL, '081915656865', 'riyan@undiksha.ac.id', 'Deyan Ardi', '$2y$10$.ZQ9ylhkO4tm4Ly0oOTM3eHCGs3PSriypOExEcy9x5/1spCDxZXgq', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2021-04-18 18:43:18', '2021-04-22 21:50:10', NULL),
+(2, NULL, '', NULL, '8000000000', 'riyan.clsg12@gmail.com', 'Vina Velina', '$2y$10$6Ja5iYG6.QBlrQo2H9tC9uAztZI/kZhUuFNsmsdRfe7tC4rvvehGa', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2021-04-18 18:48:27', '2021-04-18 18:56:03', NULL),
+(3, '1618758945_e4e0d87afcea35a8d7d0.png', 'Desa Kalibukbuk', '1998-06-20', '81915656865', 'riyan.clsg13@gmail.com', 'Riyan Ardi', '$2y$10$E.bQNAueHYDA.LOjHL7MD.zVbnaM1597M/YZxaiS1mbkqLNRZCzwS', 'e31988d6c1c5998cefee61201835f995', NULL, '2021-04-23 01:03:02', NULL, NULL, NULL, 1, 0, '2021-04-18 22:58:24', '2021-04-23 00:03:02', NULL),
+(4, NULL, 'lovina', '2021-05-03', '81915656865', 'ganatech.id@gmail.com', 'Deyan Deyan', '$2y$10$iHydH8GaM1F3hmwxqxt4S.LEPyUKMVqIfQJH3.WIsL4dgvxg6eRHi', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2021-05-06 00:08:42', '2021-05-06 00:10:40', NULL);
 
 --
 -- Indexes for dumped tables
@@ -578,7 +651,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `auth_activation_attempts`
 --
 ALTER TABLE `auth_activation_attempts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `auth_groups`
@@ -590,13 +663,13 @@ ALTER TABLE `auth_groups`
 -- AUTO_INCREMENT untuk tabel `auth_groups_users`
 --
 ALTER TABLE `auth_groups_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `auth_logins`
 --
 ALTER TABLE `auth_logins`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
 
 --
 -- AUTO_INCREMENT untuk tabel `auth_permissions`
@@ -620,19 +693,19 @@ ALTER TABLE `auth_tokens`
 -- AUTO_INCREMENT untuk tabel `kategori_kamar`
 --
 ALTER TABLE `kategori_kamar`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id_keranjang` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_keranjang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT untuk tabel `manajemen_kamar`
 --
 ALTER TABLE `manajemen_kamar`
-  MODIFY `id_kamar` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kamar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
@@ -644,19 +717,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `rincian_pesanan`
 --
 ALTER TABLE `rincian_pesanan`
-  MODIFY `id_rincian` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_rincian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -701,7 +774,7 @@ ALTER TABLE `keranjang`
 -- Ketidakleluasaan untuk tabel `manajemen_kamar`
 --
 ALTER TABLE `manajemen_kamar`
-  ADD CONSTRAINT `fk_kategori_kamar_kamar` FOREIGN KEY (`id_kategori`) REFERENCES `kategori_kamar` (`id_kategori`) ON DELETE SET NULL ON UPDATE SET NULL;
+  ADD CONSTRAINT `fk_kategori_kamar_kamar` FOREIGN KEY (`id_kategori`) REFERENCES `kategori_kamar` (`id_kategori`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `pesanan`

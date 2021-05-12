@@ -3,8 +3,8 @@
 <section class="page-banner">
     <div class="container">
         <div class="page-banner-content">
-            <h2>Contact Us</h2>
-            <p><a href="index.html">Beranda</a> / Kontak Kami</p>
+            <h2>Kontak Kami</h2>
+            <p><a href="<?= base_url(); ?>">Beranda</a> / Kontak Kami</p>
         </div>
     </div>
 </section>
@@ -19,7 +19,7 @@
                         <i class="flaticon-placeholder"></i>
                     </div>
                     <h4>Alamat</h4>
-                    <p><a href="#">Jl.Tanah Lengis, Ababi, Abang, Kabupaten Karangasem, Bali 80852 </a></p>
+                    <p><a href="#">Abang, Kabupaten Karangasem, Bali 80852 </a></p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
@@ -27,9 +27,8 @@
                     <div class="icon">
                         <i class="flaticon-call-answer"></i>
                     </div>
-                    <h4>Phone</h4>
-                    <p><a href="tel:444587458">+44 4587 458</a></p>
-                    <p><a href="tel:444587458">+44 4587 458</a></p>
+                    <h4>Telepon/Fax</h4>
+                    <p> +62-363-22116 </p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 offset-lg-0 offset-md-3">
@@ -38,16 +37,7 @@
                         <i class="flaticon-envelope"></i>
                     </div>
                     <h4>Email</h4>
-                    <p><a
-                            href="https://templates.envytheme.com/cdn-cgi/l/email-protection#224b4c444d624d544750564d0c414d4f"><span
-                                class="__cf_email__"
-                                data-cfemail="01686f676e416e776473756e2f626e6c">[email&#160;protected]</span></a>
-                    </p>
-                    <p><a
-                            href="https://templates.envytheme.com/cdn-cgi/l/email-protection#ee9d9b9e9e819c9aae81988b9c9a81c08d8183"><span
-                                class="__cf_email__"
-                                data-cfemail="7c0f090c0c130e083c130a190e0813521f1311">[email&#160;protected]</span></a>
-                    </p>
+                    <p>gsemalung@gmail.com</p>
                 </div>
             </div>
         </div>
@@ -61,7 +51,8 @@
             <div class="col-lg-6">
                 <div class="map-area">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387190.2799090714!2d-74.25987368715496!3d40.697670064588735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sbd!4v1570689677254!5m2!1sen!2sbd"></iframe>
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3946.944690660396!2d115.58206805042322!3d-8.407093293924122!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd20696b58cb321%3A0x9e03589009feec45!2sGeria%20Semalung%20Bungalow!5e0!3m2!1sid!2sid!4v1618751233390!5m2!1sid!2sid"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
             <div class="col-lg-6">

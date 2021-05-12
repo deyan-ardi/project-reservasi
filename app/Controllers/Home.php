@@ -174,7 +174,7 @@ class Home extends BaseController
 					}
 
 					$message = "[ Email Pengirim : " . $this->request->getPost('email') . ", IP Address : " . $this->request->getIpAddress() . ", Platform : " . $UserAgent->getPlatform() . ",Browser : " . $currentAgent . " ] ~ " . $this->request->getPost('message');
-					$this->email->setTo('riyan.clsg11@gmail.com');
+					$this->email->setTo('riyan.clsg11@gmail.com', 'gsemalung@gmail.com');
 					$this->email->setFrom($this->request->getPost('email'), "From [ " . $this->request->getPost('name') . " ]");
 					$this->email->setSubject($this->request->getPost('subject'));
 					$this->email->setMessage($message);
