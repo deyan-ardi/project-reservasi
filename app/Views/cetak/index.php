@@ -82,13 +82,13 @@
                 <?php else : ?>
                 <td>With Room Service</td>
                 <?php endif; ?>
-                <td>Rp. <?= $d->harga_kamar; ?></td>
+                <td>Rp. <?= format_rupiah($d->harga_kamar); ?></td>
                 <?php if ($d->layanan_kamar == 0) : ?>
                 <td>Rp. 0</td>
                 <?php else : ?>
-                <td>Rp. <?= BIAYA_LAYANAN; ?></td>
+                <td>Rp. <?= format_rupiah(BIAYA_LAYANAN); ?></td>
                 <?php endif; ?>
-                <td>Rp. <?= $d->sub_total; ?></td>
+                <td>Rp. <?= format_rupiah($d->sub_total); ?></td>
             </tr>
             <?php endif; ?>
             <?php endforeach; ?>
@@ -111,7 +111,7 @@
             </tr>
             <tr>
                 <td>Wajib Bayar</td>
-                <td>Rp. <?= $data_pesanan[0]->total_bayar; ?></td>
+                <td>Rp. <?= format_rupiah($data_pesanan[0]->total_bayar); ?></td>
             </tr>
         </tbody>
     </table>

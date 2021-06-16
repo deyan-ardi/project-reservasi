@@ -80,12 +80,12 @@
                                     <li class="nav-item">
                                         <?php if ($d->layanan_kamar == 1) : ?>
                                         <a href="#" class="nav-link"><?= $d->nama_kamar; ?> -
-                                            (Rp.<?= $d->sub_total; ?>/Malam
+                                            (Rp.<?= format_rupiah($d->sub_total); ?>/Malam
                                             ~
                                             Dengan Sarapan)</a>
                                         <?php else : ?>
                                         <a href="#" class="nav-link"><?= $d->nama_kamar; ?> -
-                                            (Rp.<?= $d->sub_total; ?>/Malam ~ Tanpa Sarapan)</a>
+                                            (Rp.<?= format_rupiah($d->sub_total); ?>/Malam ~ Tanpa Sarapan)</a>
                                         <?php endif; ?>
                                     </li>
                                     <?php endforeach; ?>

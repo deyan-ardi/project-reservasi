@@ -681,9 +681,7 @@ class Admin extends BaseController
             "users" => $users,
             "validation" => $this->form_validation,
         ];
-        if (logged_in() && in_groups('user')) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-        }
+
         if (user_id() == $id_user && !empty($users)) {
             if (!empty($this->request->getPost('submit'))) {
                 if ($users[0]->email == $this->request->getPost('email')) {

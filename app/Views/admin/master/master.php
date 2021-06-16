@@ -22,8 +22,10 @@
 </head>
 
 <body>
+    <!-- Alert -->
     <div class="berhasil" data-berhasil="<?= session()->getFlashdata('berhasil') ?>"></div>
     <div class="gagal" data-gagal="<?= session()->getFlashdata('gagal') ?>"></div>
+
     <!-- Loading starts -->
     <div id="loading-wrapper">
         <div id="loader">

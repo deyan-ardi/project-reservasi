@@ -62,8 +62,12 @@ $routes->get('/admin/validasi-masuk', 'Admin::validasi_masuk', ['filter' => 'rol
 $routes->get('/admin/pesanan-tervalidasi', 'Admin::pesanan_tervalidasi', ['filter' => 'role:admin,super admin']);
 $routes->post('/admin/pesanan-tervalidasi', 'Admin::pesanan_tervalidasi', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/info-website', 'Admin::info_website', ['filter' => 'role:admin,super admin']);
+
 $routes->get('/admin/pengaturan-profil/(:num)', 'Admin::pengaturan/$1', ['filter' => 'role:admin,super admin']);
+
+
 $routes->post('/admin/pengaturan-profil/(:num)', 'Admin::pengaturan/$1', ['filter' => 'role:admin,super admin']);
+
 $routes->get('/admin/tambah-kategori-kamar', 'Admin::tmb_kategori', ['filter' => 'role:admin,super admin']);
 $routes->post('/admin/tambah-kategori-kamar', 'Admin::tmb_kategori', ['filter' => 'role:admin,super admin']);
 $routes->get('/admin/hapus-kategori-kamar/(:num)', 'Admin::hapus_kategori/$1', ['filter' => 'role:super admin']);

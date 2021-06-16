@@ -41,7 +41,7 @@
                     <div class="check-content">
                         <p>Check-In</p>
                         <div class="form-group">
-                            <input type="text" required name="check-in" id="datepicker" class="form-control"
+                            <input type="date" min="<?= date('Y-m-d'); ?>" required name="check-in" class="form-control"
                                 placeholder="Tanggal">
                             <i class="flaticon-calendar"></i>
                         </div>
@@ -51,8 +51,8 @@
                     <div class="check-content">
                         <p>Check-Out</p>
                         <div class="form-group">
-                            <input type="text" required name="check-out" id="check-datepicker" class="form-control"
-                                placeholder="Tanggal">
+                            <input type="date" min="<?= date('Y-m-d'); ?>" required name="check-out"
+                                class="form-control" placeholder="Tanggal">
                             <i class="flaticon-calendar"></i>
                         </div>
                     </div>
@@ -141,7 +141,7 @@
                     <?php $foto = json_decode($k->foto_kamar); ?>
                     <img src="<?= base_url(); ?>/room_image/<?= $foto[1]->kamar    ?>" alt="image">
                     <div class="night-btn">
-                        <a href="#" class="default-btn-one">Rp. <?= $k->harga_kamar; ?> /Malam</a>
+                        <a href="#" class="default-btn-one">Rp. <?= format_rupiah($k->harga_kamar); ?> /Malam</a>
                     </div>
                 </div>
                 <div class="room-content">

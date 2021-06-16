@@ -85,8 +85,8 @@
                                             <?= $d->pesan; ?>
                                             <?php endif; ?>
                                         </td>
-                                        <td>Rp.<?= $d->total_bayar; ?></td>
-                                        <td>Rp.<?= $d->sisa_bayar; ?></td>
+                                        <td>Rp.<?= format_rupiah($d->total_bayar); ?></td>
+                                        <td>Rp.<?= format_rupiah($d->sisa_bayar); ?></td>
                                         <td>
                                             <a href="#" data-toggle="modal"
                                                 data-target="#view-<?= $d->id_pesanan; ?>"><button type="button"
@@ -235,12 +235,14 @@
                                                         <li class="mt-4">
                                                             <div class="col-12 border border-success">
                                                                 <p class="mt-2"> No Kamar : [<?= $k->no_kamar; ?>] </p>
-                                                                <p> Nama Kamar : <?= $k->nama_kamar; ?> </p>
+                                                                <p> Nama Kamar : <?= $k->nama_kamar; ?>
+                                                                </p>
                                                                 <p> Layanan Kamar : Pesan Dengan
                                                                     Tanpa Sarapan </p>
-                                                                <p> Biaya Kamar : Rp. <?= $k->harga_kamar; ?></p>
+                                                                <p> Biaya Kamar : Rp.
+                                                                    <?= format_rupiah($k->harga_kamar); ?></p>
                                                                 <p> Subtotal :
-                                                                    Rp. <?= $k->sub_total; ?></p>
+                                                                    Rp. <?= format_rupiah($k->sub_total); ?></p>
                                                             </div>
                                                         </li>
                                                         <?php else : ?>
@@ -250,10 +252,12 @@
                                                                 <p> Nama Kamar : <?= $k->nama_kamar; ?> </p>
                                                                 <p> Layanan Kamar : Pesan Dengan
                                                                     Sarapan </p>
-                                                                <p> Biaya Kamar : Rp. <?= $k->harga_kamar; ?></p>
-                                                                <p> Biaya Layanan : Rp. <?= BIAYA_LAYANAN ?></p>
+                                                                <p> Biaya Kamar : Rp.
+                                                                    <?= format_rupiah($k->harga_kamar); ?></p>
+                                                                <p> Biaya Layanan : Rp.
+                                                                    <?= format_rupiah(BIAYA_LAYANAN) ?></p>
                                                                 <p> Subtotal :
-                                                                    Rp. <?= $k->sub_total; ?></p>
+                                                                    Rp. <?= format_rupiah($k->sub_total); ?></p>
                                                             </div>
                                                         </li>
                                                         <?php endif; ?>
@@ -277,14 +281,14 @@
 
                                                         <li>
                                                             <div class="col-12">
-                                                                <a href="https://api.whatsapp.com/send?phone=<?= $d->no_tlp; ?>"
+                                                                <a href="https://api.whatsapp.com/send?phone=+62<?= $d->no_tlp; ?>"
                                                                     class="btn btn-success btn-sm mt-2">Hubungi
                                                                     Lewat Whatsapp</a>
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div class="col-12">
-                                                                <a href="telp:<?= $d->no_tlp; ?>"
+                                                                <a href="tel:+62<?= $d->no_tlp; ?>"
                                                                     class="btn btn-info btn-sm mt-2">Hubungi
                                                                     Lewat Telepon</a>
                                                             </div>

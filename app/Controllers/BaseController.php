@@ -27,7 +27,7 @@ class BaseController extends Controller
 	 * @var HTTP\IncomingRequest
 	 */
 	protected $request;
-	protected $helpers = ['auth','form','url'];
+	protected $helpers = ['auth', 'form', 'url', 'rupiah_helper'];
 
 	/**
 	 * Constructor.

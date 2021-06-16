@@ -55,7 +55,8 @@
                                         Anda Ingin
                                         Menyertakan
                                         Sarapan, Anda
-                                        Akan Dikenakan Biaya Tambahan Sebesar Rp.<?= BIAYA_LAYANAN; ?> untuk sarapan
+                                        Akan Dikenakan Biaya Tambahan Sebesar Rp.<?= format_rupiah(BIAYA_LAYANAN); ?>
+                                        untuk sarapan
                                         pagi. Menu Sarapan dapat dipilih
                                         ketika Anda berada di Penginapan</label>
                                 </div>
@@ -106,7 +107,7 @@
                     <?php $foto = json_decode($k->foto_kamar); ?>
                     <img src="<?= base_url(); ?>/room_image/<?= $foto[1]->kamar    ?>" alt="image">
                     <div class="night-btn">
-                        <a href="#" class="default-btn-one">Rp. <?= $k->harga_kamar; ?> /Malam</a>
+                        <a href="#" class="default-btn-one">Rp. <?= format_rupiah($k->harga_kamar); ?> /Malam</a>
                     </div>
                 </div>
                 <div class="room-content">

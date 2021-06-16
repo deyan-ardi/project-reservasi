@@ -47,7 +47,7 @@
                                         <form action="<?= base_url(); ?>/admin/cetak-laporan/" method="POST">
                                             <div class="form-group">
                                                 <label for="dariTgl" class="col-form-label">Dari Tanggal</label>
-                                                <input type="date" name="dari_tgl" value="<?=  old('dari_tgl'); ?>"
+                                                <input type="date" name="dari_tgl" value="<?= old('dari_tgl'); ?>"
                                                     class="form-control" id="dariTgl">
                                             </div>
                                             <div class="form-group">
@@ -104,7 +104,7 @@
                                         <td><?= date('d-m-Y', strtotime($d['check_out'])); ?></td>
                                         <td><?= date('d-m-Y H:i', strtotime($d['pay_date'])); ?> WITA</td>
                                         <td><?= date('d-m-Y', strtotime($d['created_at'])); ?></td>
-                                        <td>Rp.<?= $d['total_bayar']; ?></td>
+                                        <td>Rp.<?= format_rupiah($d['total_bayar']); ?></td>
                                         <td>
                                             <a href="<?= base_url(); ?>/admin/cetak-laporan/<?= $d['id_rincian']; ?>"><button
                                                     type="button" class="btn btn-info btn-sm mt-2">Cetak

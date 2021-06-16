@@ -110,7 +110,7 @@
                                     <div class="row">
                                         <div class="form-group col-lg-8">
                                             <input type="text" disabled class="form-control"
-                                                value="Sub Total Biaya Kamar = Rp. <?= $pesanan[0]->total_bayar; ?>">
+                                                value="Sub Total Biaya Kamar = Rp. <?= format_rupiah($pesanan[0]->total_bayar); ?>">
                                         </div>
                                         <input type="hidden" id="subTotal" value="<?= $pesanan[0]->total_bayar; ?>">
                                         <div class="form-group col-lg-4">
@@ -470,7 +470,7 @@
                                                         <p>:</p>
                                                     </td>
                                                     <td>
-                                                        <p>Rp. <?= $k->harga_kamar; ?></p>
+                                                        <p>Rp. <?= format_rupiah($k->harga_kamar); ?></p>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -481,7 +481,7 @@
                                                         <p>:</p>
                                                     </td>
                                                     <td>
-                                                        <p><kbd>Rp.<?= $k->sub_total; ?></kbd></p>
+                                                        <p><kbd>Rp.<?= format_rupiah($k->sub_total); ?></kbd></p>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -530,7 +530,7 @@
                                                         <p>:</p>
                                                     </td>
                                                     <td>
-                                                        <p>Rp. <?= BIAYA_LAYANAN; ?></p>
+                                                        <p>Rp. <?= format_rupiah(BIAYA_LAYANAN); ?></p>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -541,7 +541,7 @@
                                                         <p>:</p>
                                                     </td>
                                                     <td>
-                                                        <p>Rp. <?= $k->harga_kamar; ?></p>
+                                                        <p>Rp. <?= format_rupiah($k->harga_kamar); ?></p>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -552,7 +552,7 @@
                                                         <p>:</p>
                                                     </td>
                                                     <td>
-                                                        <p><kbd> Rp.<?= $k->sub_total; ?></kbd></p>
+                                                        <p><kbd> Rp.<?= format_rupiah($k->sub_total); ?></kbd></p>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -578,7 +578,7 @@
                                             <p>:</p>
                                         </td>
                                         <td>
-                                            <p><kbd>Rp.<?= $data_pesanan[0]->total_bayar; ?></kbd></p>
+                                            <p><kbd>Rp.<?= format_rupiah($data_pesanan[0]->total_bayar); ?></kbd></p>
                                         </td>
                                     </tr>
                                     <tr>
@@ -760,7 +760,7 @@
                     <?php $foto = json_decode($k->foto_kamar); ?>
                     <img src="<?= base_url(); ?>/room_image/<?= $foto[1]->kamar    ?>" alt="image">
                     <div class="night-btn">
-                        <a href="#" class="default-btn-one">Rp. <?= $k->harga_kamar; ?> /Malam</a>
+                        <a href="#" class="default-btn-one">Rp. <?= format_rupiah($k->harga_kamar); ?> /Malam</a>
                     </div>
                 </div>
                 <div class="room-content">

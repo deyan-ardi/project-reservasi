@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-header">Ubah Kategori Kamar</div>
                     <div class="card-body">
-                        <form action="" method="POST" enctype="multipart/form-data">
+                        <form action="" method="POST">
                             <?= csrf_field() ?>
                             <div class="form-group">
                                 <label for="inputNama" class="col-form-label">Nama Kategori</label>

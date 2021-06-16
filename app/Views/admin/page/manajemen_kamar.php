@@ -102,7 +102,7 @@
                                         <td><?= $k->no_kamar; ?></td>
                                         <td><?= $k->nama_kamar; ?></td>
                                         <td><?= $k->deskripsi_kamar; ?></td>
-                                        <td>Rp. <?= $k->harga_kamar; ?> /malam</td>
+                                        <td>Rp. <?= format_rupiah($k->harga_kamar); ?> /malam</td>
                                         <td><?= $k->nama_kategori; ?></td>
                                         <td>
                                             <div id="carouselExampleControls" class="carousel slide"

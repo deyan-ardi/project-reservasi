@@ -39,6 +39,24 @@ const previewImg = () => {
         imgPreview.src = e.target.result;
     }
 }
+
+function formatRupiah(bilangan) {
+    var number_string = bilangan.toString(),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{1,3}/gi);
+
+    if (ribuan) {
+        separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+    }
+    rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+
+    // Cetak hasil	
+    return rupiah;
+}
+
 const hitungLama = () => {
     let checkIn = document.querySelector('#checkIn');
     let checkOut = document.querySelector('#checkOut');
@@ -63,13 +81,16 @@ const hitungLama = () => {
             let subTotal = document.querySelector("#subTotal").value;
             let valKode = Math.floor(Math.random() * 800) + 100;
             let total_val = document.querySelector('#total_value');
+            if (selisih <= 0) {
+                selisih = 1;
+            }
             total = parseInt(subTotal * selisih +
                 valKode);
             if (subTotal != "") {
                 hari.value = "x " + selisih + " Hari (Lama Menginap)";
                 kode_unik.value = "Kode Unik =" + valKode;
                 total_val.value = total;
-                totalBayar.value = "Total Wajib Bayar = Rp." + total;
+                totalBayar.value = "Total Wajib Bayar = Rp." + formatRupiah(total, 'Rp.');
                 checkIn.classList.remove('is-invalid');
                 checkOut.classList.remove('is-invalid');
                 document.querySelector('#button_pesanan').removeAttribute("disabled");
